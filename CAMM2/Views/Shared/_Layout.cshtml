@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Cable Assembly Manufacturing Management</title>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type='text/javascript' src="~/Scripts/jquery.blockUI.js"></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.js")' type='text/javascript'></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")' type='text/javascript'></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/knockout")
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/knockout-mapping")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @*<script type="text/javascript" charset="utf8" src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+        <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/sl-1.2.6/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/sl-1.2.6/datatables.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md fixed-top navbar-expand-lg">
+        <div class="container-fluid navbar-dark bg-primary">
+            @Html.ActionLink("CAMM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" id="Home" href="/">Home</a>
+                    <a class="nav-item nav-link" id="Items" href="/Items/Index">Items</a>
+                    <a class="nav-item nav-link" id="About" href="#">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Michael Bross</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Highlight the navbar button with the id that matches the third string in the url
+            var loc = window.location.href; // grabbing the url
+            var str = loc.split("/")[3]; // splitting the url and taking the third string
+            if (str.localeCompare("") == 0)
+                $("#Home").addClass("active");
+            else
+                $("#" + str).addClass("active");
+        });
+    </script>
+</body>
+</html>
