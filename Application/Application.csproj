@@ -72,6 +72,7 @@
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\ItemService.cs" />
     <Compile Include="Items\ItemVM.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="SearchParameters.cs" />
     <Compile Include="Interfaces\IItemsRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Items\Queries\GetItemList\IGetItemList.cs" />
     <Compile Include="Items\Queries\GetItemList\ItemVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Commands\" />

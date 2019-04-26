@@ -22,55 +22,60 @@ namespace Application.Items
         {
             try
             {
-                var newItem = new Item
-                {
-                    Code = itemVM.Code,
-                    Description = itemVM.Description,
-                    QtyOnHand = itemVM.QtyOnHand,
-                    UnitsOfMeasure = itemVM.UnitsOfMeasure,
-                    CreateDate = DateTime.Now,
-                    UpdateDate = DateTime.Now
-                };
+                var newItem = new Item();
+
+                Map.AtoB(itemVM, newItem);
+
+                var now = DateTime.Now;
+                newItem.CreateDate = now;
+                newItem.UpdateDate = now;
 
                 _unitOfWork.Items.Add(newItem);
                 _unitOfWork.Complete();
-
-                itemVM.Id = newItem.Id;
+                                
+                Map.AtoB(newItem, itemVM);
 
                 return itemVM;
             }
             catch (Exception ex)
-            {
-                switch (ex.Message)
-                {
-                    case string a when a.Contains("Duplicate Code"):
-                        throw new Exception("Duplicate Code");
-                        
-                    case string a when a.Contains("See the inner exception for details."):
-                        if (ex.InnerException.Message.Contains("See the inner exception for details."))
-                            throw new Exception(ex.InnerException.InnerException.Message);
-                        else
-                            throw new Exception(ex.InnerException.Message);
-                        
-                    default:
-                        throw new Exception(ex.Message);                        
-                }
+            {  
+                var message = Utility.GetRootCauseOfException(ex);
+
+                throw new Exception(message);
             }
         }
 
         public IEnumerable<ItemVM> GetAll()
         {
-            throw new NotImplementedException();
+            var items = _unitOfWork.Items.GetAll();
+            var itemVMs = new List<ItemVM>();
+
+            Map.AtoB(items, itemVMs);
+
+            return itemVMs;
         }
 
         public int GetTotalCount()
         {
-            throw new NotImplementedException();
+            var count = _unitOfWork.Items.GetAll().Count();
+            return count;
         }
 
-        public bool Remove(ItemVM itemVM)
+        public void Remove(ItemVM itemVM)
         {
-            throw new NotImplementedException();
+            try
+            {               
+                var toBeRemoved = _unitOfWork.Items.Get(itemVM.Id);
+                if (toBeRemoved == null)
+                    throw new Exception("Item not found.");
+                _unitOfWork.Items.Remove(toBeRemoved);
+                _unitOfWork.Complete();
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
         }
 
         public IEnumerable<ItemVM> Search(SearchParameters searchParams)
@@ -89,9 +94,25 @@ namespace Application.Items
             return result;
         }
 
-        public ItemVM Update(ItemVM itemVM)
+        public ItemVM Update(ItemVM revisedVM)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var retrieved = _unitOfWork.Items.Get(revisedVM.Id);
+                retrieved.Code = revisedVM.Code;
+                retrieved.Description = revisedVM.Description;
+                retrieved.QtyOnHand = revisedVM.QtyOnHand;
+                retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+                var now = DateTime.Now;
+                retrieved.UpdateDate = now;                
+                _unitOfWork.Complete();
+                return revisedVM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
         }
     }
 }

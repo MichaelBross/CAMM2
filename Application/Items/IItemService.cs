@@ -14,6 +14,6 @@ namespace Application.Items
         int GetTotalCount();
         ItemVM Add(ItemVM itemVM);
         ItemVM Update(ItemVM itemVM);
-        bool Remove(ItemVM itemVM);
+        void Remove(ItemVM itemVM);
     }
 }

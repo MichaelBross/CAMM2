@@ -11,16 +11,16 @@ using Application.Items;
 
 namespace Presentation.Items
 {
-    public class ItemsController : Controller
+    public class ItemsController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         //private readonly IGetItemList _getItemList;
-        private readonly IItemService _itemService;
+        private readonly IItemService _itemService;        
 
         public ItemsController(IUnitOfWork unitOfWork, IItemService itemService)
         {
             _unitOfWork = unitOfWork;
-            _itemService = itemService;
+            _itemService = itemService;            
         }
 
         // GET: Items
@@ -33,7 +33,7 @@ namespace Presentation.Items
         public JsonResult SearchServerSide()
         {
             // Get Server Side Parameters from Request
-            var searchParams = Utilities.MapDataTableRequestToSearchParams(Request);
+            var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
             int totalrows = _unitOfWork.Items.GetAll().Count();
@@ -61,7 +61,10 @@ namespace Presentation.Items
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(String.Empty, ex.Message);                   
+                    if(ex.Message.Contains("IX_Code"))
+                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
+                    else
+                        ModelState.AddModelError(string.Empty, "The save failed.");
                 }
             }
             return JsonErrorResult();
@@ -70,22 +73,22 @@ namespace Presentation.Items
         // POST: Items/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]Item revised)
+        public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
         {
-            var req = Request;
-            var id = Request.Form.Get("Id");
             if (ModelState.IsValid)
             {
-                var retrieved = _unitOfWork.Items.Get(revised.Id);
-
-                retrieved.Code = revised.Code;
-                retrieved.Description = revised.Description;
-                retrieved.UnitsOfMeasure = revised.UnitsOfMeasure;
-                retrieved.QtyOnHand = revised.QtyOnHand;
-
-                _unitOfWork.Complete();
-
-                return Json(new { success = true, model = retrieved });
+                try
+                {
+                    var updated = _itemService.Update(revised);
+                    return Json(new { success = true, model = updated });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("IX_Code"))
+                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
+                    else
+                        ModelState.AddModelError(string.Empty, "The save failed.");
+                }
             }
 
             return JsonErrorResult();
@@ -94,7 +97,7 @@ namespace Presentation.Items
         // GET: Items/Delete
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] Item toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] ItemVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {
@@ -103,39 +106,21 @@ namespace Presentation.Items
 
             try
             {
-                var retrieved = _unitOfWork.Items.Get(toBeRemoved.Id);
-                _unitOfWork.Items.Remove(retrieved);
-                _unitOfWork.Complete();
+                _itemService.Remove(toBeRemoved);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, ErrorMessage = ex.Message });
-            }
+                if (ex.Message.Contains("Item not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the item was not found.");
+                else
+                    ModelState.AddModelError(string.Empty, "The delete failed.");
+
+                return JsonErrorResult();
+            }            
         }
 
-        private JsonResult JsonErrorResult()
-        {
-            List<ValidationError> validationErrors = new List<ValidationError>();
-            var propertyErrors = ModelState.Where(x => x.Value.Errors.Count > 0).ToList();
-            foreach (KeyValuePair<string, ModelState> item in propertyErrors)
-            {
-                ValidationError validationError = new ValidationError();
-                validationError.PropertyName = item.Key;
-                foreach (ModelError error in item.Value.Errors)
-                {
-                    validationError.ErrorMessage = error.ErrorMessage;
-                }
-                validationErrors.Add(validationError);
-            }
-            return Json(new { success = false, errors = validationErrors }, JsonRequestBehavior.AllowGet);
-        }
 
-        public class ValidationError
-        {
-            public string PropertyName { get; set; }
-            public string ErrorMessage { get; set; }
-        }
 
     }
 }

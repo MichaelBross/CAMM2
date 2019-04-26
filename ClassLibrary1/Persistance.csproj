@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201904080052246_InitialMigration.Designer.cs">
       <DependentUpon>201904080052246_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904211510044_CodeColumnUniqueIndex.cs" />
+    <Compile Include="Migrations\201904211510044_CodeColumnUniqueIndex.Designer.cs">
+      <DependentUpon>201904211510044_CodeColumnUniqueIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Camm2Context.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +106,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904080052246_InitialMigration.resx">
       <DependentUpon>201904080052246_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904211510044_CodeColumnUniqueIndex.resx">
+      <DependentUpon>201904211510044_CodeColumnUniqueIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

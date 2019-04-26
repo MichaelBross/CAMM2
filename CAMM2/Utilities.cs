@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Presentation
 {
-    public class Utilities : Controller
+    public class BaseController : Controller
     {
         /// <summary>
         /// Maps Http Request parameters from jquery datatable ajax 
@@ -28,6 +28,31 @@ namespace Presentation
                 SortDirection = Request["order[0][dir]"]
             };
             return searchParams;
+        }
+
+        public JsonResult JsonErrorResult()
+        {
+            List<ValidationError> validationErrors = new List<ValidationError>();
+            var propertyErrors = ModelState.Where(x => x.Value.Errors.Count > 0).ToList();
+            foreach (KeyValuePair<string, ModelState> item in propertyErrors)
+            {
+                ValidationError validationError = new ValidationError();
+                validationError.PropertyName = item.Key;
+                foreach (ModelError error in item.Value.Errors)
+                {
+                    validationError.ErrorMessage = error.ErrorMessage;
+                }
+                validationErrors.Add(validationError);
+            }
+
+                       
+            return Json(new { success = false, errors = validationErrors }, JsonRequestBehavior.AllowGet);
+        }
+
+        public class ValidationError
+        {
+            public string PropertyName { get; set; }
+            public string ErrorMessage { get; set; }
         }
     }
 }

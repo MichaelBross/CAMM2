@@ -1,5 +1,5 @@
 ﻿@model Application.Items.ItemVM
-
+@using Domain.Items
 @{
     ViewBag.Title = "Items";
 }
@@ -39,42 +39,46 @@
         @Html.AntiForgeryToken()
         <div class="card-body" data-bind="with:Item">
             <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                <div class="col form-inline">                    
+                @foreach()
+                <div class="camm-control-group">
                     <input name="Id" type="hidden" data-bind="value: Id" />
 
-                    @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-sm-4" })
-                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control col-sm-8", @data_bind = "value: Code, enable: $parent.enableKeyTextBox" } })
+                    @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-sm-12" })
+                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: Code, enable: $parent.enableKeyTextBox" } })
                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                 </div>
-                <div class="col form-inline">
+                <div class="camm-control-group">
 
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-sm-4" })
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control col-sm-8", @data_bind = "value: Description, enable: $parent.enableEditableTextBoxes" } })
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @data_bind = "value: Description, enable: $parent.enableEditableTextBoxes" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                 </div>
-                <div class="col form-inline">
+                <div class="camm-control-group">
 
-                    @Html.LabelFor(model => model.UnitsOfMeasure, htmlAttributes: new { @class = "control-label col-sm-4" })
-                    @Html.EditorFor(model => model.UnitsOfMeasure, new { htmlAttributes = new { @class = "form-control col-sm-8", @data_bind = "value:UnitsOfMeasure, enable: $parent.enableEditableTextBoxes" } })
+                    @Html.LabelFor(model => model.UnitsOfMeasure, htmlAttributes: new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(model => model.UnitsOfMeasure, "Select Units of Measure", new { @class = "form-control", @data_bind = "value:UnitsOfMeasure, enable: $parent.enableEditableTextBoxes" })
                     @Html.ValidationMessageFor(model => model.UnitsOfMeasure, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                 </div>
-            </div>
-            <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                <div class="col-sm-4 form-inline">
+                <div class="camm-control-group">
 
-                    @Html.LabelFor(model => model.QtyOnHand, htmlAttributes: new { @class = "control-label col-sm-4" })
-                    @Html.EditorFor(model => model.QtyOnHand, new { htmlAttributes = new { @class = "form-control col-sm-8", @data_bind = "value:QtyOnHand, enable: $parent.enableEditableTextBoxes" } })
+                    @Html.LabelFor(model => model.QtyOnHand, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.QtyOnHand, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:QtyOnHand, enable: $parent.enableEditableTextBoxes" } })
                     @Html.ValidationMessageFor(model => model.QtyOnHand, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
-                </div> 
+                </div>
             </div>
         </div>
     </form>
 </div>
 
+<style>
+    .camm-control-group {
+        margin-bottom: 20px;
+    }
+</style>
 
 @section scripts{
 
@@ -434,6 +438,7 @@
         $(document).ready(function () {
             Itemmodel = new viewModel();
             ko.applyBindings(Itemmodel);
+            $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6 col-xs-12");
         });
 
 
