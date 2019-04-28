@@ -87,7 +87,9 @@ namespace Application.Items
                     Code = i.Code,
                     Description = i.Description,
                     QtyOnHand = i.QtyOnHand,
-                    UnitsOfMeasure = i.UnitsOfMeasure
+                    UnitsOfMeasure = i.UnitsOfMeasure,
+                    CreateDate = i.CreateDate,
+                    UpdateDate = i.UpdateDate
                     
                 }).ToList();
 

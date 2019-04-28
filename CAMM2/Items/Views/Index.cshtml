@@ -1,5 +1,9 @@
 ﻿@model Application.Items.ItemVM
 @using Domain.Items
+@using Application.Items
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection
+
 @{
     ViewBag.Title = "Items";
 }
@@ -34,40 +38,80 @@
     </div>
     <div id="validationSummary">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    </div>    
+    </div>
     <form id="addeditform">
         @Html.AntiForgeryToken()
         <div class="card-body" data-bind="with:Item">
             <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                <div class="camm-control-group">
-                    <input name="Id" type="hidden" data-bind="value: Id" />
+                @foreach (var p in typeof(ItemVM).GetProperties())
+                {
+                    var displayName = p.Name;
 
-                    @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-sm-12" })
-                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: Code, enable: $parent.enableKeyTextBox" } })
-                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                    var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+                    if (displayAttr != null)
+                    {
+                        displayName = displayAttr.Name;
+                    }
 
-                </div>
-                <div class="camm-control-group">
+                    var hidden = false;
+                    var hiddenInput = p.GetCustomAttribute(typeof(HiddenInputAttribute)) as HiddenInputAttribute;
+                    if (hiddenInput != null)
+                    {
+                        hidden = !hiddenInput.DisplayValue;
+                    }
 
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @data_bind = "value: Description, enable: $parent.enableEditableTextBoxes" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                    if (hidden)
+                    {
+                        <input name=@p.Name type="hidden" data-bind="value: @p.Name" />                        
+                    }
 
-                </div>
-                <div class="camm-control-group">
+                    if(hidden)
+                    { continue; }
 
-                    @Html.LabelFor(model => model.UnitsOfMeasure, htmlAttributes: new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(model => model.UnitsOfMeasure, "Select Units of Measure", new { @class = "form-control", @data_bind = "value:UnitsOfMeasure, enable: $parent.enableEditableTextBoxes" })
-                    @Html.ValidationMessageFor(model => model.UnitsOfMeasure, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                    if (p.PropertyType == typeof(string))
+                    {
+                        <div class="camm-control-group">
 
-                </div>
-                <div class="camm-control-group">
+                            @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label col-sm-12" })
+                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
-                    @Html.LabelFor(model => model.QtyOnHand, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.QtyOnHand, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:QtyOnHand, enable: $parent.enableEditableTextBoxes" } })
-                    @Html.ValidationMessageFor(model => model.QtyOnHand, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                        </div>
+                    }
 
-                </div>
+                    if (p.PropertyType.BaseType == typeof(Enum))
+                    {
+                        <div class="camm-control-group">
+
+                            @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList(p.Name, new SelectList(Enum.GetValues(typeof(UnitsOfMeasure))), new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+
+                        </div>
+                    }
+
+
+                    if (p.PropertyType == typeof(int))
+                    {
+                        <div class="camm-control-group-sm">
+
+                            @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+
+                        </div>
+                    }
+
+                    if (p.PropertyType == typeof(DateTime))
+                    {
+                        <div class="camm-control-group">
+                            <label class="control-label" for="@p.Name">@displayName</label>
+                            <input class="form-control text-box single-line datepicker" data-bind="value: @p.Name, enable: $parent.enableEditableTextBoxes" data-val="true" data-val-date="The field Date Created must be a date." data-val-required="The Date Created field is required." id="@p.Name" name="@p.Name" value="" disabled="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="@p.Name" data-valmsg-replace="true" style="width: 100%; text-align:center;"></span>
+                        </div>
+                    }
+
+                }
             </div>
         </div>
     </form>
@@ -94,7 +138,8 @@
                 Description: ko.observable(),
                 UnitsOfMeasure: ko.observable(),
                 QtyOnHand: ko.observable(),
-                DueDate: ko.observable()
+                UpdateDate: ko.observable(),
+                CreateDate: ko.observable()
             }
 
             vm.clearModel = function () {
@@ -103,6 +148,8 @@
                 vm.Item.Description("");
                 vm.Item.UnitsOfMeasure("");
                 vm.Item.QtyOnHand("");
+                vm.Item.UpdateDate("");
+                vm.Item.CreateDate("");
             }
 
             vm.searchstring = ko.observable();
@@ -154,7 +201,7 @@
                     "serverSide": "true",
                     "order": [0, "asc"],
                     "processing": "true",
-                    "language": {  
+                    "language": {
                         "processing": "processing, please wait"
                     },
                     "select": "single",
@@ -221,7 +268,7 @@
                 }
                 var item = vm.Item;
                 var allFormData1 = $("#addeditform").serialize();
-                var allFormData = ko.toJSON(item); 
+                var allFormData = ko.toJSON(item);
                 var itemData = JSON.stringify(item);
                 var allFormDataString = JSON.stringify(allFormData);
 
@@ -353,6 +400,8 @@
                 vm.Item.Description(data["Description"]);
                 vm.Item.UnitsOfMeasure(data["UnitsOfMeasure"]);
                 vm.Item.QtyOnHand(data["QtyOnHand"]);
+                vm.Item.CreateDate(vm.formatduedate(data["CreateDate"]));
+                vm.Item.UpdateDate(vm.formatduedate(data["UpdateDate"]));
             };
 
             vm.enableKeyTextBox = ko.observable(false);
@@ -438,6 +487,7 @@
             Itemmodel = new viewModel();
             ko.applyBindings(Itemmodel);
             $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6 col-xs-12");
+            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6 col-xs-12");
         });
 
 
