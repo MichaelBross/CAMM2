@@ -72,8 +72,9 @@ namespace Presentation.Items
 
         // POST: Items/Edit
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
+        //[ValidateAntiForgeryToken]
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
+        public JsonResult Update(ItemVM revised)
         {
             if (ModelState.IsValid)
             {

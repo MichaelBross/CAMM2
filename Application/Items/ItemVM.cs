@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Domain.Items;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System.ComponentModel;
 
 namespace Application.Items
 {
@@ -24,15 +25,17 @@ namespace Application.Items
 
         [Display(Name = "Qty on Hand")]
         public int QtyOnHand { get; set; }
-        
+
+        [ReadOnly(true)]
         [Display(Name = "Date Updated")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime UpdateDate { get; set; }
 
+        [ReadOnly(true)]
         [Display(Name = "Date Created")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime CreateDate { get; set; }
     }
 }

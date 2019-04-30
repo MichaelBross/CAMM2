@@ -1,8 +1,11 @@
 ﻿@model Application.Items.ItemVM
 @using Domain.Items
 @using Application.Items
+@using System.ComponentModel;
 @using System.ComponentModel.DataAnnotations
 @using System.Reflection
+@using Newtonsoft.Json;
+@using System;
 
 @{
     ViewBag.Title = "Items";
@@ -46,7 +49,6 @@
                 @foreach (var p in typeof(ItemVM).GetProperties())
                 {
                     var displayName = p.Name;
-
                     var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
                     if (displayAttr != null)
                     {
@@ -62,11 +64,18 @@
 
                     if (hidden)
                     {
-                        <input name=@p.Name type="hidden" data-bind="value: @p.Name" />                        
+                        <input name=@p.Name type="hidden" data-bind="value: @p.Name" />
                     }
 
-                    if(hidden)
+                    if (hidden)
                     { continue; }
+
+                    var readOnly = false;
+                    var readOnlyAttr = p.GetCustomAttribute(typeof(ReadOnlyAttribute)) as ReadOnlyAttribute;
+                    if (readOnlyAttr != null)
+                    {
+                        readOnly = readOnlyAttr.IsReadOnly;
+                    }
 
                     if (p.PropertyType == typeof(string))
                     {
@@ -84,7 +93,8 @@
                         <div class="camm-control-group">
 
                             @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownList(p.Name, new SelectList(Enum.GetValues(typeof(UnitsOfMeasure))), new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" })
+                            <select class="form-control" data-bind="options: unitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: selectedUOM, enable: $parent.enableEditableTextBoxes"></select>
+                            @*@Html.DropDownList(p.Name, new SelectList(Enum.GetValues(typeof(UnitsOfMeasure))), new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes, selected: " + p.Name + " " })*@
                             @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
@@ -106,12 +116,14 @@
                     {
                         <div class="camm-control-group">
                             <label class="control-label" for="@p.Name">@displayName</label>
-                            <input class="form-control text-box single-line datepicker" data-bind="value: @p.Name, enable: $parent.enableEditableTextBoxes" data-val="true" data-val-date="The field Date Created must be a date." data-val-required="The Date Created field is required." id="@p.Name" name="@p.Name" value="" disabled="">
+                            <input class="form-control datepicker" data-bind="value: @p.Name, enable: @if (readOnly) { <text>false</text> } else { <text>$parent.enableEditableTextBoxes</text> } " 
+                                   data-val="true" data-val-date="The field @displayName must be a date." data-val-required="The @displayName field is required." 
+                                   id="@p.Name" name="@p.Name" value="" disabled="" type="datetime">
                             <span class="field-validation-valid text-danger" data-valmsg-for="@p.Name" data-valmsg-replace="true" style="width: 100%; text-align:center;"></span>
                         </div>
                     }
 
-                }
+                            }
             </div>
         </div>
     </form>
@@ -138,8 +150,10 @@
                 Description: ko.observable(),
                 UnitsOfMeasure: ko.observable(),
                 QtyOnHand: ko.observable(),
-                UpdateDate: ko.observable(),
-                CreateDate: ko.observable()
+                UpdateDate: ko.observable(new Date()),
+                CreateDate: ko.observable(new Date()),
+                unitsOfMeasureList: [{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },],
+                selectedUOM: ko.observable()
             }
 
             vm.clearModel = function () {
@@ -148,9 +162,12 @@
                 vm.Item.Description("");
                 vm.Item.UnitsOfMeasure("");
                 vm.Item.QtyOnHand("");
-                vm.Item.UpdateDate("");
-                vm.Item.CreateDate("");
+                vm.Item.UpdateDate(new Date());
+                vm.Item.CreateDate(new Date());
+                vm.Item.selectedUOM("");
             }
+
+            vm.unitsOfMeasureList = [{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },]
 
             vm.searchstring = ko.observable();
             @* Execute search on searchbox value change*@
@@ -228,7 +245,8 @@
                 var month = duedate.getUTCMonth() + 1;
                 var date = duedate.getUTCDate();
                 var formatduedate = month + "/" + date + "/" + year;
-                return formatduedate;
+                //return formatduedate;
+                return duedate.toLocaleDateString();
             }
 
             vm.add = function () {
@@ -266,11 +284,9 @@
                 if (vm.mode() === 'Update' || vm.mode() === 'Delete') {
                     vm.enableKeyTextBox(true);
                 }
-                var item = vm.Item;
-                var allFormData1 = $("#addeditform").serialize();
-                var allFormData = ko.toJSON(item);
-                var itemData = JSON.stringify(item);
-                var allFormDataString = JSON.stringify(allFormData);
+                vm.Item.UnitsOfMeasure(vm.Item.selectedUOM());
+                var item = vm.Item;                
+                var itemJson = ko.toJSON(item);               
 
                 @* Reapply input disable *@
                 if (vm.mode() === 'Update' || vm.mode() === 'Delete') {
@@ -279,9 +295,10 @@
 
                 $.ajax({
                     url: vm.mode(),
-                    data: allFormData1,
+                    data: itemJson,
                     type: "POST",
                     dataType: "json",
+                    contentType: "application/json",
                     success: function (response) {
                         $("label").removeClass("text-danger");
                         $("input").removeClass("is-invalid");
@@ -402,6 +419,7 @@
                 vm.Item.QtyOnHand(data["QtyOnHand"]);
                 vm.Item.CreateDate(vm.formatduedate(data["CreateDate"]));
                 vm.Item.UpdateDate(vm.formatduedate(data["UpdateDate"]));
+                vm.Item.selectedUOM(data["UnitsOfMeasure"]);
             };
 
             vm.enableKeyTextBox = ko.observable(false);
