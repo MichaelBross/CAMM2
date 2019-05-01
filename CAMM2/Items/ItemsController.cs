@@ -18,7 +18,7 @@ namespace Presentation.Items
         private readonly IItemService _itemService;        
 
         public ItemsController(IUnitOfWork unitOfWork, IItemService itemService)
-        {
+        {            
             _unitOfWork = unitOfWork;
             _itemService = itemService;            
         }
@@ -80,7 +80,7 @@ namespace Presentation.Items
             {
                 try
                 {
-                    var updated = _itemService.Update(revised);
+                    var updated = _itemService.Update(revised);                     
                     return Json(new { success = true, model = updated });
                 }
                 catch (Exception ex)

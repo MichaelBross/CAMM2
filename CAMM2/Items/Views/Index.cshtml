@@ -1,6 +1,7 @@
 ﻿@model Application.Items.ItemVM
 @using Domain.Items
 @using Application.Items
+@using System.Collections;
 @using System.ComponentModel;
 @using System.ComponentModel.DataAnnotations
 @using System.Reflection
@@ -93,8 +94,7 @@
                         <div class="camm-control-group">
 
                             @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
-                            <select class="form-control" data-bind="options: unitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: selectedUOM, enable: $parent.enableEditableTextBoxes"></select>
-                            @*@Html.DropDownList(p.Name, new SelectList(Enum.GetValues(typeof(UnitsOfMeasure))), new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes, selected: " + p.Name + " " })*@
+                            <select class="form-control" data-bind="options: unitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>                            
                             @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
@@ -137,24 +137,36 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
         var viewModel = function() {
             var vm = this;
             vm.mode = ko.observable('Get');
             vm.Code = ko.observable();
 
+            @{
+                var enumData = from UnitsOfMeasure e in Enum.GetValues(typeof(UnitsOfMeasure))
+                               select new
+                               {
+                                   id = (int)e,
+                                   name = e.ToString()
+                               };
+                var enumArray = enumData.ToArray();
+                var enumJson = JsonConvert.SerializeObject(enumArray);
+            }
+
             vm.Item = {
                 Id: ko.observable(),
                 Code: ko.observable(),
                 Description: ko.observable(),
                 UnitsOfMeasure: ko.observable(),
+                unitsOfMeasureList: @Html.Raw(enumJson),
                 QtyOnHand: ko.observable(),
                 UpdateDate: ko.observable(new Date()),
-                CreateDate: ko.observable(new Date()),
-                unitsOfMeasureList: [{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },],
-                selectedUOM: ko.observable()
+                CreateDate: ko.observable(new Date()),                
             }
+
+            //[{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },]
 
             vm.clearModel = function () {
                 vm.Item.Id("");
@@ -164,10 +176,7 @@
                 vm.Item.QtyOnHand("");
                 vm.Item.UpdateDate(new Date());
                 vm.Item.CreateDate(new Date());
-                vm.Item.selectedUOM("");
-            }
-
-            vm.unitsOfMeasureList = [{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },]
+            }          
 
             vm.searchstring = ko.observable();
             @* Execute search on searchbox value change*@
@@ -241,10 +250,10 @@
                 }
                 var dateInt = parseInt(d.substring(6, 19));
                 var duedate = new Date(dateInt);
-                var year = duedate.getUTCFullYear();
-                var month = duedate.getUTCMonth() + 1;
-                var date = duedate.getUTCDate();
-                var formatduedate = month + "/" + date + "/" + year;
+                //var year = duedate.getUTCFullYear();
+                //var month = duedate.getUTCMonth() + 1;
+                //var date = duedate.getUTCDate();
+                //var formatduedate = month + "/" + date + "/" + year;
                 //return formatduedate;
                 return duedate.toLocaleDateString();
             }
@@ -284,9 +293,9 @@
                 if (vm.mode() === 'Update' || vm.mode() === 'Delete') {
                     vm.enableKeyTextBox(true);
                 }
-                vm.Item.UnitsOfMeasure(vm.Item.selectedUOM());
-                var item = vm.Item;                
-                var itemJson = ko.toJSON(item);               
+
+                var item = vm.Item;
+                var itemJson = ko.toJSON(item);
 
                 @* Reapply input disable *@
                 if (vm.mode() === 'Update' || vm.mode() === 'Delete') {
@@ -419,7 +428,6 @@
                 vm.Item.QtyOnHand(data["QtyOnHand"]);
                 vm.Item.CreateDate(vm.formatduedate(data["CreateDate"]));
                 vm.Item.UpdateDate(vm.formatduedate(data["UpdateDate"]));
-                vm.Item.selectedUOM(data["UnitsOfMeasure"]);
             };
 
             vm.enableKeyTextBox = ko.observable(false);
@@ -510,7 +518,7 @@
 
 
 
-    </script>
+</script>
 }
 
 
