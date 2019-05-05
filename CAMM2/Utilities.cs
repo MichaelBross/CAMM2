@@ -1,8 +1,10 @@
 ﻿using Application;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Presentation
@@ -54,5 +56,47 @@ namespace Presentation
             public string PropertyName { get; set; }
             public string ErrorMessage { get; set; }
         }
+        
+    }
+
+    public class Converter
+    {
+        public static string enumToJson(Enum _vm)
+        {
+            var enumList = from Object e in Enum.GetValues(_vm.GetType())
+                           select new enumItem
+                           {
+                               id = (int)e,
+                               name = e.ToString()
+                           };
+            var enumObjArray = enumList.ToArray();
+            var enumString = "[";
+            foreach(var i in enumObjArray)
+            {
+                enumString = enumString + "{  id: " + i.id + ", name: \"" + i.name + "\" }, ";
+            }
+            enumString = enumString + "], ";
+            return Json.Encode(enumList.ToList());
+        }
+
+        public static MvcHtmlString enumToString(Enum en)
+        {
+            var values = Enum.GetValues(en.GetType()).Cast<int>();
+            var enumDictionary = values.ToDictionary(value => Enum.GetName(en.GetType(), value));
+
+            return new MvcHtmlString(JsonConvert.SerializeObject(enumDictionary));
+        }
+    }
+
+    public class enumItem
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+
+    public class EnumSelectList
+    {
+        public string Name { get; set; }
+        public MvcHtmlString List { get; set; }
     }
 }

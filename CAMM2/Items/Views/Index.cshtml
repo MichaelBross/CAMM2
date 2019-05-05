@@ -1,15 +1,18 @@
-﻿@model Application.Items.ItemVM
-@using Domain.Items
+﻿@using Domain.Items
 @using Application.Items
-@using System.Collections;
 @using System.ComponentModel;
 @using System.ComponentModel.DataAnnotations
 @using System.Reflection
+@using System.Linq.Expressions
 @using Newtonsoft.Json;
 @using System;
+@using System.Data.Entity
+@using System.IO
+@using Presentation
 
 @{
     ViewBag.Title = "Items";
+    var _viewModel = new ItemVM();
 }
 
 <div class="search">
@@ -47,7 +50,7 @@
         @Html.AntiForgeryToken()
         <div class="card-body" data-bind="with:Item">
             <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                @foreach (var p in typeof(ItemVM).GetProperties())
+                @foreach (var p in _viewModel.GetType().GetProperties())
                 {
                     var displayName = p.Name;
                     var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
@@ -94,7 +97,7 @@
                         <div class="camm-control-group">
 
                             @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
-                            <select class="form-control" data-bind="options: unitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>                            
+                            <select class="form-control" data-bind="options: $parent.UnitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>                            
                             @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
@@ -145,28 +148,54 @@
             vm.Code = ko.observable();
 
             @{
-                var enumData = from UnitsOfMeasure e in Enum.GetValues(typeof(UnitsOfMeasure))
-                               select new
-                               {
-                                   id = (int)e,
-                                   name = e.ToString()
-                               };
-                var enumArray = enumData.ToArray();
-                var enumJson = JsonConvert.SerializeObject(enumArray);
-            }
 
-            vm.Item = {
-                Id: ko.observable(),
-                Code: ko.observable(),
-                Description: ko.observable(),
-                UnitsOfMeasure: ko.observable(),
-                unitsOfMeasureList: @Html.Raw(enumJson),
-                QtyOnHand: ko.observable(),
-                UpdateDate: ko.observable(new Date()),
-                CreateDate: ko.observable(new Date()),                
-            }
+                var selectLists = new List<EnumSelectList>();
+                var jsonKoObject = "{";
+                foreach (var p in _viewModel.GetType().GetProperties())
+                {
+                    if (p.PropertyType == typeof(string))
+                    {
+                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+                    }
 
-            //[{ "id": 1, "name": "Each" }, { "id": 2, "name": "Inches" }, { "id": 3, "name": "Feet" }, { "id": 4, "name": "Meters" }, { "id": 5, "name": "Ounces" }, { "id": 6, "name": "Pounds" },]
+                    if (p.PropertyType == typeof(DateTime))
+                    {
+                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(new Date()),";
+                    }
+
+                    if (p.PropertyType == typeof(int))
+                    {
+                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+                    }
+
+                    if (p.PropertyType.BaseType == typeof(Enum))
+                    {
+                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+
+                        var enumList = from Object e in Enum.GetValues(p.PropertyType)
+                                       select new enumItem
+                                       {
+                                           id = (int)e,
+                                           name = e.ToString()
+                                       };
+                        var selectList = new EnumSelectList {
+                            Name = p.Name + "List",
+                            List = new MvcHtmlString(JsonConvert.SerializeObject(enumList))
+                        };
+                        selectLists.Add(selectList);
+                    }
+
+                }
+                jsonKoObject = jsonKoObject + "}";
+
+                foreach(EnumSelectList esl in selectLists)
+                {
+                    <text>
+            vm.@esl.Name = ko.observableArray(@Html.Raw(esl.List));
+                    </text>
+                }
+            }
+            vm.Item = @jsonKoObject;
 
             vm.clearModel = function () {
                 vm.Item.Id("");
