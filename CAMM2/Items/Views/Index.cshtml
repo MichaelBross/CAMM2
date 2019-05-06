@@ -140,7 +140,7 @@
 
 @section scripts{
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
         var viewModel = function() {
             var vm = this;
@@ -148,64 +148,23 @@
             vm.Code = ko.observable();
 
             @{
+                <text>vm.Item = @Build.JsonKoObjectFromViewModel(_viewModel) </text>
 
-                var selectLists = new List<EnumSelectList>();
-                var jsonKoObject = "{";
                 foreach (var p in _viewModel.GetType().GetProperties())
                 {
-                    if (p.PropertyType == typeof(string))
+                    if(p.PropertyType.BaseType == typeof(Enum))
                     {
-                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
-                    }
-
-                    if (p.PropertyType == typeof(DateTime))
-                    {
-                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(new Date()),";
-                    }
-
-                    if (p.PropertyType == typeof(int))
-                    {
-                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
-                    }
-
-                    if (p.PropertyType.BaseType == typeof(Enum))
-                    {
-                        jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
-
-                        var enumList = from Object e in Enum.GetValues(p.PropertyType)
-                                       select new enumItem
-                                       {
-                                           id = (int)e,
-                                           name = e.ToString()
-                                       };
-                        var selectList = new EnumSelectList {
-                            Name = p.Name + "List",
-                            List = new MvcHtmlString(JsonConvert.SerializeObject(enumList))
-                        };
-                        selectLists.Add(selectList);
+                        var SelectListName = p.Name + "List";
+                        <text>
+                        vm.@SelectListName  = ko.observableArray(@Html.Raw(Build.SelectListFromEnum(p.PropertyType)));
+                        </text>
                     }
 
                 }
-                jsonKoObject = jsonKoObject + "}";
 
-                foreach(EnumSelectList esl in selectLists)
-                {
-                    <text>
-            vm.@esl.Name = ko.observableArray(@Html.Raw(esl.List));
-                    </text>
-                }
-            }
-            vm.Item = @jsonKoObject;
+                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunctionFromViewModel(_viewModel)) </text>
 
-            vm.clearModel = function () {
-                vm.Item.Id("");
-                vm.Item.Code("");
-                vm.Item.Description("");
-                vm.Item.UnitsOfMeasure("");
-                vm.Item.QtyOnHand("");
-                vm.Item.UpdateDate(new Date());
-                vm.Item.CreateDate(new Date());
-            }          
+            } 
 
             vm.searchstring = ko.observable();
             @* Execute search on searchbox value change*@
@@ -273,7 +232,19 @@
 
             vm.configureTable();
 
-            vm.formatduedate = function (d) {
+            vm.today = function () {
+                var now = new Date();
+                var dd = now.getDate();
+                var mm = now.getMonth() + 1;
+                var yyyy = now.getFullYear();
+
+                //if (dd < 10) dd = '0' + dd;
+                //if (mm < 10) mm = '0' + mm;
+
+                return (mm + '/' + dd + '/' + yyyy);
+            }
+
+            vm.formatDate = function (d) {
                 if (d === null) {
                     return "";
                 }
@@ -282,8 +253,8 @@
                 //var year = duedate.getUTCFullYear();
                 //var month = duedate.getUTCMonth() + 1;
                 //var date = duedate.getUTCDate();
-                //var formatduedate = month + "/" + date + "/" + year;
-                //return formatduedate;
+                //var formatDate = month + "/" + date + "/" + year;
+                //return formatDate;
                 return duedate.toLocaleDateString();
             }
 
@@ -455,8 +426,8 @@
                 vm.Item.Description(data["Description"]);
                 vm.Item.UnitsOfMeasure(data["UnitsOfMeasure"]);
                 vm.Item.QtyOnHand(data["QtyOnHand"]);
-                vm.Item.CreateDate(vm.formatduedate(data["CreateDate"]));
-                vm.Item.UpdateDate(vm.formatduedate(data["UpdateDate"]));
+                vm.Item.CreateDate(vm.formatDate(data["CreateDate"]));
+                vm.Item.UpdateDate(vm.formatDate(data["UpdateDate"]));
             };
 
             vm.enableKeyTextBox = ko.observable(false);
@@ -547,7 +518,7 @@
 
 
 
-</script>
+    </script>
 }
 
 

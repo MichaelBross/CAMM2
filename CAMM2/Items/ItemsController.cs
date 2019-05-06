@@ -49,7 +49,7 @@ namespace Presentation.Items
 
         // POST: Items/Add
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ItemVM itemVM)
         {
             if (ModelState.IsValid)

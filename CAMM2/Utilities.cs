@@ -58,33 +58,81 @@ namespace Presentation
         }
         
     }
-
-    public class Converter
+       
+    public class Build
     {
-        public static string enumToJson(Enum _vm)
+        public static string JsonKoObjectFromViewModel(object viewModel)
         {
-            var enumList = from Object e in Enum.GetValues(_vm.GetType())
+            var jsonKoObject = "{";
+            foreach (var p in viewModel.GetType().GetProperties())
+            {
+                if (p.PropertyType == typeof(string))
+                {
+                    jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+                }
+
+                if (p.PropertyType == typeof(DateTime))
+                {
+                    jsonKoObject = jsonKoObject + p.Name + ": ko.observable(new Date()),";
+                }
+
+                if (p.PropertyType == typeof(int))
+                {
+                    jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+                }
+
+                if (p.PropertyType.BaseType == typeof(Enum))
+                {
+                    jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),";
+                }
+
+            }
+            jsonKoObject = jsonKoObject + "}";
+
+            return jsonKoObject;
+        }
+
+        public static string ClearModelFunctionFromViewModel(object viewModel)
+        {
+            var jsonKoObject = "{";
+            foreach (var p in viewModel.GetType().GetProperties())
+            {
+                if (p.PropertyType == typeof(string))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+                if (p.PropertyType == typeof(DateTime))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "(vm.today());";
+                }
+
+                if (p.PropertyType == typeof(int))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+                if (p.PropertyType.BaseType == typeof(Enum))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+            }
+            jsonKoObject = jsonKoObject + "}";
+
+            return jsonKoObject;
+        }
+
+        public static MvcHtmlString SelectListFromEnum(Type type)
+        {
+            var enumList = from Object e in Enum.GetValues(type)
                            select new enumItem
                            {
                                id = (int)e,
                                name = e.ToString()
                            };
-            var enumObjArray = enumList.ToArray();
-            var enumString = "[";
-            foreach(var i in enumObjArray)
-            {
-                enumString = enumString + "{  id: " + i.id + ", name: \"" + i.name + "\" }, ";
-            }
-            enumString = enumString + "], ";
-            return Json.Encode(enumList.ToList());
-        }
 
-        public static MvcHtmlString enumToString(Enum en)
-        {
-            var values = Enum.GetValues(en.GetType()).Cast<int>();
-            var enumDictionary = values.ToDictionary(value => Enum.GetName(en.GetType(), value));
-
-            return new MvcHtmlString(JsonConvert.SerializeObject(enumDictionary));
+            return new MvcHtmlString(JsonConvert.SerializeObject(enumList));
         }
     }
 
@@ -94,9 +142,4 @@ namespace Presentation
         public string name { get; set; }
     }
 
-    public class EnumSelectList
-    {
-        public string Name { get; set; }
-        public MvcHtmlString List { get; set; }
-    }
 }
