@@ -61,7 +61,7 @@ namespace Presentation
        
     public class Build
     {
-        public static string JsonKoObjectFromViewModel(object viewModel)
+        public static string JsonKoObject(object viewModel)
         {
             var jsonKoObject = "{";
             foreach (var p in viewModel.GetType().GetProperties())
@@ -92,7 +92,38 @@ namespace Presentation
             return jsonKoObject;
         }
 
-        public static string ClearModelFunctionFromViewModel(object viewModel)
+        public static string ClearModelFunction(object viewModel)
+        {
+            var jsonKoObject = "{";
+            foreach (var p in viewModel.GetType().GetProperties())
+            {
+                if (p.PropertyType == typeof(string))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+                if (p.PropertyType == typeof(DateTime))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "(vm.today());";
+                }
+
+                if (p.PropertyType == typeof(int))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+                if (p.PropertyType.BaseType == typeof(Enum))
+                {
+                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                }
+
+            }
+            jsonKoObject = jsonKoObject + "}";
+
+            return jsonKoObject;
+        }
+
+        public static string TableColumns(object viewModel)
         {
             var jsonKoObject = "{";
             foreach (var p in viewModel.GetType().GetProperties())

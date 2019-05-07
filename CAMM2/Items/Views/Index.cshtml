@@ -148,7 +148,7 @@
             vm.Code = ko.observable();
 
             @{
-                <text>vm.Item = @Build.JsonKoObjectFromViewModel(_viewModel) </text>
+                <text>vm.Item = @Build.JsonKoObject(_viewModel) </text>
 
                 foreach (var p in _viewModel.GetType().GetProperties())
                 {
@@ -162,11 +162,12 @@
 
                 }
 
-                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunctionFromViewModel(_viewModel)) </text>
+                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunction(_viewModel)) </text>
 
             } 
 
             vm.searchstring = ko.observable();
+
             @* Execute search on searchbox value change*@
             vm.searchstring.subscribe(function (newValue) {
                 if (vm.mode() === 'Get') {
@@ -208,7 +209,11 @@
                         { data: "Id", name: "Id", title: "Id", visible: false },
                         { data: "Code", name: "Code", title: "Item Number" },
                         { data: "Description", name: "Description", title: "Description" },
-                        { data: "UnitsOfMeasure", name: "UnitsOfMeasure", title: "UOM" },
+                        {
+                            render: function (data, type, row, meta) {
+                                return vm.getEnumName("UnitsOfMeasure", row["UnitsOfMeasure"]);
+                            }, name: "UnitsOfMeasure", title: "UOM"
+                        },
                         { data: "QtyOnHand", name: "QtyOnHand", title: "Qty On Hand" }
                     ],
                     "searching": "true",
@@ -228,6 +233,15 @@
                     vm.loadDetails(data);
                 });
 
+            };
+
+            vm.getEnumName = function (myEnum, value) {
+                var enumList = myEnum + "List";
+                var q = ko.observable(value);
+                var n = ko.utils.arrayFirst(vm.UnitsOfMeasureList(), function (i) {
+                    return value === i.id;
+                });
+                return n.name;
             };
 
             vm.configureTable();
