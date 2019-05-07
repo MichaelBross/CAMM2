@@ -211,7 +211,7 @@
                         { data: "Description", name: "Description", title: "Description" },
                         {
                             render: function (data, type, row, meta) {
-                                return vm.getEnumName("UnitsOfMeasure", row["UnitsOfMeasure"]);
+                                return vm.getEnumItemName("UnitsOfMeasure", row["UnitsOfMeasure"]);
                             }, name: "UnitsOfMeasure", title: "UOM"
                         },
                         { data: "QtyOnHand", name: "QtyOnHand", title: "Qty On Hand" }
@@ -235,10 +235,10 @@
 
             };
 
-            vm.getEnumName = function (myEnum, value) {
-                var enumList = myEnum + "List";
-                var q = ko.observable(value);
-                var n = ko.utils.arrayFirst(vm.UnitsOfMeasureList(), function (i) {
+            vm.getEnumItemName = function (myEnum, value) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = ko.utils.arrayFirst(enumList(), function (i) {
                     return value === i.id;
                 });
                 return n.name;
