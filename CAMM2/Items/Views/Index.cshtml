@@ -205,17 +205,8 @@
                             vm.selectedRow.select();
                         }
                     },
-                    "columns": [
-                        { data: "Id", name: "Id", title: "Id", visible: false },
-                        { data: "Code", name: "Code", title: "Item Number" },
-                        { data: "Description", name: "Description", title: "Description" },
-                        {
-                            render: function (data, type, row, meta) {
-                                return vm.getEnumItemName("UnitsOfMeasure", row["UnitsOfMeasure"]);
-                            }, name: "UnitsOfMeasure", title: "UOM"
-                        },
-                        { data: "QtyOnHand", name: "QtyOnHand", title: "Qty On Hand" }
-                    ],
+                    "columns": 
+                        @Html.Raw(Build.TableColumns(_viewModel)),
                     "searching": "true",
                     "serverSide": "true",
                     "order": [0, "asc"],

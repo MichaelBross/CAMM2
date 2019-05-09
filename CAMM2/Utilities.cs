@@ -123,35 +123,59 @@ namespace Presentation
             return jsonKoObject;
         }
 
-        public static string TableColumns(object viewModel)
+        public static MvcHtmlString TableColumns(object viewModel)
         {
-            var jsonKoObject = "{";
+            var columnsArray = "";
+            var columnsList = new List<JsColumn>();
             foreach (var p in viewModel.GetType().GetProperties())
             {
+                if (p.Name == "Id")
+                {
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, false));
+                }
+
                 if (p.PropertyType == typeof(string))
                 {
-                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name));
                 }
 
                 if (p.PropertyType == typeof(DateTime))
                 {
-                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "(vm.today());";
+                    var render = "function(data, type, row, meta) { " +
+                        "return vm.formatDate(row['" + p.Name + "']);" +
+                        "}";
+
+                    columnsList.Add(new JsColumn(render, p.Name, p.Name));
                 }
 
-                if (p.PropertyType == typeof(int))
+                if (p.PropertyType == typeof(int) && p.Name != "Id")
                 {
-                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name));
                 }
 
                 if (p.PropertyType.BaseType == typeof(Enum))
-                {
-                    jsonKoObject = jsonKoObject + "vm.Item." + p.Name + "('');";
+                {                    
+                    var render = "function(data, type, row, meta) { " +
+                        "return vm.getEnumItemName('" + p.Name + "', row['" + p.Name + "']);" +
+                        "}";
+
+                    columnsList.Add(new JsColumn(render, p.Name, p.Name));
                 }
 
-            }
-            jsonKoObject = jsonKoObject + "}";
+            }            
+            
+            var columnsMvcHtmlString = new MvcHtmlString(JsonConvert.SerializeObject(columnsList));
+            var stringish = columnsMvcHtmlString.ToString();
+            var replaceThis = "data\":\"function";
+            var withThis = "render\": function";
+            var cleanString = stringish.Replace(replaceThis, withThis);
+            replaceThis = "]);}\"";
+            withThis = "]);}";
+            cleanString = cleanString.Replace(replaceThis, withThis);
+            var htmlString = new MvcHtmlString(cleanString);
 
-            return jsonKoObject;
+
+            return htmlString;
         }
 
         public static MvcHtmlString SelectListFromEnum(Type type)
@@ -171,6 +195,21 @@ namespace Presentation
     {
         public int id { get; set; }
         public string name { get; set; }
+    }
+
+    public class JsColumn
+    {
+        public JsColumn(string _data, string _name, string _title, bool _visible = true)
+        {
+            data = _data;
+            name = _name;
+            title = _title;
+            visible = _visible;
+        }
+        public string data { get; set; }
+        public string name { get; set; }
+        public string title { get; set; }
+        public bool visible { get; set; }
     }
 
 }
