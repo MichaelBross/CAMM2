@@ -50,7 +50,7 @@ namespace Presentation.Items
         // POST: Items/Add
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ItemVM itemVM)
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ItemDetailVM itemVM)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace Presentation.Items
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
-        public JsonResult Update(ItemVM revised)
+        public JsonResult Update(ItemDetailVM revised)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace Presentation.Items
         // GET: Items/Delete
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] ItemVM toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] ItemDetailVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {

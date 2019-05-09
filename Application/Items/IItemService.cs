@@ -9,11 +9,11 @@ namespace Application.Items
 {
     public interface IItemService
     {
-        IEnumerable<ItemVM> Search(SearchParameters searchParams);
-        IEnumerable<ItemVM> GetAll();
+        IEnumerable<ItemDetailVM> Search(SearchParameters searchParams);
+        IEnumerable<ItemDetailVM> GetAll();
         int GetTotalCount();
-        ItemVM Add(ItemVM itemVM);
-        ItemVM Update(ItemVM itemVM);
-        void Remove(ItemVM itemVM);
+        ItemDetailVM Add(ItemDetailVM itemVM);
+        ItemDetailVM Update(ItemDetailVM itemVM);
+        void Remove(ItemDetailVM itemVM);
     }
 }

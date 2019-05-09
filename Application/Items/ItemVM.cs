@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Application.Items
 {
-    public class ItemVM
+    public class ItemDetailVM
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }

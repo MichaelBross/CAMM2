@@ -12,7 +12,7 @@
 
 @{
     ViewBag.Title = "Items";
-    var _viewModel = new ItemVM();
+    var detailVM = new ItemDetailVM();
     var listVM = new ItemListVM();
 }
 
@@ -51,7 +51,7 @@
         @Html.AntiForgeryToken()
         <div class="card-body" data-bind="with:Item">
             <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                @foreach (var p in _viewModel.GetType().GetProperties())
+                @foreach (var p in detailVM.GetType().GetProperties())
                 {
                     var displayName = p.Name;
                     var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
@@ -127,7 +127,7 @@
                         </div>
                     }
 
-                            }
+                 }
             </div>
         </div>
     </form>
@@ -149,9 +149,9 @@
             vm.Code = ko.observable();
 
             @{
-                <text>vm.Item = @Build.JsonKoObject(_viewModel) </text>
+                <text>vm.Item = @Build.JsonKoObject(detailVM) </text>
 
-                foreach (var p in _viewModel.GetType().GetProperties())
+                foreach (var p in detailVM.GetType().GetProperties())
                 {
                     if(p.PropertyType.BaseType == typeof(Enum))
                     {
@@ -163,7 +163,7 @@
 
                 }
 
-                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunction(_viewModel)) </text>
+                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunction(detailVM)) </text>
 
             } 
 
@@ -256,11 +256,6 @@
                 }
                 var dateInt = parseInt(d.substring(6, 19));
                 var duedate = new Date(dateInt);
-                //var year = duedate.getUTCFullYear();
-                //var month = duedate.getUTCMonth() + 1;
-                //var date = duedate.getUTCDate();
-                //var formatDate = month + "/" + date + "/" + year;
-                //return formatDate;
                 return duedate.toLocaleDateString();
             }
 

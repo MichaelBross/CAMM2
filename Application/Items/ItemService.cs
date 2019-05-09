@@ -18,7 +18,7 @@ namespace Application.Items
             _unitOfWork = unitOfWork;
         }
 
-        public ItemVM Add(ItemVM itemVM)
+        public ItemDetailVM Add(ItemDetailVM itemVM)
         {
             try
             {
@@ -45,10 +45,10 @@ namespace Application.Items
             }
         }
 
-        public IEnumerable<ItemVM> GetAll()
+        public IEnumerable<ItemDetailVM> GetAll()
         {
             var items = _unitOfWork.Items.GetAll();
-            var itemVMs = new List<ItemVM>();
+            var itemVMs = new List<ItemDetailVM>();
 
             Map.AtoB(items, itemVMs);
 
@@ -61,7 +61,7 @@ namespace Application.Items
             return count;
         }
 
-        public void Remove(ItemVM itemVM)
+        public void Remove(ItemDetailVM itemVM)
         {
             try
             {               
@@ -78,10 +78,10 @@ namespace Application.Items
             }
         }
 
-        public IEnumerable<ItemVM> Search(SearchParameters searchParams)
+        public IEnumerable<ItemDetailVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Items.Search(searchParams)
-                .Select(i => new ItemVM()
+                .Select(i => new ItemDetailVM()
                 {
                     Id = i.Id,
                     Code = i.Code,
@@ -96,7 +96,7 @@ namespace Application.Items
             return result;
         }
 
-        public ItemVM Update(ItemVM revisedVM)
+        public ItemDetailVM Update(ItemDetailVM revisedVM)
         {
             try
             {
