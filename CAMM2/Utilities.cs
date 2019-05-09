@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -125,18 +126,24 @@ namespace Presentation
 
         public static MvcHtmlString TableColumns(object viewModel)
         {
-            var columnsArray = "";
             var columnsList = new List<JsColumn>();
             foreach (var p in viewModel.GetType().GetProperties())
             {
+                var visible = true;
+                var hiddenInput = p.GetCustomAttribute(typeof(HiddenInputAttribute)) as HiddenInputAttribute;
+                if (hiddenInput != null)
+                {
+                    visible = hiddenInput.DisplayValue;
+                }
+
                 if (p.Name == "Id")
                 {
-                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, false));
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, visible));
                 }
 
                 if (p.PropertyType == typeof(string))
                 {
-                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name));
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, visible));
                 }
 
                 if (p.PropertyType == typeof(DateTime))
@@ -145,12 +152,12 @@ namespace Presentation
                         "return vm.formatDate(row['" + p.Name + "']);" +
                         "}";
 
-                    columnsList.Add(new JsColumn(render, p.Name, p.Name));
+                    columnsList.Add(new JsColumn(render, p.Name, p.Name, visible));
                 }
 
                 if (p.PropertyType == typeof(int) && p.Name != "Id")
                 {
-                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name));
+                    columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, visible));
                 }
 
                 if (p.PropertyType.BaseType == typeof(Enum))
@@ -159,23 +166,23 @@ namespace Presentation
                         "return vm.getEnumItemName('" + p.Name + "', row['" + p.Name + "']);" +
                         "}";
 
-                    columnsList.Add(new JsColumn(render, p.Name, p.Name));
+                    columnsList.Add(new JsColumn(render, p.Name, p.Name, visible));
                 }
 
             }            
             
             var columnsMvcHtmlString = new MvcHtmlString(JsonConvert.SerializeObject(columnsList));
-            var stringish = columnsMvcHtmlString.ToString();
-            var replaceThis = "data\":\"function";
+            var editableVersion = columnsMvcHtmlString.ToString();
+            var unwantedString = "data\":\"function";
             var withThis = "render\": function";
-            var cleanString = stringish.Replace(replaceThis, withThis);
-            replaceThis = "]);}\"";
+            var corrected = editableVersion.Replace(unwantedString, withThis);
+            unwantedString = "]);}\"";
             withThis = "]);}";
-            cleanString = cleanString.Replace(replaceThis, withThis);
-            var htmlString = new MvcHtmlString(cleanString);
+            var finished = corrected.Replace(unwantedString, withThis);
+            var backToMvcHtmlString = new MvcHtmlString(finished);
 
 
-            return htmlString;
+            return backToMvcHtmlString;
         }
 
         public static MvcHtmlString SelectListFromEnum(Type type)
