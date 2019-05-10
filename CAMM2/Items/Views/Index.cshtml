@@ -148,24 +148,13 @@
             vm.mode = ko.observable('Get');
             vm.Code = ko.observable();
 
-            @{
-                <text>vm.Item = @Build.JsonKoObject(detailVM) </text>
+            @Build.JsonKoObject(detailVM)
 
-                foreach (var p in detailVM.GetType().GetProperties())
-                {
-                    if(p.PropertyType.BaseType == typeof(Enum))
-                    {
-                        var SelectListName = p.Name + "List";
-                        <text>
-                        vm.@SelectListName  = ko.observableArray(@Html.Raw(Build.SelectListFromEnum(p.PropertyType)));
-                        </text>
-                    }
+            @Html.Raw(Build.SelectLists(detailVM))
 
-                }
+            @Html.Raw(Build.ClearModelFunction(detailVM))
 
-                <text>vm.clearModel = function () @Html.Raw(Build.ClearModelFunction(detailVM)) </text>
-
-            } 
+            @Html.Raw(Build.LoadDetailsFunction(detailVM))
 
             vm.searchstring = ko.observable();
 
@@ -416,20 +405,6 @@
                 var data = vm.selectedRows[0];
                 vm.loadDetails(data);
             }
-
-            vm.loadDetails = function (data) {
-                if (data === undefined) {
-                    vm.clearModel();
-                    return;
-                }
-                vm.Item.Id(data["Id"]);
-                vm.Item.Code(data["Code"]);
-                vm.Item.Description(data["Description"]);
-                vm.Item.UnitsOfMeasure(data["UnitsOfMeasure"]);
-                vm.Item.QtyOnHand(data["QtyOnHand"]);
-                vm.Item.CreateDate(vm.formatDate(data["CreateDate"]));
-                vm.Item.UpdateDate(vm.formatDate(data["UpdateDate"]));
-            };
 
             vm.enableKeyTextBox = ko.observable(false);
             vm.enableEditableTextBoxes = ko.observable(false);
