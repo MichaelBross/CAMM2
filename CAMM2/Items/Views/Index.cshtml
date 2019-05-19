@@ -40,96 +40,9 @@
             <h4 id="deleteMessage" style="margin-left:3mm; margin-right:3mm; margin-top:2mm" data-bind="visible: showDeleteMessage">Click "Cancel" to abort. Click "Confirm" to delete.</h4>
         </div>
     </div>
-
-    @Html.Partial("DetailsPartial")
-
-    @*<div id="validationSummary">
-            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        </div>
-        <form id="addeditform">
-            @Html.AntiForgeryToken()
-            <div class="card-body" data-bind="with:Item">
-                <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                    @foreach (var p in detailVM.GetType().GetProperties())
-                    {
-                        var displayName = p.Name;
-                        var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-                        if (displayAttr != null)
-                        {
-                            displayName = displayAttr.Name;
-                        }
-
-                        var hidden = false;
-                        var hiddenInput = p.GetCustomAttribute(typeof(HiddenInputAttribute)) as HiddenInputAttribute;
-                        if (hiddenInput != null)
-                        {
-                            hidden = !hiddenInput.DisplayValue;
-                        }
-
-                        if (hidden)
-                        {
-                            <input name=@p.Name type="hidden" data-bind="value: @p.Name" />
-                        }
-
-                        if (hidden)
-                        { continue; }
-
-                        var readOnly = false;
-                        var readOnlyAttr = p.GetCustomAttribute(typeof(ReadOnlyAttribute)) as ReadOnlyAttribute;
-                        if (readOnlyAttr != null)
-                        {
-                            readOnly = readOnlyAttr.IsReadOnly;
-                        }
-
-                        if (p.PropertyType == typeof(string))
-                        {
-                            <div class="camm-control-group">
-
-                                @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label col-sm-12" })
-                                @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
-                                @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
-
-                            </div>
-                        }
-
-                        if (p.PropertyType.BaseType == typeof(Enum))
-                        {
-                            <div class="camm-control-group">
-
-                                @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
-                                <select class="form-control" data-bind="options: $parent.UnitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>
-                                @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
-
-                            </div>
-                        }
-
-
-                        if (p.PropertyType == typeof(int))
-                        {
-                            <div class="camm-control-group-sm">
-
-                                @Html.Label(p.Name, displayName, htmlAttributes: new { @class = "control-label" })
-                                @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
-                                @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
-
-                            </div>
-                        }
-
-                        if (p.PropertyType == typeof(DateTime))
-                        {
-                            <div class="camm-control-group">
-                                <label class="control-label" for="@p.Name">@displayName</label>
-                                <input class="form-control datepicker" data-bind="value: @p.Name, enable: @if (readOnly) { <text>false</text> } else { <text>$parent.enableEditableTextBoxes</text> } "
-                                       data-val="true" data-val-date="The field @displayName must be a date." data-val-required="The @displayName field is required."
-                                       id="@p.Name" name="@p.Name" value="" disabled="" type="datetime">
-                                <span class="field-validation-valid text-danger" data-valmsg-for="@p.Name" data-valmsg-replace="true" style="width: 100%; text-align:center;"></span>
-                            </div>
-                        }
-
-                     }
-                </div>
-            </div>
-        </form>*@
+    
+    @ViewHelper.DetailsFromModel(detailVM, this);
+    
 </div>
 
 <style>

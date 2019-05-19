@@ -281,6 +281,7 @@
     <Content Include="Scripts\datatables.extensions\TableTools\Readme.txt" />
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls.swf" />
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="App_Code\ViewHelper.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -418,10 +419,10 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Utilities\" />
   </ItemGroup>
