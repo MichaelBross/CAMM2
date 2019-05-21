@@ -10,10 +10,11 @@
 @helper DetailsFromModel(object detailVM, System.Web.Mvc.WebViewPage page)
 {
 
+var Html = page.Html;
 var _detailVM = detailVM;
 
     <div id="validationSummary">
-        @page.Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     </div>
 
     <form id="addeditform">
@@ -54,9 +55,9 @@ var _detailVM = detailVM;
                     {
                         <div class="camm-control-group">
 
-                            @page.Html.Label(p.Name, displayName, new { @class = "control-label" })
-                            @page.Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
-                            @page.Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                            @Html.Label(p.Name, displayName, new { @class = "control-label" })
+                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
                     }
@@ -65,9 +66,9 @@ var _detailVM = detailVM;
                     {
                         <div class="camm-control-group">
 
-                            @page.Html.Label(p.Name, displayName, new { @class = "control-label" })
+                            @Html.Label(p.Name, displayName, new { @class = "control-label" })
                             <select class="form-control" data-bind="options: $parent.UnitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>
-                            @page.Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
                     }
@@ -77,9 +78,9 @@ var _detailVM = detailVM;
                     {
             <div class="camm-control-group-sm">
 
-                @page.Html.Label(p.Name, displayName, new { @class = "control-label" })
-                @page.Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
-                @page.Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                @Html.Label(p.Name, displayName, new { @class = "control-label" })
+                @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
             </div>
                     }
