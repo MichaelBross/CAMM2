@@ -10,8 +10,8 @@
 @helper DetailsFromModel(object detailVM, System.Web.Mvc.WebViewPage page)
 {
 
-var Html = page.Html;
-var _detailVM = detailVM;
+    var Html = page.Html;
+    var _detailVM = detailVM;
 
     <div id="validationSummary">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -76,13 +76,13 @@ var _detailVM = detailVM;
 
                     if (p.PropertyType == typeof(int))
                     {
-            <div class="camm-control-group-sm">
+                        <div class="camm-control-group-sm">
 
-                @Html.Label(p.Name, displayName, new { @class = "control-label" })
-                @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
-                @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
+                            @Html.Label(p.Name, displayName, new { @class = "control-label" })
+                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                            @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
-            </div>
+                        </div>
                     }
 
                     if (p.PropertyType == typeof(DateTime))
@@ -100,4 +100,17 @@ var _detailVM = detailVM;
             </div>
         </div>
     </form>
+
+    <style>
+        .camm-control-group {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6 col-xs-12");
+            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6 col-xs-12");            
+        });
+    </script>
 }

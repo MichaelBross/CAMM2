@@ -40,16 +40,10 @@
             <h4 id="deleteMessage" style="margin-left:3mm; margin-right:3mm; margin-top:2mm" data-bind="visible: showDeleteMessage">Click "Cancel" to abort. Click "Confirm" to delete.</h4>
         </div>
     </div>
-    
-    @ViewHelper.DetailsFromModel(detailVM, this);
-    
-</div>
 
-<style>
-    .camm-control-group {
-        margin-bottom: 20px;
-    }
-</style>
+    @ViewHelper.DetailsFromModel(detailVM, this)
+
+</div>
 
 @section scripts{
 
@@ -221,6 +215,7 @@
                         if (response.success === true) {
                             vm.table.draw();
                             vm.mode('Get');
+                            vm.clearErrorMessagesAndHighLights();
                         }
                         else {
                             vm.displayValidationErrors(response.errors);
@@ -236,11 +231,6 @@
                     }
                 });
             }
-
-            AddAntiForgeryToken = function(data) {
-                data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
-                return data;
-            };
 
             vm.displayValidationErrors = function(errors) {
 
@@ -409,9 +399,7 @@
 
         $(document).ready(function () {
             Itemmodel = new viewModel();
-            ko.applyBindings(Itemmodel);
-            $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6 col-xs-12");
-            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6 col-xs-12");            
+            ko.applyBindings(Itemmodel);           
         });
 
 
