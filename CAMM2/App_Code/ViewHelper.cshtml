@@ -79,7 +79,7 @@
                         <div class="camm-control-group-sm">
 
                             @Html.Label(p.Name, displayName, new { @class = "control-label" })
-                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
+                            @Html.Editor(p.Name, new { htmlAttributes = new { @class = "form-control", @type = "number", @data_bind = "value:" + p.Name + ", enable: $parent.enableEditableTextBoxes" } })
                             @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>
@@ -109,8 +109,8 @@
 
     <script>
         $(document).ready(function () {
-            $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6 col-xs-12");
-            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6 col-xs-12");            
+            $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6");
+            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6");            
         });
     </script>
 }

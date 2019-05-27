@@ -23,7 +23,8 @@ namespace Application.Items
         [Display(Name = "Units of Measure")]
         public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
-        [Display(Name = "Qty on Hand")]
+        [Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+        [Display(Name = "Qty on Hand")]        
         public int QtyOnHand { get; set; }
 
         [ReadOnly(true)]

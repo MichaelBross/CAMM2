@@ -15,10 +15,13 @@
         <div class="search">
             <div class="row" style="margin-bottom:5mm">
                 <div class="col-sm-3">
-                    @Html.TextBox("searchbox", "", new { @autofocus = "autofocus", @data_bind = "value:searchstring", @class = "form-control", @placeholder = "multiple keyword search" })
+                    @Html.TextBox("searchbox", "", new { @autofocus = "autofocus", @style="max-width:100%; width:100%; padding-right:0px", @data_bind = "value:searchstring", @class = "form-control", @placeholder = "multiple keyword search" })
                 </div>
-                <div class="col-sm-1">
-                    <input type="button" class="btn btn-warning" style="width:80px" value="Search" data-bind="click: search" />
+                <div class="col-sm-1" style="text-align:left">
+                    <input type="button" class="btn btn-warning" style="width:80px; padding-left:0px" value="Search" data-bind="click: search" />                    
+                </div>
+                <div class="col-sm-3">
+                    <h2>@ViewBag.Title</h2>
                 </div>
             </div>
             <div>
