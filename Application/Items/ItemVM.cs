@@ -7,10 +7,11 @@ using Domain.Items;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.ComponentModel;
+using Application.Base;
 
 namespace Application.Items
 {
-    public class ItemDetailVM
+    public class ItemDetailVM : BaseDetailVM
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -27,20 +28,9 @@ namespace Application.Items
         [Display(Name = "Qty on Hand")]        
         public int QtyOnHand { get; set; }
 
-        [ReadOnly(true)]
-        [Display(Name = "Date Updated")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime UpdateDate { get; set; }
-
-        [ReadOnly(true)]
-        [Display(Name = "Date Created")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime CreateDate { get; set; }
     }
 
-    public class ItemListVM
+    public class ItemListVM : BaseDetailVM
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -56,18 +46,5 @@ namespace Application.Items
         [Display(Name = "Qty on Hand")]
         public int QtyOnHand { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        [ReadOnly(true)]
-        [Display(Name = "Date Updated")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime UpdateDate { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        [ReadOnly(true)]
-        [Display(Name = "Date Created")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime CreateDate { get; set; }
     }
 }

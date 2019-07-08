@@ -7,35 +7,35 @@ using Application.Interfaces;
 using Domain.Items;
 
 
-namespace Application.Items
+namespace Application.Connectors
 {
-    public class ItemService : IItemService
+    public class ConnectorService : IConnectorService
     {
         private readonly IUnitOfWork _unitOfWork;
         
-        public ItemService(IUnitOfWork unitOfWork)
+        public ConnectorService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public ItemDetailVM Add(ItemDetailVM itemVM)
+        public ConnectorDetailVM Add(ConnectorDetailVM connectorVM)
         {
             try
             {
-                var newItem = new Item();
+                var newConnector = new Connector();
 
-                Map.AtoB(itemVM, newItem);
+                Map.AtoB(connectorVM, newConnector);
 
                 var now = DateTime.Now;
-                newItem.CreateDate = now;
-                newItem.UpdateDate = now;
+                newConnector.CreateDate = now;
+                newConnector.UpdateDate = now;
 
-                _unitOfWork.Items.Add(newItem);
+                _unitOfWork.Connectors.Add(newConnector);
                 _unitOfWork.Complete();
                                 
-                Map.AtoB(newItem, itemVM);
+                Map.AtoB(newConnector, connectorVM);
 
-                return itemVM;
+                return connectorVM;
             }
             catch (Exception ex)
             {  
@@ -45,30 +45,30 @@ namespace Application.Items
             }
         }
 
-        public IEnumerable<ItemListVM> GetAll()
+        public IEnumerable<ConnectorListVM> GetAll()
         {
-            var items = _unitOfWork.Items.GetAll();
-            var itemVMs = new List<ItemListVM>();
+            var connectors = _unitOfWork.Connectors.GetAll();
+            var connectorVMs = new List<ConnectorListVM>();
 
-            Map.AtoB(items, itemVMs);
+            Map.AtoB(connectors, connectorVMs);
 
-            return itemVMs;
+            return connectorVMs;
         }
 
         public int GetTotalCount()
         {
-            var count = _unitOfWork.Items.GetAll().Count();
+            var count = _unitOfWork.Connectors.GetAll().Count();
             return count;
         }
 
-        public void Remove(ItemDetailVM itemVM)
+        public void Remove(ConnectorDetailVM connectorVM)
         {
             try
             {               
-                var toBeRemoved = _unitOfWork.Items.Get(itemVM.Id);
+                var toBeRemoved = _unitOfWork.Connectors.Get(connectorVM.Id);
                 if (toBeRemoved == null)
-                    throw new Exception("Item not found.");
-                _unitOfWork.Items.Remove(toBeRemoved);
+                    throw new Exception("Connector not found.");
+                _unitOfWork.Connectors.Remove(toBeRemoved);
                 _unitOfWork.Complete();
             }
             catch (Exception ex)
@@ -78,10 +78,10 @@ namespace Application.Items
             }
         }
 
-        public IEnumerable<ItemListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ConnectorListVM> Search(SearchParameters searchParams)
         {
-            var result = _unitOfWork.Items.Search(searchParams)
-                .Select(i => new ItemListVM()
+            var result = _unitOfWork.Connectors.Search(searchParams)
+                .Select(i => new ConnectorListVM()
                 {
                     Id = i.Id,
                     Code = i.Code,
@@ -96,11 +96,11 @@ namespace Application.Items
             return result;
         }
 
-        public ItemDetailVM Update(ItemDetailVM revisedVM)
+        public ConnectorDetailVM Update(ConnectorDetailVM revisedVM)
         {
             try
             {
-                var retrieved = _unitOfWork.Items.Get(revisedVM.Id);
+                var retrieved = _unitOfWork.Connectors.Get(revisedVM.Id);
                 retrieved.Code = revisedVM.Code;
                 retrieved.Description = revisedVM.Description;
                 retrieved.QtyOnHand = revisedVM.QtyOnHand;

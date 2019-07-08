@@ -70,6 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseDetailVM.cs" />
+    <Compile Include="Base\BaseListVM.cs" />
+    <Compile Include="Connectors\ConnectorDetailVM.cs" />
+    <Compile Include="Connectors\ConnectorListVM.cs" />
+    <Compile Include="Connectors\IConnectorService.cs" />
+    <Compile Include="Connectors\ConnectorService.cs" />
+    <Compile Include="Interfaces\IConnectorsRepository.cs" />
     <Compile Include="JsonAntiForgeryValidator.cs" />
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\ItemService.cs" />

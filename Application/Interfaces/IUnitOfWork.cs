@@ -8,7 +8,8 @@ namespace Application.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IItemsRepository Items { get; }        
+        IItemsRepository Items { get; } 
+        IConnectorsRepository Connectors { get; }
         int Complete();
     }
 }

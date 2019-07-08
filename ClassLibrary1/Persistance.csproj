@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connectors\ConnectorsRepository.cs" />
     <Compile Include="Items\ItemsRepository.cs" />
     <Compile Include="Migrations\201905052046398_initial.cs" />
     <Compile Include="Migrations\201905052046398_initial.Designer.cs">

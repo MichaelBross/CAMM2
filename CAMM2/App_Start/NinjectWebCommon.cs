@@ -17,6 +17,7 @@ namespace App_Start
     using Application.Items.Queries.GetItemList;
     using Application.Interfaces;
     using Application.Items;
+    using Application.Connectors;
 
     public static class NinjectWebCommon 
     {
@@ -67,12 +68,17 @@ namespace App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {
-            kernel.Bind<IGetItemList>().To<GetItemList>();
-            kernel.Bind<IItemsRepository>().To<ItemsRepository>();
+        {  
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>)).InRequestScope();
+
+            kernel.Bind<IItemsRepository>().To<ItemsRepository>();
             kernel.Bind<IItemService>().To<ItemService>();
+
+            kernel.Bind<IConnectorsRepository>().To<ConnectorsRepository>();
+            kernel.Bind<IConnectorService>().To<ConnectorService>();
+
+
         }        
     }
 }

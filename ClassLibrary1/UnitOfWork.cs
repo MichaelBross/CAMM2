@@ -15,10 +15,12 @@ namespace Persistance
         public UnitOfWork(Camm2Context context)
         {
             _context = context;
-            Items = new ItemsRepository(_context);            
+            Items = new ItemsRepository(_context);
+            Connectors = new ConnectorsRepository(_context);
         }
 
-        public IItemsRepository Items { get; private set; }        
+        public IItemsRepository Items { get; private set; }
+        public IConnectorsRepository Connectors { get; set; }
 
         public int Complete()
         {
