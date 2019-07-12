@@ -76,6 +76,16 @@
     <Compile Include="Connectors\ConnectorListVM.cs" />
     <Compile Include="Connectors\IConnectorService.cs" />
     <Compile Include="Connectors\ConnectorService.cs" />
+    <Compile Include="Interfaces\Generated Code\IUnitOfWork.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IUnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\Generated Code\RepositoryInterfaces.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryInterfaces.tt</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IConnectorsRepository.cs" />
     <Compile Include="JsonAntiForgeryValidator.cs" />
     <Compile Include="Items\IItemService.cs" />
@@ -85,7 +95,6 @@
     <Compile Include="SearchParameters.cs" />
     <Compile Include="Interfaces\IItemsRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Items\Queries\GetItemList\GetItemList.cs" />
     <Compile Include="Items\Queries\GetItemList\IGetItemList.cs" />
     <Compile Include="Items\Queries\GetItemList\ItemVM.cs" />
@@ -104,6 +113,19 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Interfaces\Generated Code\IUnitOfWork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IUnitOfWork.cs</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\Generated Code\RepositoryInterfaces.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RepositoryInterfaces.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

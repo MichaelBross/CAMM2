@@ -1,0 +1,94 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Reflection" #>
+<#@ import namespace="System.Reflection" #>
+<#@ assembly name="EnvDTE" #>
+<#@ import namespace="EnvDTE" #>
+<#@ assembly name="C:\Users\micha\source\repos\CAMM2\CAMM2.Repository\bin\Debug\Domain.dll" #>
+<#@ import namespace="Domain.Items" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Threading.Tasks;
+using Persistance.Repository;
+using Domain.Items;
+using Domain.Users;
+using Domain.Documents;
+using Domain.Assemblies;
+using Application;
+using Application.Interfaces;
+
+namespace Persistance
+{
+<#
+    var item = new Item();
+    Type[] typelist = GetTypesInNamespace(Assembly.GetAssembly(item.GetType()), "Domain.Items");
+    for (int i = 0; i < typelist.Length; i++)
+    {
+        string className = typelist[i].Name;
+        string classNamePlural = typelist[i].Name;
+        if(className.EndsWith("y"))
+        {
+            classNamePlural = classNamePlural.TrimEnd('y');
+            classNamePlural += "ie";
+        }
+#>
+    public class <#=className#>Repository : Repository<<#=className#>>, I<#=className#>Repository
+    {
+        public <#=className#>Repository(Camm2Context context)
+            :base(context)
+        {
+        }
+               
+        public IEnumerable<<#=className#>> Search(SearchParameters searchParams)
+        {
+            var query = Camm2Context.<#=classNamePlural#>s.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q => q.Code.Contains(term)
+                    || q.Description.Contains(term));
+                }
+            }
+
+            query = query.OrderBy(searchParams.SortColumnName + " " + searchParams.SortDirection);
+            query = query.Skip(searchParams.Start).Take(searchParams.Length);
+
+            return query.ToList();
+        }
+
+        public Camm2Context Camm2Context
+        {
+            get { return Context as Camm2Context; }
+        }
+    }
+
+<#
+    }
+#>
+}
+
+<#+
+
+    private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
+    {
+        var types = assembly.GetTypes();
+
+        return assembly.GetTypes()
+            .Where(t => !String.Equals(t.BaseType.Name, "Enum", StringComparison.Ordinal) && !t.Name.Contains("Base"))
+            .ToArray();
+    }
+
+ #>
