@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostSpecific="true" #>
-<#@ output extension=".txt" #>
+<#@ output extension=".cs" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>
 <#@ Assembly Name="System.Xml.Linq.dll" #>
@@ -20,7 +20,11 @@
 	
  	System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
 	var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
-#>
+#>using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain
 {
 <#           
@@ -60,8 +64,8 @@ foreach (var aClass in xmlClasses)
 	}
 #>
 	}
-
 <#
 }
 #>
+}
 

@@ -1,24 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Domain.BaseEntity" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAIgAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.User" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEkAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAk=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Document">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACkAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Component" Collapsed="true">
+    <Position X="9.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Connector" Collapsed="true">
+    <Position X="14" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAJAA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Contact" Collapsed="true">
+    <Position X="7.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAQAAAAAAAJIA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Item">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAEAAAAgAAAAAAAgAAAAAAAAgAACAAAAAAAAAAA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Tool" Collapsed="true">
+    <Position X="11.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAAAAAAAAAAAQAAAAAAACAAEAAAAAAAAAAACAIAA=</HashCode>
+      <FileName>ClassesGenerated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Domain.Assembly" Collapsed="true">
     <Position X="5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assemblies\Assembly.cs</FileName>
+      <FileName>ClassesGenerated.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.AssemblyComponent">
     <Position X="2.75" Y="1.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAgAAAAIAAAABAAAAAAAA=</HashCode>
-      <FileName>Assemblies\AssemblyComponent.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.BaseEntity" Collapsed="true">
-    <Position X="16.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAIgAAAAAAAAgAAAAAAAA=</HashCode>
-      <FileName>BaseEntity.cs</FileName>
+      <FileName>ClassesGenerated.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Base">
@@ -28,67 +77,18 @@
       <FileName>Common\Base.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Domain.Document">
-    <Position X="2.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAACkAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Documents\Document.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.Component" Collapsed="true">
-    <Position X="9.5" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Items\Component.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.Connector" Collapsed="true">
-    <Position X="14" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAJAA=</HashCode>
-      <FileName>Items\Connector.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.Contact" Collapsed="true">
-    <Position X="7.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAQAAAAAAAJIA=</HashCode>
-      <FileName>Items\Contact.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.Item">
-    <Position X="9.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAEAAAAgAAAAAAAgAAAAAAAAgAACAAAAAAAAAAA=</HashCode>
-      <FileName>Items\Item.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.Tool" Collapsed="true">
-    <Position X="11.75" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAgAAAAAAAAAAAAQAAAAAAACAAEAAAAAAAAAAACAIAA=</HashCode>
-      <FileName>Items\Tool.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Domain.User" Collapsed="true">
-    <Position X="18.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACEkAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAk=</HashCode>
-      <FileName>Users\User.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Enum Name="Domain.DocumentType" Collapsed="true">
     <Position X="16.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAgAAAAABAAAAAAAAAAIAAIAAAAA=</HashCode>
-      <FileName>Documents\Document.cs</FileName>
+      <FileName>Enums\DocumentType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Domain.UnitsOfMeasure" Collapsed="true">
     <Position X="18.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAQAAAAAAAAAAAAIAAAAAAgAQAEAAAAAA=</HashCode>
-      <FileName>Items\UnitsOfMeasure.cs</FileName>
+      <FileName>Enums\UnitsOfMeasure.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

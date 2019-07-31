@@ -3,23 +3,23 @@
     <name>User</name>    
     <property>
       <name>Id</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>FirstName</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>LastName</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>EmailAddress</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>IsObsolete</name>
-      <type>Boolean</type>
+      <type>bool</type>
     </property>
     <property>
       <name>CreateDate</name>
@@ -27,7 +27,7 @@
     </property>
     <property>
       <name>CreatedBy</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>UpdateDate</name>
@@ -35,7 +35,7 @@
     </property>
     <property>
       <name>UpdatedBy</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
   </class>
   <class>
@@ -43,19 +43,19 @@
     <inherits>Base</inherits>
     <property>
       <name>Id</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>Code</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Rev</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Title</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>DocType</name>
@@ -71,7 +71,7 @@
     <inherits>Item</inherits>
     <property>
       <name>Manufacturer</name>
-      <type>String</type>
+      <type>string</type>
     </property>    
   </class>
   <class>
@@ -79,11 +79,11 @@
     <inherits>Item</inherits>
     <property>
       <name>Family</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Comments</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Tools</name>
@@ -95,23 +95,23 @@
     <inherits>Item</inherits>
     <property>
       <name>Size</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Family</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>WireGageMin</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>WireGageMax</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>Comments</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Tools</name>
@@ -123,16 +123,16 @@
     <inherits>Base</inherits>
     <property>
       <name>Id</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>Code</name>
-      <type>String</type>
+      <type>string</type>
       <annotations>[Index(IsUnique = true)],[StringLength(100)]</annotations>
     </property>
     <property>
       <name>Description</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>UnitsOfMeasure</name>
@@ -140,7 +140,7 @@
     </property>
     <property>
       <name>QtyOnHand</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>Documents</name>
@@ -152,23 +152,23 @@
     <inherits>Item</inherits>
     <property>
       <name>Manufacturer</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>BinNumber</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>MilitarySpecification</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>SerialNumber</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Comments</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>Connectors</name>
@@ -184,7 +184,7 @@
     <inherits>Item</inherits>
     <property>
       <name>Rev</name>
-      <type>String</type>
+      <type>string</type>
     </property>
     <property>
       <name>AssemblyComponents</name>
@@ -196,7 +196,7 @@
     <inherits>Base</inherits>
     <property>
       <name>Id</name>
-      <type>Int32</type>
+      <type>int</type>
     </property>
     <property>
       <name>Assembly</name>

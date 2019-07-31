@@ -50,18 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assemblies\Assembly.cs" />
-    <Compile Include="Assemblies\AssemblyComponent.cs" />
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="ClassesGenerated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClassesGenerated.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\Base.cs" />
-    <Compile Include="Items\Component.cs" />
-    <Compile Include="Items\Connector.cs" />
-    <Compile Include="Items\Contact.cs" />
-    <Compile Include="Documents\Document.cs" />
-    <Compile Include="Items\Item.cs" />
-    <Compile Include="Items\Tool.cs" />
-    <Compile Include="Items\UnitsOfMeasure.cs" />
-    <Compile Include="Users\User.cs" />
+    <Compile Include="Enums\DocumentType.cs" />
+    <Compile Include="Enums\UnitsOfMeasure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,16 +71,14 @@
     <Content Include="CAMM2Model.xml" />
     <Content Include="ClassesGenerated.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ClassesGenerated.txt</LastGenOutput>
-    </Content>
-    <Content Include="ClassesGenerated.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClassesGenerated.tt</DependentUpon>
+      <LastGenOutput>ClassesGenerated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

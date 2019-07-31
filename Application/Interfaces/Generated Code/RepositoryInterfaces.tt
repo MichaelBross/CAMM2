@@ -38,7 +38,7 @@ foreach (var aClass in xmlClasses)
     }
 
 	var properties = aClass.Elements("property").Select(ww => ww).ToList();
-	var typesString = properties.Elements("type").Where(t => t.Value == "String").Select(t => t).ToList();
+	var typesString = properties.Elements("type").Where(t => t.Value == "string").Select(t => t).ToList();
 	var propertiesTypesString = typesString.Ancestors("property").ToList();
 #>
     public partial interface I<#=className#>Repository : IRepository<<#=className#>> 
