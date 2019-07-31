@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Bases;
-using Domain.Items;
 
-namespace Domain.Documents
+namespace Domain
 {
     public class Document : Base
     {

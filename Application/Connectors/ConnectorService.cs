@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Domain.Items;
+using Domain;
 
 
 namespace Application.Connectors

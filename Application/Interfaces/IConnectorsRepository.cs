@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Domain.Items;
+using Domain;
 
 namespace Application.Interfaces
 {

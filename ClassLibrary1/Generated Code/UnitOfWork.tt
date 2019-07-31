@@ -1,19 +1,25 @@
-﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ assembly name="System.Reflection" #>
-<#@ import namespace="System.Reflection" #>
-<#@ assembly name="EnvDTE" #>
-<#@ import namespace="EnvDTE" #>
-<#@ assembly name="C:\Users\micha\source\repos\CAMM2\CAMM2.Repository\bin\Debug\Domain.dll" #>
-<#@ import namespace="Domain.Items" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
+﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
-
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
 <#
-    var item = new Item();
-    Type[] typelist = GetTypesInNamespace(Assembly.GetAssembly(item.GetType()), "Domain.Items");
+	string CammXml = File.ReadAllText("C:\\Users\\micha\\Source\\Repos\\CAMM2\\CAMM2.Repository\\CAMM2Model.xml");	 
+    // Certainly you would normally load the model data from a file using 
+	// the relative path of the template as shown below:
+	// string SampleInputFileContent = System.IO.File.ReadAllText( 
+    // System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\datafile.xml"); 
+	
+ 	System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
+	var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
 #>
 using System;
 using System.Collections.Generic;
@@ -33,20 +39,34 @@ namespace Persistance
         {
             _context = context;
 <#  
-    for (int i = 0; i < typelist.Length; i++)
-    {
+foreach (var aClass in xmlClasses) 
+{
+        string className = aClass.Element("name").Value;
+        string classNamePlural = aClass.Element("name").Value;
+        if(className.EndsWith("y"))
+        {
+            classNamePlural = classNamePlural.TrimEnd('y');
+            classNamePlural += "ie";
+        }
 #>
-            <#=typelist[i].Name#>s = new <#=typelist[i].Name#>Repository(_context);            
+            <#=className#>s = new <#=className#>Repository(_context);            
 <#
     }
 #>
         }
 
 <#  
-    for (int i = 0; i < typelist.Length; i++)
-    {
+foreach (var aClass in xmlClasses) 
+{
+        string className = aClass.Element("name").Value;
+        string classNamePlural = aClass.Element("name").Value;
+        if(className.EndsWith("y"))
+        {
+            classNamePlural = classNamePlural.TrimEnd('y');
+            classNamePlural += "ie";
+        }
 #>
-        public I<#=typelist[i].Name#>Repository <#=typelist[i].Name#>s { get; private set; }        
+        public I<#=className#>Repository <#=className#>s { get; private set; }        
 <#
     }
 #>
@@ -61,16 +81,3 @@ namespace Persistance
         }
     }
 }
-
-<#+
-
-    private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
-    {
-        var types = assembly.GetTypes();
-
-        return assembly.GetTypes()
-            .Where(t => !String.Equals(t.BaseType.Name, "Enum", StringComparison.Ordinal) && !t.Name.Contains("Base"))
-            .ToArray();
-    }
-
- #>

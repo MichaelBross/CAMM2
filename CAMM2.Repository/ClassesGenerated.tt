@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostSpecific="true" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".txt" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>
 <#@ Assembly Name="System.Xml.Linq.dll" #>
@@ -21,34 +21,47 @@
  	System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
 	var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
 #>
-using System.Collections.Generic;
-using Domain;
-
-namespace Application.Interfaces
+namespace Domain
 {
-<#
+<#           
 foreach (var aClass in xmlClasses) 
 {
-    string className = aClass.Element("name").Value;
-    string classNamePlural = aClass.Element("name").Value;
-    if(className.EndsWith("y"))
-    {
-        classNamePlural = classNamePlural.TrimEnd('y');
-        classNamePlural += "ie";
-    }
-
-	var properties = aClass.Elements("property").Select(ww => ww).ToList();
-	var typesString = properties.Elements("type").Where(t => t.Value == "String").Select(t => t).ToList();
-	var propertiesTypesString = typesString.Ancestors("property").ToList();
+	var inheritsXml = aClass.Element("inherits");
+	var inheritsText = "";
+	if(inheritsXml != null)
+		inheritsText = " : " + inheritsXml.Value;
 #>
-    public partial interface I<#=className#>Repository : IRepository<<#=className#>> 
-    {
-<# if(propertiesTypesString.Count > 0){ #>
-        IEnumerable<<#=className#>> Search(SearchParameters searchParams);
-<# } #>
-    }
+	public class <#= aClass.Element("name").Value #><#= inheritsText #>
+	{	 
+<#
+	var properties = aClass.Elements("property").Select(ww => ww).ToList();
+	foreach (var prop in properties) 
+	{
+		List<string> annotationList = new List<string>();
+        try 
+        {	        
+			var annotations = prop.Element("annotations").Value;
+			annotationList = annotations.Split(',').ToList();
+        }
+        catch (Exception ex)
+		{
+		}
+
+		foreach(var anno in annotationList)
+        {
+#>
+		<#= anno #>
+<#
+        }
+#>
+		public <#= prop.Element("type").Value #> <#= prop.Element("name").Value #> { get; set; }
 
 <#
-    }
+	}
 #>
+	}
+
+<#
 }
+#>
+

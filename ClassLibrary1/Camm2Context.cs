@@ -4,10 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
-using Domain.Assemblies;
-using Domain.Documents;
-using Domain.Users;
+using Domain;
 
 namespace Persistance
 {

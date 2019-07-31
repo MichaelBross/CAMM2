@@ -1,4 +1,4 @@
-﻿
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,10 +7,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Persistance.Repository;
-using Domain.Items;
-using Domain.Users;
-using Domain.Documents;
-using Domain.Assemblies;
+using Domain;
 using Application;
 using Application.Interfaces;
 
@@ -33,8 +30,11 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.FirstName.Contains(term)
-                    || q.LastName.Contains(term));
+                    query = query.Where(q =>
+					q.FirstName.Contains(term)
+					|| q.LastName.Contains(term)
+					|| q.EmailAddress.Contains(term)
+					);					
                 }
             }
 
@@ -43,7 +43,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -67,8 +66,11 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Title.Contains(term));
+                    query = query.Where(q =>
+					q.Code.Contains(term)
+					|| q.Rev.Contains(term)
+					|| q.Title.Contains(term)
+					);					
                 }
             }
 
@@ -77,7 +79,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -101,8 +102,9 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Manufacturer.Contains(term)
+					);					
                 }
             }
 
@@ -111,7 +113,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -135,8 +136,10 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Family.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
                 }
             }
 
@@ -145,7 +148,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -169,8 +171,11 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Size.Contains(term)
+					|| q.Family.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
                 }
             }
 
@@ -179,7 +184,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -203,8 +207,10 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					);					
                 }
             }
 
@@ -213,7 +219,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -237,8 +242,13 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Manufacturer.Contains(term)
+					|| q.BinNumber.Contains(term)
+					|| q.MilitarySpecification.Contains(term)
+					|| q.SerialNumber.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
                 }
             }
 
@@ -247,7 +257,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -271,8 +280,9 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+					q.Rev.Contains(term)
+					);					
                 }
             }
 
@@ -281,7 +291,6 @@ namespace Persistance
 
             return query.ToList();
         }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -294,24 +303,6 @@ namespace Persistance
             :base(context)
         {
         }
-               
-        public IEnumerable<AssemblyComponent> Search(SearchParameters searchParams)
-        {
-            var query = Camm2Context.AssemblyComponents.AsQueryable();
-
-            if (!String.IsNullOrEmpty(searchParams.SearchValue))
-            {
-                string[] terms = searchParams.SearchValue.Split(' ');
-
-
-            }
-
-            query = query.OrderBy(searchParams.SortColumnName + " " + searchParams.SortDirection);
-            query = query.Skip(searchParams.Start).Take(searchParams.Length);
-
-            return query.ToList();
-        }
-
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -319,4 +310,3 @@ namespace Persistance
     }
 
 }
-

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Persistance.Repository;
-using Domain.Items;
+using Domain;
 using Application;
 using Application.Interfaces;
 

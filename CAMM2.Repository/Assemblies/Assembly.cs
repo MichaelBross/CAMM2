@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
+using Domain;
 
-namespace Domain.Assemblies
+namespace Domain
 {
     public class Assembly : Item
     {

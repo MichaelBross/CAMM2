@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
+using Domain;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.ComponentModel;
@@ -43,6 +43,7 @@ namespace Application.Items
         [Display(Name = "Units of Measure")]
         public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
+        
         [Display(Name = "Qty on Hand")]
         public int QtyOnHand { get; set; }
 

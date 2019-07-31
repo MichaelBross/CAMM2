@@ -1,4 +1,4 @@
-﻿
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,4 +30,3 @@ namespace Application.Interfaces
         int Complete();
     }
 }
-

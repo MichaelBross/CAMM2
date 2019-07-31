@@ -1,16 +1,26 @@
-﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ assembly name="System.Reflection" #>
-<#@ import namespace="System.Reflection" #>
-<#@ assembly name="EnvDTE" #>
-<#@ import namespace="EnvDTE" #>
-<#@ assembly name="C:\Users\micha\source\repos\CAMM2\CAMM2.Repository\bin\Debug\Domain.dll" #>
-<#@ import namespace="Domain.Items" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
+﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
-
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#
+	string CammXml = File.ReadAllText("C:\\Users\\micha\\Source\\Repos\\CAMM2\\CAMM2.Repository\\CAMM2Model.xml");	 
+    // Certainly you would normally load the model data from a file using 
+	// the relative path of the template as shown below:
+	// string SampleInputFileContent = System.IO.File.ReadAllText( 
+    // System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\datafile.xml"); 
+	
+ 	System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
+	var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
+#>
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,27 +29,27 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Persistance.Repository;
-using Domain.Items;
-using Domain.Users;
-using Domain.Documents;
-using Domain.Assemblies;
+using Domain;
 using Application;
 using Application.Interfaces;
 
 namespace Persistance
 {
 <#
-    var item = new Item();
-    Type[] typelist = GetTypesInNamespace(Assembly.GetAssembly(item.GetType()), "Domain.Items");
-    for (int i = 0; i < typelist.Length; i++)
-    {
-        string className = typelist[i].Name;
-        string classNamePlural = typelist[i].Name;
-        if(className.EndsWith("y"))
-        {
-            classNamePlural = classNamePlural.TrimEnd('y');
-            classNamePlural += "ie";
-        }
+foreach (var aClass in xmlClasses) 
+{
+	string className = aClass.Element("name").Value;
+	string classNamePlural = aClass.Element("name").Value;
+	if(className.EndsWith("y"))
+	{
+		classNamePlural = classNamePlural.TrimEnd('y');
+		classNamePlural += "ie";
+	}
+	var properties = aClass.Elements("property").Select(ww => ww).ToList();
+	var typesString = properties.Elements("type").Where(t => t.Value == "String").Select(t => t).ToList();
+	var propertiesTypesString = typesString.Ancestors("property").ToList();
+
+	var p = 1;
 #>
     public class <#=className#>Repository : Repository<<#=className#>>, I<#=className#>Repository
     {
@@ -47,7 +57,7 @@ namespace Persistance
             :base(context)
         {
         }
-               
+<# if(propertiesTypesString.Count > 0){ #>               
         public IEnumerable<<#=className#>> Search(SearchParameters searchParams)
         {
             var query = Camm2Context.<#=classNamePlural#>s.AsQueryable();
@@ -58,8 +68,28 @@ namespace Persistance
 
                 foreach (string term in terms)
                 {
-                    query = query.Where(q => q.Code.Contains(term)
-                    || q.Description.Contains(term));
+                    query = query.Where(q =>
+<#
+	var firstProp = true;
+	foreach(var prop in propertiesTypesString)
+    {
+		var propertyName = prop.Element("name").Value;
+		if(firstProp)
+        {
+#>
+					q.<#=propertyName#>.Contains(term)
+<#
+			firstProp = false;
+        }
+		else
+        {
+#>
+					|| q.<#=propertyName#>.Contains(term)
+<#
+        }
+
+    } 
+#>					);					
                 }
             }
 
@@ -68,7 +98,7 @@ namespace Persistance
 
             return query.ToList();
         }
-
+<# } #>
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -76,19 +106,6 @@ namespace Persistance
     }
 
 <#
-    }
+}
 #>
 }
-
-<#+
-
-    private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
-    {
-        var types = assembly.GetTypes();
-
-        return assembly.GetTypes()
-            .Where(t => !String.Equals(t.BaseType.Name, "Enum", StringComparison.Ordinal) && !t.Name.Contains("Base"))
-            .ToArray();
-    }
-
- #>

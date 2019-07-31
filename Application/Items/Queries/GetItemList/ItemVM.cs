@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
+using Domain;
 
 namespace Application.Items.Queries.GetItemList
 {

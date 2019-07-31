@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Domain.Items;
-using Domain.Users;
-using Domain.Documents;
-using Domain.Assemblies;
+﻿ 
+using System.Collections.Generic;
+using Domain;
 
 namespace Application.Interfaces
 {
@@ -48,8 +46,6 @@ namespace Application.Interfaces
 
     public partial interface IAssemblyComponentRepository : IRepository<AssemblyComponent> 
     {
-        IEnumerable<AssemblyComponent> Search(SearchParameters searchParams);
     }
 
 }
-

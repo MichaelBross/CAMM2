@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Domain.Items;
+using Domain;
 
 
 namespace Application.Items
@@ -12,19 +12,19 @@ namespace Application.Items
     public class ItemService : IItemService
     {
         private readonly IUnitOfWork _unitOfWork;
-        
+
         public ItemService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public ItemDetailVM Add(ItemDetailVM itemVM)
+        public ItemDetailVM Add(ItemDetailVM connectorVM)
         {
             try
             {
                 var newItem = new Item();
 
-                Map.AtoB(itemVM, newItem);
+                Map.AtoB(connectorVM, newItem);
 
                 var now = DateTime.Now;
                 newItem.CreateDate = now;
@@ -32,13 +32,13 @@ namespace Application.Items
 
                 _unitOfWork.Items.Add(newItem);
                 _unitOfWork.Complete();
-                                
-                Map.AtoB(newItem, itemVM);
 
-                return itemVM;
+                Map.AtoB(newItem, connectorVM);
+
+                return connectorVM;
             }
             catch (Exception ex)
-            {  
+            {
                 var message = Utility.GetRootCauseOfException(ex);
 
                 throw new Exception(message);
@@ -47,12 +47,12 @@ namespace Application.Items
 
         public IEnumerable<ItemListVM> GetAll()
         {
-            var items = _unitOfWork.Items.GetAll();
-            var itemVMs = new List<ItemListVM>();
+            var connectors = _unitOfWork.Items.GetAll();
+            var connectorVMs = new List<ItemListVM>();
 
-            Map.AtoB(items, itemVMs);
+            Map.AtoB(connectors, connectorVMs);
 
-            return itemVMs;
+            return connectorVMs;
         }
 
         public int GetTotalCount()
@@ -61,11 +61,11 @@ namespace Application.Items
             return count;
         }
 
-        public void Remove(ItemDetailVM itemVM)
+        public void Remove(ItemDetailVM connectorVM)
         {
             try
-            {               
-                var toBeRemoved = _unitOfWork.Items.Get(itemVM.Id);
+            {
+                var toBeRemoved = _unitOfWork.Items.Get(connectorVM.Id);
                 if (toBeRemoved == null)
                     throw new Exception("Item not found.");
                 _unitOfWork.Items.Remove(toBeRemoved);
@@ -90,7 +90,7 @@ namespace Application.Items
                     UnitsOfMeasure = i.UnitsOfMeasure,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate
-                    
+
                 }).ToList();
 
             return result;
@@ -106,7 +106,7 @@ namespace Application.Items
                 retrieved.QtyOnHand = revisedVM.QtyOnHand;
                 retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
                 var now = DateTime.Now;
-                retrieved.UpdateDate = now;                
+                retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
                 return revisedVM;
             }
