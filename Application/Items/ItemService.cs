@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
+using Application.Service;
 
 
 namespace Application.Items
@@ -18,13 +19,13 @@ namespace Application.Items
             _unitOfWork = unitOfWork;
         }
 
-        public ItemDetailVM Add(ItemDetailVM connectorVM)
+        public ItemDetailVM Add(ItemDetailVM itemVM)
         {
             try
             {
                 var newItem = new Item();
 
-                Map.AtoB(connectorVM, newItem);
+                Map.AtoB(itemVM, newItem);
 
                 var now = DateTime.Now;
                 newItem.CreateDate = now;
@@ -33,9 +34,9 @@ namespace Application.Items
                 _unitOfWork.Items.Add(newItem);
                 _unitOfWork.Complete();
 
-                Map.AtoB(newItem, connectorVM);
+                Map.AtoB(newItem, itemVM);
 
-                return connectorVM;
+                return itemVM;
             }
             catch (Exception ex)
             {
@@ -47,12 +48,12 @@ namespace Application.Items
 
         public IEnumerable<ItemListVM> GetAll()
         {
-            var connectors = _unitOfWork.Items.GetAll();
-            var connectorVMs = new List<ItemListVM>();
+            var items = _unitOfWork.Items.GetAll();
+            var itemVMs = new List<ItemListVM>();
 
-            Map.AtoB(connectors, connectorVMs);
+            Map.AtoB(items, itemVMs);
 
-            return connectorVMs;
+            return itemVMs;
         }
 
         public int GetTotalCount()
@@ -61,11 +62,11 @@ namespace Application.Items
             return count;
         }
 
-        public void Remove(ItemDetailVM connectorVM)
+        public void Remove(ItemDetailVM itemVM)
         {
             try
             {
-                var toBeRemoved = _unitOfWork.Items.Get(connectorVM.Id);
+                var toBeRemoved = _unitOfWork.Items.Get(itemVM.Id);
                 if (toBeRemoved == null)
                     throw new Exception("Item not found.");
                 _unitOfWork.Items.Remove(toBeRemoved);

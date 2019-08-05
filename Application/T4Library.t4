@@ -1,0 +1,83 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#+ 
+	List<System.Xml.Linq.XElement> GetClasses(string pathToModelFromSolutionRoot)
+	{			
+		string currentDirectory = System.IO.Path.GetDirectoryName(this.Host.TemplateFile);
+		int Camm2Index = currentDirectory.IndexOf("CAMM2\\");
+		string solutionRootDirectory = currentDirectory.Substring(0,Camm2Index);
+
+		string CammXml = File.ReadAllText(solutionRootDirectory + pathToModelFromSolutionRoot);	 
+	
+		System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
+		var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
+		return xmlClasses;
+	}
+
+	string GetName (System.Xml.Linq.XElement node)
+    {
+		return node.Element("name").Value;
+    }
+
+	string GetNamePluralVersion (System.Xml.Linq.XElement node)
+    {
+		string Name = node.Element("name").Value;
+		string NamePlural = node.Element("name").Value;
+		if(Name.EndsWith("y"))
+		{
+			NamePlural = NamePlural.TrimEnd('y');
+			NamePlural += "ie";
+		}
+		return NamePlural;
+    }
+
+	string GetSuperClassName (System.Xml.Linq.XElement aClass)
+    {
+		var inheritsXml = aClass.Element("inherits");
+		var superClassName = "";
+		if(inheritsXml != null)
+			superClassName = inheritsXml.Value;
+		return superClassName;
+    }
+
+	string GetInheritanceText (System.Xml.Linq.XElement aClass)
+    {
+		var inheritsXml = aClass.Element("inherits");
+		var inheritsText = "";
+		if(inheritsXml != null)
+			inheritsText = " : " + inheritsXml.Value;
+		return inheritsText;
+    }
+
+	List<System.Xml.Linq.XElement> GetProperties(System.Xml.Linq.XElement aClass)
+    {
+		return aClass.Elements("property").Select(ww => ww).ToList();
+    }
+
+	List<System.Xml.Linq.XElement> GetPropertiesOfTypeString(System.Xml.Linq.XElement aClass)
+    {
+		var propertyList = aClass.Elements("property").Select(ww => ww).ToList();
+		var typeStringList = propertyList.Elements("type").Where(t => t.Value == "string").Select(t => t).ToList();
+		var propertListOfTypeString = typeStringList.Ancestors("property").ToList();
+		return propertListOfTypeString;
+    }
+
+	string GetPropertyType (System.Xml.Linq.XElement aProperty) 
+    {
+		return aProperty.Element("type").Value;
+    }
+
+	List<String> GetAnnotations(System.Xml.Linq.XElement aProperty)
+    {
+		List<string> annotationList = new List<string>();
+        try 
+        {	        
+			var annotations = aProperty.Element("annotations").Value;  
+			annotationList = annotations.Split(',').ToList();
+        }
+        catch (Exception){}
+
+		return annotationList;
+    }
+#>

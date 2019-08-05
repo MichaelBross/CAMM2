@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CAMM2Model.xml" />
+    <Content Include="CAMM2ViewModel.xml" />
     <Content Include="ClassesGenerated.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ClassesGenerated.cs</LastGenOutput>

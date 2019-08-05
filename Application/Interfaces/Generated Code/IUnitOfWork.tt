@@ -10,16 +10,10 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections" #>
-<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\..\T4Library.t4" #>
 <#
-	string currentDirectory = System.IO.Path.GetDirectoryName(this.Host.TemplateFile);
-	int Camm2Index = currentDirectory.IndexOf("CAMM2\\");
-	string solutionRootDirectory = currentDirectory.Substring(0,Camm2Index);
-
-	string CammXml = File.ReadAllText(solutionRootDirectory + "CAMM2\\CAMM2.Repository\\CAMM2Model.xml"); 
-	
- 	System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
-	var xmlClasses  = XmlDocu.Root.Elements("class").Select(xx => xx).ToList();
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
 #>
 using System;
 using System.Collections.Generic;
@@ -34,13 +28,7 @@ namespace Application.Interfaces
 <#
 foreach (var aClass in xmlClasses) 
 {
-        string className = aClass.Element("name").Value;
-        string classNamePlural = aClass.Element("name").Value;
-        if(className.EndsWith("y"))
-        {
-            classNamePlural = classNamePlural.TrimEnd('y');
-            classNamePlural += "ie";
-        }
+        string className = GetName(aClass);
 #>
         I<#= className #>Repository <#= className #>s { get; } 
         

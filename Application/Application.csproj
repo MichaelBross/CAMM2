@@ -99,7 +99,22 @@
     <Compile Include="Items\Queries\GetItemList\IGetItemList.cs" />
     <Compile Include="Items\Queries\GetItemList\ItemVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\Generated Code\ServiceInterfaces.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceInterfaces.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Generated Code\Services.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
     <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\ViewModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModels.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Commands\" />
@@ -114,6 +129,7 @@
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
+    <None Include="T4Library.t4" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Interfaces\Generated Code\IUnitOfWork.tt">
@@ -123,6 +139,18 @@
     <Content Include="Interfaces\Generated Code\RepositoryInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RepositoryInterfaces.cs</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\Generated Code\ServiceInterfaces.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServiceInterfaces.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\Generated Code\Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Services.cs</LastGenOutput>
+    </Content>
+    <Content Include="ViewModels\ViewModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ViewModels.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

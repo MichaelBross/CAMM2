@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
+﻿using Domain;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using System.ComponentModel;
 using Application.Base;
 
 namespace Application.Items

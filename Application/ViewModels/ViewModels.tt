@@ -1,0 +1,86 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\T4Library.t4" #> 
+<#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2ViewModel.xml");
+#>
+using System;
+using Domain;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using Application.Base;
+using System.Collections.Generic;
+
+namespace Application.Service
+{
+<#
+foreach (var aClass in xmlClasses) 
+{
+	var className = GetName(aClass);
+	var properties = GetProperties(aClass);
+	var inheritsText = GetInheritanceText(aClass);
+#>
+    public class <#=className#>DetailVM <#= inheritsText #>
+    {
+<#	
+	foreach (var prop in properties) 
+	{
+		var annotationList = GetAnnotations(prop);
+
+		foreach(var anno in annotationList)
+        {
+#>
+		<#= anno #>
+<#
+        }
+
+		var propertyType = GetPropertyType(prop);
+		var propertyName = GetName(prop);
+#>
+		public <#= propertyType #> <#= propertyName #> { get; set; }
+
+<#
+	}
+#>
+	}
+
+	public class <#=className#>ListVM <#= inheritsText #>
+    {
+<#	
+	foreach (var prop in properties) 
+	{
+		var annotationList = GetAnnotations(prop);
+
+		foreach(var anno in annotationList)
+        {
+#>
+		<#= anno #>
+<#
+        }
+		var propertyType = GetPropertyType(prop);
+		var propertyName = GetName(prop);
+#>
+		public <#= propertyType #> <#= propertyName #> { get; set; }
+
+<#
+	}
+#>
+	}
+
+<#
+}
+
+
+#>
+}

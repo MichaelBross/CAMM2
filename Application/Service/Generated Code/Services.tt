@@ -1,0 +1,160 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ include file="..\..\T4Library.t4" #>
+<#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain;
+using Application.Service;
+
+namespace Application.Service
+{
+<#
+foreach (var aClass in xmlClasses) 
+{
+    string className = GetName(aClass);
+	string classNameLowerCase = className.ToLower();
+
+	var properties = GetProperties(aClass);
+	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
+#>
+   public class <#=className#>Service : I<#=className#>Service
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public <#=className#>Service(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public <#=className#>DetailVM Add(<#=className#>DetailVM <#=classNameLowerCase#>VM)
+        {
+            try
+            {
+                var new<#=className#> = new <#=className#>();
+
+                Map.AtoB(<#=classNameLowerCase#>VM, new<#=className#>);
+
+                var now = DateTime.Now;
+                new<#=className#>.CreateDate = now;
+                new<#=className#>.UpdateDate = now;
+
+                _unitOfWork.<#=className#>s.Add(new<#=className#>);
+                _unitOfWork.Complete();
+
+                Map.AtoB(new<#=className#>, <#=classNameLowerCase#>VM);
+
+                return <#=classNameLowerCase#>VM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+
+                throw new Exception(message);
+            }
+        }
+
+        public IEnumerable<<#=className#>ListVM> GetAll()
+        {
+            var <#=classNameLowerCase#>s = _unitOfWork.<#=className#>s.GetAll();
+            var <#=classNameLowerCase#>VMs = new List<<#=className#>ListVM>();
+
+            Map.AtoB(<#=classNameLowerCase#>s, <#=classNameLowerCase#>VMs);
+
+            return <#=classNameLowerCase#>VMs;
+        }
+
+        public int GetTotalCount()
+        {
+            var count = _unitOfWork.<#=className#>s.GetAll().Count();
+            return count;
+        }
+
+        public void Remove(<#=className#>DetailVM <#=classNameLowerCase#>VM)
+        {
+            try
+            {
+                var toBeRemoved = _unitOfWork.<#=className#>s.Get(<#=classNameLowerCase#>VM.Id);
+                if (toBeRemoved == null)
+                    throw new Exception("<#=className#> not found.");
+                _unitOfWork.<#=className#>s.Remove(toBeRemoved);
+                _unitOfWork.Complete();
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
+        }
+
+<# if(propertiesTypesString.Count > 0){ #>
+                public IEnumerable<<#=className#>ListVM> Search(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.<#=className#>s.Search(searchParams)
+                .Select(i => new <#=className#>ListVM()
+                {
+<#	
+	foreach (var prop in properties) 
+	{
+		var propertyType = GetPropertyType(prop);
+		var propertyName = GetName(prop);
+#>
+					<#= propertyName #> = i.<#= propertyName #>,
+<#
+	}
+#>
+                }).ToList();
+
+            return result;
+        }
+<# } #>
+
+        public <#=className#>DetailVM Update(<#=className#>DetailVM revisedVM)
+        {
+            try
+            {
+                var retrieved = _unitOfWork.<#=className#>s.Get(revisedVM.Id);
+<#	
+	foreach (var prop in properties) 
+	{
+		var propertyType = GetPropertyType(prop);
+		var propertyName = GetName(prop);
+#>
+				retrieved.<#= propertyName #> = revisedVM.<#= propertyName #>;
+<#
+	}
+#>
+                var now = DateTime.Now;
+                retrieved.UpdateDate = now;
+                _unitOfWork.Complete();
+                return revisedVM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
+        }
+    }
+
+<#	
+} 
+#>
+}

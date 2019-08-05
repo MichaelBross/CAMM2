@@ -1,0 +1,53 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ include file="..\..\T4Library.t4" #>
+<#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Service
+{
+<#
+foreach (var aClass in xmlClasses) 
+{
+    string className = GetName(aClass);
+	string classnameLowerCase = className.ToLower();
+
+	var properties = GetProperties(aClass);
+	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
+#>
+    public interface I<#=className#>Service
+    {
+<#	
+	if(propertiesTypesString.Count > 0){ 
+#>
+        IEnumerable<<#=className#>ListVM> Search(SearchParameters searchParams);
+<#
+		} 
+#>
+        IEnumerable<<#=className#>ListVM> GetAll();
+        int GetTotalCount();
+        <#=className#>DetailVM Add(<#=className#>DetailVM <#=classnameLowerCase#>VM);
+        <#=className#>DetailVM Update(<#=className#>DetailVM <#=classnameLowerCase#>VM);
+        void Remove(<#=className#>DetailVM <#=classnameLowerCase#>VM);
+    }
+<#	
+} 
+#>
+}
