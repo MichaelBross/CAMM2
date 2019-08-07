@@ -1,7 +1,8 @@
+﻿
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(App_Start.NinjectWebCommon), "Stop")]
 
-namespace App_Start.Obsolete
+namespace App_Start
 {
     using System;
 
@@ -72,12 +73,32 @@ namespace App_Start.Obsolete
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>)).InRequestScope();
 
-            kernel.Bind<IItemsRepository>().To<ItemsRepository>();
-            kernel.Bind<IItemService>().To<ItemService>();
+            kernel.Bind<IUserRepository>().To<UserRepository>();
+            kernel.Bind<IUserService>().To<UserService>();
 
-            kernel.Bind<IConnectorsRepository>().To<ConnectorsRepository>();
+            kernel.Bind<IDocumentRepository>().To<DocumentRepository>();
+            kernel.Bind<IDocumentService>().To<DocumentService>();
+
+            kernel.Bind<IComponentRepository>().To<ComponentRepository>();
+            kernel.Bind<IComponentService>().To<ComponentService>();
+
+            kernel.Bind<IConnectorRepository>().To<ConnectorRepository>();
             kernel.Bind<IConnectorService>().To<ConnectorService>();
 
+            kernel.Bind<IContactRepository>().To<ContactRepository>();
+            kernel.Bind<IContactService>().To<ContactService>();
+
+            kernel.Bind<IItemRepository>().To<ItemRepository>();
+            kernel.Bind<IItemService>().To<ItemService>();
+
+            kernel.Bind<IToolRepository>().To<ToolRepository>();
+            kernel.Bind<IToolService>().To<ToolService>();
+
+            kernel.Bind<IAssemblyRepository>().To<AssemblyRepository>();
+            kernel.Bind<IAssemblyService>().To<AssemblyService>();
+
+            kernel.Bind<IAssemblyComponentRepository>().To<AssemblyComponentRepository>();
+            kernel.Bind<IAssemblyComponentService>().To<AssemblyComponentService>();
 
         }        
     }

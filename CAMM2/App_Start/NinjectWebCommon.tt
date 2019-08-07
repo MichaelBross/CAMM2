@@ -1,7 +1,24 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\..\Application\T4Library.t4" #>
+<#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2ViewModel.xml");
+#>
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(App_Start.NinjectWebCommon), "Stop")]
 
-namespace App_Start.Obsolete
+namespace App_Start
 {
     using System;
 
@@ -72,13 +89,21 @@ namespace App_Start.Obsolete
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>)).InRequestScope();
 
-            kernel.Bind<IItemsRepository>().To<ItemsRepository>();
-            kernel.Bind<IItemService>().To<ItemService>();
+<#
+foreach (var aClass in xmlClasses) 
+{
+	var className = GetName(aClass);
+	if(className == "Base")
+		continue;
+	var properties = GetProperties(aClass);
+	var inheritsText = GetInheritanceText(aClass);
+#>
+            kernel.Bind<I<#=className#>Repository>().To<<#=className#>Repository>();
+            kernel.Bind<I<#=className#>Service>().To<<#=className#>Service>();
 
-            kernel.Bind<IConnectorsRepository>().To<ConnectorsRepository>();
-            kernel.Bind<IConnectorService>().To<ConnectorService>();
-
-
+<#
+}
+#>
         }        
     }
 }
