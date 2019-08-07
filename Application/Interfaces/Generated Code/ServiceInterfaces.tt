@@ -27,6 +27,8 @@ namespace Application.Service
 foreach (var aClass in xmlClasses) 
 {
     string className = GetName(aClass);
+	if(className == "Base")
+	continue;
 	string classnameLowerCase = className.ToLower();
 
 	var properties = GetProperties(aClass);

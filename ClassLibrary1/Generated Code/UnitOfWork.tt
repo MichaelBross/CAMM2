@@ -36,6 +36,8 @@ namespace Persistance
 foreach (var aClass in xmlClasses) 
 {
         string className = GetName(aClass);
+		if(className == "Base")
+			continue;
 #>
             <#=className#>s = new <#=className#>Repository(_context);            
 <#
@@ -47,6 +49,8 @@ foreach (var aClass in xmlClasses)
 foreach (var aClass in xmlClasses) 
 {
         string className = GetName(aClass);
+		if(className == "Base")
+			continue;
 #>
         public I<#=className#>Repository <#=className#>s { get; private set; }        
 <#

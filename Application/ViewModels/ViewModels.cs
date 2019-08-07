@@ -14,11 +14,11 @@ namespace Application.Service
 
 		public DateTime CreateDate { get; set; }
 
-		public int CreatedBy { get; set; }
+		public User CreatedBy { get; set; }
 
 		public DateTime UpdateDate { get; set; }
 
-		public int UpdatedBy { get; set; }
+		public User UpdatedBy { get; set; }
 
 	}
 
@@ -28,11 +28,11 @@ namespace Application.Service
 
 		public DateTime CreateDate { get; set; }
 
-		public int CreatedBy { get; set; }
+		public User CreatedBy { get; set; }
 
 		public DateTime UpdateDate { get; set; }
 
-		public int UpdatedBy { get; set; }
+		public User UpdatedBy { get; set; }
 
 	}
 

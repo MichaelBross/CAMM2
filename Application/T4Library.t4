@@ -15,6 +15,24 @@
 		return xmlClasses;
 	}
 
+	XDocument GetXDocument(string pathToModelFromSolutionRoot)
+    {
+		string currentDirectory = System.IO.Path.GetDirectoryName(this.Host.TemplateFile);
+		int Camm2Index = currentDirectory.IndexOf("CAMM2\\");
+		string solutionRootDirectory = currentDirectory.Substring(0,Camm2Index);
+
+		string CammXml = File.ReadAllText(solutionRootDirectory + pathToModelFromSolutionRoot);	 
+	
+		System.Xml.Linq.XDocument XmlDocu = System.Xml.Linq.XDocument.Parse(CammXml);
+		return XmlDocu;
+    }
+
+	List<System.Xml.Linq.XElement> GetClassesFromXDoc(XDocument XDoc)
+	{
+		var xmlClasses  = XDoc.Root.Elements("class").Select(xx => xx).ToList();
+		return xmlClasses;
+	}
+
 	string GetName (System.Xml.Linq.XElement node)
     {
 		return node.Element("name").Value;
@@ -53,6 +71,16 @@
 	List<System.Xml.Linq.XElement> GetProperties(System.Xml.Linq.XElement aClass)
     {
 		return aClass.Elements("property").Select(ww => ww).ToList();
+    }
+
+	List<System.Xml.Linq.XElement> GetInheritedProperties(System.Xml.Linq.XElement aClass, XDocument XDoc)
+    {
+		var superClassName = GetSuperClassName(aClass);
+		var inheritanceElement = XDoc.Descendants("name").Where(xx => xx.Value == superClassName).Select(ww => ww).FirstOrDefault();
+		if(inheritanceElement == null)
+			return new List<System.Xml.Linq.XElement>();
+		var superClass = inheritanceElement.Parent;
+		return superClass.Elements("property").Select(ww => ww).ToList();
     }
 
 	List<System.Xml.Linq.XElement> GetPropertiesOfTypeString(System.Xml.Linq.XElement aClass)

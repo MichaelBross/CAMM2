@@ -6,6 +6,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
+	public class Base
+	{	 
+		public bool IsObsolete { get; set; }
+
+		public DateTime CreateDate { get; set; }
+
+		public User CreatedBy { get; set; }
+
+		public DateTime UpdateDate { get; set; }
+
+		public User UpdatedBy { get; set; }
+
+	}
 	public class User
 	{	 
 		public int Id { get; set; }

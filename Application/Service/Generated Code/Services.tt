@@ -13,7 +13,8 @@
 <#@ import namespace="System.Collections.Generic" #> 
 <#@ include file="..\..\T4Library.t4" #>
 <#
-	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+	var XDoc = GetXDocument("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+	var xmlClasses  = GetClassesFromXDoc(XDoc);
 #>
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Application.Service
 foreach (var aClass in xmlClasses) 
 {
     string className = GetName(aClass);
+	if(className == "Base")
+		continue;
 	string classNameLowerCase = className.ToLower();
 
 	var properties = GetProperties(aClass);
@@ -110,7 +113,9 @@ foreach (var aClass in xmlClasses)
             var result = _unitOfWork.<#=className#>s.Search(searchParams)
                 .Select(i => new <#=className#>ListVM()
                 {
-<#	
+<#		
+	var inhertiedProperties = GetInheritedProperties(aClass, XDoc);
+	properties.AddRange(inhertiedProperties);
 	foreach (var prop in properties) 
 	{
 		var propertyType = GetPropertyType(prop);

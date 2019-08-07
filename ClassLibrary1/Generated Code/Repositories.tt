@@ -33,6 +33,8 @@ namespace Persistance
 foreach (var aClass in xmlClasses) 
 {
 	string className = GetName(aClass);
+	if(className == "Base")
+		continue;
 	string classNamePlural = GetNamePluralVersion(aClass);
 	var properties = GetProperties(aClass);	
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);

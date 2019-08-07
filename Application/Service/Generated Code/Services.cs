@@ -206,6 +206,11 @@ namespace Application.Service
 					Title = i.Title,
 					DocType = i.DocType,
 					Items = i.Items,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -222,6 +227,11 @@ namespace Application.Service
 				retrieved.Title = revisedVM.Title;
 				retrieved.DocType = revisedVM.DocType;
 				retrieved.Items = revisedVM.Items;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -310,6 +320,12 @@ namespace Application.Service
                 .Select(i => new ComponentListVM()
                 {
 					Manufacturer = i.Manufacturer,
+					Id = i.Id,
+					Code = i.Code,
+					Description = i.Description,
+					UnitsOfMeasure = i.UnitsOfMeasure,
+					QtyOnHand = i.QtyOnHand,
+					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -321,6 +337,12 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Components.Get(revisedVM.Id);
 				retrieved.Manufacturer = revisedVM.Manufacturer;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				retrieved.Documents = revisedVM.Documents;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -411,6 +433,12 @@ namespace Application.Service
 					Family = i.Family,
 					Comments = i.Comments,
 					Tools = i.Tools,
+					Id = i.Id,
+					Code = i.Code,
+					Description = i.Description,
+					UnitsOfMeasure = i.UnitsOfMeasure,
+					QtyOnHand = i.QtyOnHand,
+					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -424,6 +452,12 @@ namespace Application.Service
 				retrieved.Family = revisedVM.Family;
 				retrieved.Comments = revisedVM.Comments;
 				retrieved.Tools = revisedVM.Tools;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				retrieved.Documents = revisedVM.Documents;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -517,6 +551,12 @@ namespace Application.Service
 					WireGageMax = i.WireGageMax,
 					Comments = i.Comments,
 					Tools = i.Tools,
+					Id = i.Id,
+					Code = i.Code,
+					Description = i.Description,
+					UnitsOfMeasure = i.UnitsOfMeasure,
+					QtyOnHand = i.QtyOnHand,
+					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -533,6 +573,12 @@ namespace Application.Service
 				retrieved.WireGageMax = revisedVM.WireGageMax;
 				retrieved.Comments = revisedVM.Comments;
 				retrieved.Tools = revisedVM.Tools;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				retrieved.Documents = revisedVM.Documents;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -626,6 +672,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -642,6 +693,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -736,6 +792,12 @@ namespace Application.Service
 					Comments = i.Comments,
 					Connectors = i.Connectors,
 					Contacts = i.Contacts,
+					Id = i.Id,
+					Code = i.Code,
+					Description = i.Description,
+					UnitsOfMeasure = i.UnitsOfMeasure,
+					QtyOnHand = i.QtyOnHand,
+					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -753,6 +815,12 @@ namespace Application.Service
 				retrieved.Comments = revisedVM.Comments;
 				retrieved.Connectors = revisedVM.Connectors;
 				retrieved.Contacts = revisedVM.Contacts;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				retrieved.Documents = revisedVM.Documents;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -842,6 +910,12 @@ namespace Application.Service
                 {
 					Rev = i.Rev,
 					AssemblyComponents = i.AssemblyComponents,
+					Id = i.Id,
+					Code = i.Code,
+					Description = i.Description,
+					UnitsOfMeasure = i.UnitsOfMeasure,
+					QtyOnHand = i.QtyOnHand,
+					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -854,6 +928,12 @@ namespace Application.Service
                 var retrieved = _unitOfWork.Assemblys.Get(revisedVM.Id);
 				retrieved.Rev = revisedVM.Rev;
 				retrieved.AssemblyComponents = revisedVM.AssemblyComponents;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				retrieved.Documents = revisedVM.Documents;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();

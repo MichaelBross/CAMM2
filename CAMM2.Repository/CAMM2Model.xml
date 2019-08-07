@@ -1,5 +1,28 @@
 ﻿<models>
   <class>
+    <name>Base</name> 
+    <property>
+      <name>IsObsolete</name>
+      <type>bool</type>
+    </property>
+    <property>
+      <name>CreateDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>CreatedBy</name>
+      <type>User</type>
+    </property>
+    <property>
+      <name>UpdateDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>UpdatedBy</name>
+      <type>User</type>
+    </property>
+  </class>
+  <class>
     <name>User</name>    
     <property>
       <name>Id</name>

@@ -28,7 +28,9 @@ namespace Application.Interfaces
 <#
 foreach (var aClass in xmlClasses) 
 {
-        string className = GetName(aClass);
+	string className = GetName(aClass);
+	if(className == "Base")
+		continue;
 #>
         I<#= className #>Repository <#= className #>s { get; } 
         
