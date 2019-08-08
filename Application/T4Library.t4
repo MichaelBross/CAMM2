@@ -102,7 +102,7 @@
         try 
         {	        
 			var annotations = aProperty.Element("annotations").Value;  
-			annotationList = annotations.Split(',').ToList();
+			annotationList = annotations.Split('~').ToList();
         }
         catch (Exception){}
 

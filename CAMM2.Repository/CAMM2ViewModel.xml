@@ -63,7 +63,7 @@
   </class>
   <class>
     <name>Document</name>
-    <inherits>BaseDetailVM</inherits>
+    <inherits>Base</inherits>
     <property>
       <name>Id</name>
       <type>int</type>
@@ -143,15 +143,16 @@
   </class>
   <class>
     <name>Item</name>
-    <inherits>BaseDetailVM</inherits>
+    <inherits>Base</inherits>
     <property>
       <name>Id</name>
       <type>int</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
     </property>
     <property>
       <name>Code</name>
       <type>string</type>
-      <annotations>[StringLength(100)]</annotations>
+      <annotations>[Display(Name = "Item Number")]</annotations>
     </property>
     <property>
       <name>Description</name>
@@ -160,10 +161,12 @@
     <property>
       <name>UnitsOfMeasure</name>
       <type>UnitsOfMeasure</type>
+      <annotations>[Display(Name = "Units of Measure")]</annotations>
     </property>
     <property>
       <name>QtyOnHand</name>
       <type>int</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
     </property>
     <property>
       <name>Documents</name>
@@ -216,7 +219,7 @@
   </class>
   <class>
     <name>AssemblyComponent</name>
-    <inherits>BaseDetailVM</inherits>
+    <inherits>Base</inherits>
     <property>
       <name>Id</name>
       <type>int</type>

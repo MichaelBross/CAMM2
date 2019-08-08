@@ -96,7 +96,7 @@ namespace Application.Service
 
 	}
 
-	public class DocumentListVM  : BaseDetailVM
+	public class DocumentListVM  : BaseListVM
     {
 		public int Id { get; set; }
 
@@ -112,19 +112,19 @@ namespace Application.Service
 
 	}
 
-    public class ComponentDetailVM  : Item
+    public class ComponentDetailVM  : ItemDetailVM
     {
 		public string Manufacturer { get; set; }
 
 	}
 
-	public class ComponentListVM  : Item
+	public class ComponentListVM  : ItemListVM
     {
 		public string Manufacturer { get; set; }
 
 	}
 
-    public class ConnectorDetailVM  : Item
+    public class ConnectorDetailVM  : ItemDetailVM
     {
 		public string Family { get; set; }
 
@@ -134,7 +134,7 @@ namespace Application.Service
 
 	}
 
-	public class ConnectorListVM  : Item
+	public class ConnectorListVM  : ItemListVM
     {
 		public string Family { get; set; }
 
@@ -144,7 +144,7 @@ namespace Application.Service
 
 	}
 
-    public class ContactDetailVM  : Item
+    public class ContactDetailVM  : ItemDetailVM
     {
 		public string Size { get; set; }
 
@@ -160,7 +160,7 @@ namespace Application.Service
 
 	}
 
-	public class ContactListVM  : Item
+	public class ContactListVM  : ItemListVM
     {
 		public string Size { get; set; }
 
@@ -178,39 +178,47 @@ namespace Application.Service
 
     public class ItemDetailVM  : BaseDetailVM
     {
+		[HiddenInput(DisplayValue = false)]
 		public int Id { get; set; }
 
-		[StringLength(100)]
+		[Display(Name = "Item Number")]
 		public string Code { get; set; }
 
 		public string Description { get; set; }
 
+		[Display(Name = "Units of Measure")]
 		public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
+		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+		[Display(Name = "Qty on Hand")]
 		public int QtyOnHand { get; set; }
 
 		public IList<Document> Documents { get; set; }
 
 	}
 
-	public class ItemListVM  : BaseDetailVM
+	public class ItemListVM  : BaseListVM
     {
+		[HiddenInput(DisplayValue = false)]
 		public int Id { get; set; }
 
-		[StringLength(100)]
+		[Display(Name = "Item Number")]
 		public string Code { get; set; }
 
 		public string Description { get; set; }
 
+		[Display(Name = "Units of Measure")]
 		public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
+		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+		[Display(Name = "Qty on Hand")]
 		public int QtyOnHand { get; set; }
 
 		public IList<Document> Documents { get; set; }
 
 	}
 
-    public class ToolDetailVM  : Item
+    public class ToolDetailVM  : ItemDetailVM
     {
 		public string Manufacturer { get; set; }
 
@@ -228,7 +236,7 @@ namespace Application.Service
 
 	}
 
-	public class ToolListVM  : Item
+	public class ToolListVM  : ItemListVM
     {
 		public string Manufacturer { get; set; }
 
@@ -246,7 +254,7 @@ namespace Application.Service
 
 	}
 
-    public class AssemblyDetailVM  : Item
+    public class AssemblyDetailVM  : ItemDetailVM
     {
 		public string Rev { get; set; }
 
@@ -254,7 +262,7 @@ namespace Application.Service
 
 	}
 
-	public class AssemblyListVM  : Item
+	public class AssemblyListVM  : ItemListVM
     {
 		public string Rev { get; set; }
 
@@ -274,7 +282,7 @@ namespace Application.Service
 
 	}
 
-	public class AssemblyComponentListVM  : BaseDetailVM
+	public class AssemblyComponentListVM  : BaseListVM
     {
 		public int Id { get; set; }
 

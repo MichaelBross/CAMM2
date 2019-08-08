@@ -151,7 +151,7 @@
     <property>
       <name>Code</name>
       <type>string</type>
-      <annotations>[Index(IsUnique = true)],[StringLength(100)]</annotations>
+      <annotations>[Index(IsUnique = true)]~[StringLength(100)]</annotations>
     </property>
     <property>
       <name>Description</name>
