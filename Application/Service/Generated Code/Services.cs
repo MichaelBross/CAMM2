@@ -326,6 +326,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -343,6 +348,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -439,6 +449,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -458,6 +473,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -557,6 +577,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -579,6 +604,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -798,6 +828,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -821,6 +856,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -916,6 +956,11 @@ namespace Application.Service
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
                 }).ToList();
 
             return result;
@@ -934,6 +979,11 @@ namespace Application.Service
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
 				retrieved.Documents = revisedVM.Documents;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();

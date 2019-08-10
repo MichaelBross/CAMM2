@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -38,8 +39,10 @@ namespace Presentation
                 if (p.PropertyType.BaseType == typeof(Enum))
                 {
                     jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),\r\n";
+                    continue;
                 }
 
+                jsonKoObject = jsonKoObject + p.Name + ": ko.observable(),\r\n";
             }
             jsonKoObject = jsonKoObject + "}\r\n";
 
@@ -112,6 +115,11 @@ namespace Presentation
             var columnsList = new List<JsColumn>();
             foreach (var p in viewModel.GetType().GetProperties())
             {
+                var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+                var title = p.Name;
+                if (displayAttr != null)
+                    title = displayAttr.Name;
+
                 var visible = true;
                 var hiddenInput = p.GetCustomAttribute(typeof(HiddenInputAttribute)) as HiddenInputAttribute;
                 if (hiddenInput != null)
@@ -125,7 +133,7 @@ namespace Presentation
                         "return vm.formatDate(row['" + p.Name + "']);" +
                         "}";
 
-                    columnsList.Add(new JsColumn(render, p.Name, p.Name, visible));
+                    columnsList.Add(new JsColumn(render, p.Name, title, visible));
                     continue;
                 }
 
@@ -135,11 +143,11 @@ namespace Presentation
                         "return vm.getEnumItemName('" + p.Name + "', row['" + p.Name + "']);" +
                         "}";
 
-                    columnsList.Add(new JsColumn(render, p.Name, p.Name, visible));
+                    columnsList.Add(new JsColumn(render, p.Name, title, visible));
                     continue;
                 }
 
-                columnsList.Add(new JsColumn(p.Name, p.Name, p.Name, visible));
+                columnsList.Add(new JsColumn(p.Name, p.Name, title, visible));
             }
 
             var columnsMvcHtmlString = new MvcHtmlString(JsonConvert.SerializeObject(columnsList));

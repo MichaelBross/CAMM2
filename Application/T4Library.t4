@@ -80,7 +80,10 @@
 		if(inheritanceElement == null)
 			return new List<System.Xml.Linq.XElement>();
 		var superClass = inheritanceElement.Parent;
-		return superClass.Elements("property").Select(ww => ww).ToList();
+		var elements = superClass.Elements("property").Select(ww => ww).ToList();
+		var moreElements = GetInheritedProperties(superClass, XDoc);
+		elements.AddRange(moreElements);
+		return elements;
     }
 
 	List<System.Xml.Linq.XElement> GetPropertiesOfTypeString(System.Xml.Linq.XElement aClass)

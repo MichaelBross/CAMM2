@@ -30,15 +30,8 @@ foreach (var aClass in xmlClasses)
 	var className = GetName(aClass);
 	var properties = GetProperties(aClass);
 	var inheritsText = GetInheritanceText(aClass);
-	var inheritsDetailText = "";
-	var inheritsListText = "";
-	if(inheritsText != "")
-	{
-		inheritsDetailText = inheritsText  + "DetailVM";
-		inheritsListText = inheritsText + "ListVM";
-    }
 #>
-    public class <#=className#>DetailVM <#= inheritsDetailText #>
+    public class <#=className#><#= inheritsText #>
     {
 <#	
 	foreach (var prop in properties) 
@@ -52,29 +45,6 @@ foreach (var aClass in xmlClasses)
 <#
         }
 
-		var propertyType = GetPropertyType(prop);
-		var propertyName = GetName(prop);
-#>
-		public <#= propertyType #> <#= propertyName #> { get; set; }
-
-<#
-	}
-#>
-	}
-
-	public class <#=className#>ListVM <#= inheritsListText #>
-    {
-<#	
-	foreach (var prop in properties) 
-	{
-		var annotationList = GetAnnotations(prop);
-
-		foreach(var anno in annotationList)
-        {
-#>
-		<#= anno #>
-<#
-        }
 		var propertyType = GetPropertyType(prop);
 		var propertyName = GetName(prop);
 #>

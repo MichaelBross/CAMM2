@@ -1,6 +1,6 @@
 ﻿<models>
   <class>
-    <name>Base</name>
+    <name>BaseDetailVM</name>
     <property>
       <name>IsObsolete</name>
       <type>bool</type>
@@ -23,7 +23,101 @@
     </property>    
   </class>
   <class>
-    <name>User</name>
+    <name>BaseListVM</name>
+    <property>
+      <name>IsObsolete</name>
+      <type>bool</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>CreateDate</name>
+      <type>DateTime</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>CreatedBy</name>
+      <type>User</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>UpdateDate</name>
+      <type>DateTime</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>UpdatedBy</name>
+      <type>User</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+  </class>
+  <class>
+    <name>ItemDetailVM</name>
+    <inherits>BaseDetailVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+      <annotations>[Display(Name = "Item Number")]</annotations>
+    </property>
+    <property>
+      <name>Description</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>UnitsOfMeasure</name>
+      <type>UnitsOfMeasure</type>
+      <annotations>[Display(Name = "Units of Measure")]</annotations>
+    </property>
+    <property>
+      <name>QtyOnHand</name>
+      <type>int</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
+    </property>
+    <property>
+      <name>Documents</name>
+      <type>IList&lt;Document&gt;</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+  </class>
+  <class>
+    <name>ItemListVM</name>
+    <inherits>BaseListVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+      <annotations>[Display(Name = "Item Number")]</annotations>
+    </property>
+    <property>
+      <name>Description</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>UnitsOfMeasure</name>
+      <type>UnitsOfMeasure</type>
+      <annotations>[Display(Name = "Units of Measure")]</annotations>
+    </property>
+    <property>
+      <name>QtyOnHand</name>
+      <type>int</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
+    </property>
+    <property>
+      <name>Documents</name>
+      <type>IList&lt;Document&gt;</type>
+      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+    </property>
+  </class>
+  <class>
+    <name>UserDetailVM</name>
     <property>
       <name>Id</name>
       <type>int</type>
@@ -62,8 +156,47 @@
     </property>
   </class>
   <class>
-    <name>Document</name>
-    <inherits>Base</inherits>
+    <name>UserListVM</name>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>FirstName</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>LastName</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>EmailAddress</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>IsObsolete</name>
+      <type>bool</type>
+    </property>
+    <property>
+      <name>CreateDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>CreatedBy</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>UpdateDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>UpdatedBy</name>
+      <type>int</type>
+    </property>
+  </class>
+  <class>
+    <name>DocumentDetailVM</name>
+    <inherits>BaseDetailVM</inherits>
     <property>
       <name>Id</name>
       <type>int</type>
@@ -90,16 +223,52 @@
     </property>
   </class>
   <class>
-    <name>Component</name>
-    <inherits>Item</inherits>
+    <name>DocumentListVM</name>
+    <inherits>BaseListVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Rev</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Title</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>DocType</name>
+      <type>DocumentType</type>
+    </property>
+    <property>
+      <name>Items</name>
+      <type>IList&lt;Item&gt;</type>
+    </property>
+  </class>
+  <class>
+    <name>ComponentDetailVM</name>
+    <inherits>ItemDetailVM</inherits>
     <property>
       <name>Manufacturer</name>
       <type>string</type>
     </property>
   </class>
   <class>
-    <name>Connector</name>
-    <inherits>Item</inherits>
+    <name>ComponentListVM</name>
+    <inherits>ItemListVM</inherits>
+    <property>
+      <name>Manufacturer</name>
+      <type>string</type>
+    </property>
+  </class>
+  <class>
+    <name>ConnectorDetailVM</name>
+    <inherits>ItemDetailVM</inherits>
     <property>
       <name>Family</name>
       <type>string</type>
@@ -114,8 +283,24 @@
     </property>
   </class>
   <class>
-    <name>Contact</name>
-    <inherits>Item</inherits>
+    <name>ConnectorListVM</name>
+    <inherits>ItemListVM</inherits>
+    <property>
+      <name>Family</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Comments</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Tools</name>
+      <type>IList&lt;Tool&gt;</type>
+    </property>
+  </class>
+  <class>
+    <name>ContactDetailVM</name>
+    <inherits>ItemDetailVM</inherits>
     <property>
       <name>Size</name>
       <type>string</type>
@@ -142,40 +327,69 @@
     </property>
   </class>
   <class>
-    <name>Item</name>
-    <inherits>Base</inherits>
+    <name>ContactListVM</name>
+    <inherits>ItemListVM</inherits>
     <property>
-      <name>Id</name>
-      <type>int</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
-    </property>
-    <property>
-      <name>Code</name>
-      <type>string</type>
-      <annotations>[Display(Name = "Item Number")]</annotations>
-    </property>
-    <property>
-      <name>Description</name>
+      <name>Size</name>
       <type>string</type>
     </property>
     <property>
-      <name>UnitsOfMeasure</name>
-      <type>UnitsOfMeasure</type>
-      <annotations>[Display(Name = "Units of Measure")]</annotations>
+      <name>Family</name>
+      <type>string</type>
     </property>
     <property>
-      <name>QtyOnHand</name>
+      <name>WireGageMin</name>
       <type>int</type>
-      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
     </property>
     <property>
-      <name>Documents</name>
-      <type>IList&lt;Document&gt;</type>
+      <name>WireGageMax</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Comments</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Tools</name>
+      <type>IList&lt;Tool&gt;</type>
     </property>
   </class>
+
   <class>
-    <name>Tool</name>
-    <inherits>Item</inherits>
+    <name>ToolDetailVM</name>
+    <inherits>ItemDetailVM</inherits>
+    <property>
+      <name>Manufacturer</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>BinNumber</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>MilitarySpecification</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>SerialNumber</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Comments</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Connectors</name>
+      <type>IList&lt;Connector&gt;</type>
+    </property>
+    <property>
+      <name>Contacts</name>
+      <type>IList&lt;Contact&gt;</type>
+    </property>
+  </class>  
+  <class>
+    <name>ToolListVM</name>
+    <inherits>ItemListVM</inherits>
     <property>
       <name>Manufacturer</name>
       <type>string</type>
@@ -206,8 +420,8 @@
     </property>
   </class>
   <class>
-    <name>Assembly</name>
-    <inherits>Item</inherits>
+    <name>AssemblyDetailVM</name>
+    <inherits>ItemDetailVM</inherits>
     <property>
       <name>Rev</name>
       <type>string</type>
@@ -218,8 +432,40 @@
     </property>
   </class>
   <class>
-    <name>AssemblyComponent</name>
-    <inherits>Base</inherits>
+    <name>AssemblyListVM</name>
+    <inherits>ItemListVM</inherits>
+    <property>
+      <name>Rev</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>AssemblyComponents</name>
+      <type>IList&lt;AssemblyComponent&gt;</type>
+    </property>
+  </class>
+  <class>
+    <name>AssemblyComponentDetailVM</name>
+    <inherits>BaseDetailVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Assembly</name>
+      <type>Assembly</type>
+    </property>
+    <property>
+      <name>Component</name>
+      <type>Component</type>
+    </property>
+    <property>
+      <name>Qty</name>
+      <type>Decimal</type>
+    </property>
+  </class>
+  <class>
+    <name>AssemblyComponentListVM</name>
+    <inherits>BaseListVM</inherits>
     <property>
       <name>Id</name>
       <type>int</type>
