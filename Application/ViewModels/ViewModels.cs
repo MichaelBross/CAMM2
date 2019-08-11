@@ -10,14 +10,19 @@ namespace Application.Service
 {
     public class BaseDetailVM
     {
+		[Display(Name = "Is Obsolete", Order = 1000)]
 		public bool IsObsolete { get; set; }
 
+		[Display(Name = "Create Date", Order = 1010)]
 		public DateTime CreateDate { get; set; }
 
+		[Display(Name = "Created By", Order = 1020)]
 		public User CreatedBy { get; set; }
 
+		[Display(Name = "Update Date", Order = 1030)]
 		public DateTime UpdateDate { get; set; }
 
+		[Display(Name = "Updated By", Order = 1040)]
 		public User UpdatedBy { get; set; }
 
 	}
@@ -25,18 +30,23 @@ namespace Application.Service
     public class BaseListVM
     {
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Is Obsolete", Order = 1000)]
 		public bool IsObsolete { get; set; }
 
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Create Date", Order = 1010)]
 		public DateTime CreateDate { get; set; }
 
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Created By", Order = 1020)]
 		public User CreatedBy { get; set; }
 
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Update Date", Order = 1030)]
 		public DateTime UpdateDate { get; set; }
 
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Updated By", Order = 1040)]
 		public User UpdatedBy { get; set; }
 
 	}
@@ -46,18 +56,20 @@ namespace Application.Service
 		[HiddenInput(DisplayValue = false)]
 		public int Id { get; set; }
 
-		[Display(Name = "Item Number")]
+		[Display(Name = "Item Number", Order = -100)]
 		public string Code { get; set; }
 
+		[Display(Name = "Description", Order = -90)]
 		public string Description { get; set; }
 
-		[Display(Name = "Units of Measure")]
+		[Display(Name = "Units of Measure", Order = -80)]
 		public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
 		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
-		[Display(Name = "Qty on Hand")]
+		[Display(Name = "Qty on Hand", Order = -70)]
 		public int QtyOnHand { get; set; }
 
+		[Display(Name = "Documents", Order = -60)]
 		public IList<Document> Documents { get; set; }
 
 	}
@@ -174,10 +186,13 @@ namespace Application.Service
 
     public class ConnectorDetailVM : ItemDetailVM
     {
+		[Display(Name = "Family", Order = -69)]
 		public string Family { get; set; }
 
+		[Display(Name = "Comments", Order = -68)]
 		public string Comments { get; set; }
 
+		[Display(Name = "Tools", Order = -59)]
 		public IList<Tool> Tools { get; set; }
 
 	}

@@ -113,10 +113,11 @@ foreach (var aClass in xmlClasses)
             var result = _unitOfWork.<#=className#>s.Search(searchParams)
                 .Select(i => new <#=className#>ListVM()
                 {
-<#		
-	var inhertiedProperties = GetInheritedProperties(aClass, XDoc);
-	properties.AddRange(inhertiedProperties);
-	foreach (var prop in properties) 
+<#	
+	var allProperties = new List<XElement>();	
+	allProperties.AddRange(GetInheritedProperties(aClass, XDoc));
+	allProperties.AddRange(properties);
+	foreach (var prop in allProperties) 
 	{
 		var propertyType = GetPropertyType(prop);
 		var propertyName = GetName(prop);

@@ -4,50 +4,55 @@
     <property>
       <name>IsObsolete</name>
       <type>bool</type>
+      <annotations>[Display(Name = "Is Obsolete", Order = 1000)]</annotations>
     </property>
     <property>
       <name>CreateDate</name>
       <type>DateTime</type>
+      <annotations>[Display(Name = "Create Date", Order = 1010)]</annotations>
     </property>
     <property>
       <name>CreatedBy</name>
       <type>User</type>
+      <annotations>[Display(Name = "Created By", Order = 1020)]</annotations>
     </property>
     <property>
       <name>UpdateDate</name>
       <type>DateTime</type>
+      <annotations>[Display(Name = "Update Date", Order = 1030)]</annotations>
     </property>
     <property>
       <name>UpdatedBy</name>
       <type>User</type>
-    </property>    
+      <annotations>[Display(Name = "Updated By", Order = 1040)]</annotations>
+    </property> 
   </class>
   <class>
     <name>BaseListVM</name>
     <property>
       <name>IsObsolete</name>
       <type>bool</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Is Obsolete", Order = 1000)]</annotations>
     </property>
     <property>
       <name>CreateDate</name>
       <type>DateTime</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Create Date", Order = 1010)]</annotations>
     </property>
     <property>
       <name>CreatedBy</name>
       <type>User</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Created By", Order = 1020)]</annotations>
     </property>
     <property>
       <name>UpdateDate</name>
       <type>DateTime</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Update Date", Order = 1030)]</annotations>
     </property>
     <property>
       <name>UpdatedBy</name>
       <type>User</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Updated By", Order = 1040)]</annotations>
     </property>
   </class>
   <class>
@@ -61,25 +66,27 @@
     <property>
       <name>Code</name>
       <type>string</type>
-      <annotations>[Display(Name = "Item Number")]</annotations>
+      <annotations>[Display(Name = "Item Number", Order = -100)]</annotations>
     </property>
     <property>
       <name>Description</name>
       <type>string</type>
+      <annotations>[Display(Name = "Description", Order = -90)]</annotations>
     </property>
     <property>
       <name>UnitsOfMeasure</name>
       <type>UnitsOfMeasure</type>
-      <annotations>[Display(Name = "Units of Measure")]</annotations>
+      <annotations>[Display(Name = "Units of Measure", Order = -80)]</annotations>
     </property>
     <property>
       <name>QtyOnHand</name>
       <type>int</type>
-      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand", Order = -70)]</annotations>
     </property>
     <property>
       <name>Documents</name>
       <type>IList&lt;Document&gt;</type>
+    <annotations>[Display(Name = "Documents", Order = -60)]</annotations>
     </property>
   </class>
   <class>
@@ -271,14 +278,17 @@
     <property>
       <name>Family</name>
       <type>string</type>
+      <annotations>[Display(Name = "Family", Order = -69)]</annotations>
     </property>
     <property>
       <name>Comments</name>
       <type>string</type>
+      <annotations>[Display(Name = "Comments", Order = -68)]</annotations>
     </property>
     <property>
       <name>Tools</name>
       <type>IList&lt;Tool&gt;</type>
+      <annotations>[Display(Name = "Tools", Order = -59)]</annotations>
     </property>
   </class>
   <class>

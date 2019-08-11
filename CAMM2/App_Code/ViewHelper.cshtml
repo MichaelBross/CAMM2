@@ -22,13 +22,24 @@ var methodNames = new List<string>();
     <form id="addeditform">
         <div class="card-body" data-bind="with:Item">
             <div class="row" style="margin-bottom:5mm; margin-right:5mm">
-                @foreach (var p in _detailVM.GetType().GetProperties())
+                @{ 
+                    var properties = from property in _detailVM.GetType().GetProperties()
+                                     where Attribute.IsDefined(property, typeof(DisplayAttribute))
+                                     orderby ((DisplayAttribute)property
+                                             .GetCustomAttributes(typeof(DisplayAttribute), false)
+                                             .Single()).Order
+                                     select property;
+
+                }
+                
+
+                @foreach (var p in properties)
                 {
                     var displayName = p.Name;
                     var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
                     if (displayAttr != null)
                     {
-                        displayName = displayAttr.Name;
+                        displayName = displayAttr.Name;                        
                     }
 
                     var hidden = false;
@@ -100,12 +111,12 @@ var methodNames = new List<string>();
 
                     if (p.PropertyType.Name.Contains("IList"))
                     {
-                        var buttonName = p.Name + "Button";
-                        var methodName = "Get" + p.Name;
+                        var buttonName = "get" + p.Name + "Btn";
+                        var methodName = "Get" + p.Name + "()";
                         methodNames.Add(methodName);
-                        <div class="camm-control-group">
+                        <div class="camm-control-group-sm">
                             <label class="control-label" for="@buttonName">@displayName</label>
-                            <button class="form-control" id="@buttonName" name="@buttonName" onclick="@methodName">Show</button>
+                            <button type="button" class="btn btn-primary btn-block" id="@buttonName" name="@buttonName" onclick="@methodName">Open @p.Name List</button>
                         </div>
                     }
 
@@ -121,10 +132,15 @@ var methodNames = new List<string>();
     </style>
 
     <script>
-        @foreach(var methodName in methodNames)
-        {
-            
+@foreach(var methodName in methodNames)
+{
+    var functionName = methodName;
+        <text>
+        function @functionName {
+            alert("@methodName pressed.");
+        }
 
+        </text>
         }
         $(document).ready(function () {
             $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6");
