@@ -10,8 +10,10 @@
 @helper DetailsFromModel(object detailVM, System.Web.Mvc.WebViewPage page)
 {
 
-    var Html = page.Html;
-    var _detailVM = detailVM;
+var Html = page.Html;
+var _detailVM = detailVM;
+
+var methodNames = new List<string>();
 
     <div id="validationSummary">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -96,6 +98,17 @@
                         </div>
                     }
 
+                    if (p.PropertyType.Name.Contains("IList"))
+                    {
+                        var buttonName = p.Name + "Button";
+                        var methodName = "Get" + p.Name;
+                        methodNames.Add(methodName);
+                        <div class="camm-control-group">
+                            <label class="control-label" for="@buttonName">@displayName</label>
+                            <button class="form-control" id="@buttonName" name="@buttonName" onclick="@methodName">Show</button>
+                        </div>
+                    }
+
                 }
             </div>
         </div>
@@ -108,9 +121,14 @@
     </style>
 
     <script>
+        @foreach(var methodName in methodNames)
+        {
+            
+
+        }
         $(document).ready(function () {
             $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6");
-            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6");            
+            $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6");
         });
     </script>
 }

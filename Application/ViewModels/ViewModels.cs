@@ -58,7 +58,6 @@ namespace Application.Service
 		[Display(Name = "Qty on Hand")]
 		public int QtyOnHand { get; set; }
 
-		[HiddenInput(DisplayValue = false)]
 		public IList<Document> Documents { get; set; }
 
 	}

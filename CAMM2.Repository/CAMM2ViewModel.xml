@@ -80,7 +80,6 @@
     <property>
       <name>Documents</name>
       <type>IList&lt;Document&gt;</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
     </property>
   </class>
   <class>
