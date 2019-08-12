@@ -61,32 +61,32 @@
     <property>
       <name>Id</name>
       <type>int</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Id", Order = -100)]</annotations>
     </property>
     <property>
       <name>Code</name>
       <type>string</type>
-      <annotations>[Display(Name = "Item Number", Order = -100)]</annotations>
+      <annotations>[Display(Name = "Item Number", Order = -90)]</annotations>
     </property>
     <property>
       <name>Description</name>
       <type>string</type>
-      <annotations>[Display(Name = "Description", Order = -90)]</annotations>
+      <annotations>[Display(Name = "Description", Order = -80)]</annotations>
     </property>
     <property>
       <name>UnitsOfMeasure</name>
       <type>UnitsOfMeasure</type>
-      <annotations>[Display(Name = "Units of Measure", Order = -80)]</annotations>
+      <annotations>[Display(Name = "Units of Measure", Order = -70)]</annotations>
     </property>
     <property>
       <name>QtyOnHand</name>
       <type>int</type>
-      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand", Order = -70)]</annotations>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand", Order = -60)]</annotations>
     </property>
     <property>
       <name>Documents</name>
       <type>IList&lt;Document&gt;</type>
-    <annotations>[Display(Name = "Documents", Order = -60)]</annotations>
+    <annotations>[Display(Name = "Documents", Order = -50)]</annotations>
     </property>
   </class>
   <class>
@@ -95,31 +95,32 @@
     <property>
       <name>Id</name>
       <type>int</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Item Number", Order = -90)]</annotations>
     </property>
     <property>
       <name>Code</name>
       <type>string</type>
-      <annotations>[Display(Name = "Item Number")]</annotations>
+      <annotations>[Display(Name = "Item Number", Order = -80)]</annotations>
     </property>
     <property>
       <name>Description</name>
       <type>string</type>
+      <annotations>[Display(Name = "Description", Order = -70)]</annotations>
     </property>
     <property>
       <name>UnitsOfMeasure</name>
       <type>UnitsOfMeasure</type>
-      <annotations>[Display(Name = "Units of Measure")]</annotations>
+      <annotations>[Display(Name = "Units of Measure", Order = -60)]</annotations>
     </property>
     <property>
       <name>QtyOnHand</name>
       <type>int</type>
-      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand")]</annotations>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty on Hand", Order = -50)]</annotations>
     </property>
     <property>
       <name>Documents</name>
       <type>IList&lt;Document&gt;</type>
-      <annotations>[HiddenInput(DisplayValue = false)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Documents", Order = -40)]</annotations>
     </property>
   </class>
   <class>

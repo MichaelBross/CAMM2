@@ -29,9 +29,7 @@ var methodNames = new List<string>();
                                              .GetCustomAttributes(typeof(DisplayAttribute), false)
                                              .Single()).Order
                                      select property;
-
                 }
-                
 
                 @foreach (var p in properties)
                 {

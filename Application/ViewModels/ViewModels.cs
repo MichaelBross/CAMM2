@@ -54,22 +54,23 @@ namespace Application.Service
     public class ItemDetailVM : BaseDetailVM
     {
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Id", Order = -100)]
 		public int Id { get; set; }
 
-		[Display(Name = "Item Number", Order = -100)]
+		[Display(Name = "Item Number", Order = -90)]
 		public string Code { get; set; }
 
-		[Display(Name = "Description", Order = -90)]
+		[Display(Name = "Description", Order = -80)]
 		public string Description { get; set; }
 
-		[Display(Name = "Units of Measure", Order = -80)]
+		[Display(Name = "Units of Measure", Order = -70)]
 		public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
 		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
-		[Display(Name = "Qty on Hand", Order = -70)]
+		[Display(Name = "Qty on Hand", Order = -60)]
 		public int QtyOnHand { get; set; }
 
-		[Display(Name = "Documents", Order = -60)]
+		[Display(Name = "Documents", Order = -50)]
 		public IList<Document> Documents { get; set; }
 
 	}
@@ -77,21 +78,24 @@ namespace Application.Service
     public class ItemListVM : BaseListVM
     {
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Item Number", Order = -90)]
 		public int Id { get; set; }
 
-		[Display(Name = "Item Number")]
+		[Display(Name = "Item Number", Order = -80)]
 		public string Code { get; set; }
 
+		[Display(Name = "Description", Order = -70)]
 		public string Description { get; set; }
 
-		[Display(Name = "Units of Measure")]
+		[Display(Name = "Units of Measure", Order = -60)]
 		public UnitsOfMeasure UnitsOfMeasure { get; set; }
 
 		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
-		[Display(Name = "Qty on Hand")]
+		[Display(Name = "Qty on Hand", Order = -50)]
 		public int QtyOnHand { get; set; }
 
 		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Documents", Order = -40)]
 		public IList<Document> Documents { get; set; }
 
 	}

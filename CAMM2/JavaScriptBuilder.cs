@@ -113,7 +113,15 @@ namespace Presentation
         public static MvcHtmlString TableColumns(object viewModel)
         {
             var columnsList = new List<JsColumn>();
-            foreach (var p in viewModel.GetType().GetProperties())
+
+            var properties = from property in viewModel.GetType().GetProperties()
+                             where Attribute.IsDefined(property, typeof(DisplayAttribute))
+                             orderby ((DisplayAttribute)property
+                                     .GetCustomAttributes(typeof(DisplayAttribute), false)
+                                     .Single()).Order
+                             select property;
+
+            foreach (var p in properties)
             {
                 var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
                 var title = p.Name;
