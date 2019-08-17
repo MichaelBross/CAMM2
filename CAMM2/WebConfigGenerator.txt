@@ -1,3 +1,4 @@
+﻿// Generated Code! Do not manually edit. Adjust template (WebConfigGenerator.tt) to make changes to this file.
 <?xml version="1.0"?>
 
 <configuration>

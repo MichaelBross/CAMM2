@@ -1,4 +1,4 @@
-// Generated Code! Do not manually edit. Adjust template (Controllers.tt) to make changes to this file.
+// Generated Code! Do not manually edit. Adjust template (ControllersGenerator.tt) to make changes to this file.
  
 using System;
 using System.Collections.Generic;

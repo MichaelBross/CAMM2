@@ -229,19 +229,14 @@
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
-    <Content Include="Controllers.tt">
+    <Content Include="ControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Controllers1.txt</LastGenOutput>
+      <LastGenOutput>ControllersGenerator.txt</LastGenOutput>
     </Content>
-    <Content Include="Controllers.txt">
+    <Content Include="ControllersGenerator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Controllers.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers1.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Controllers.tt</DependentUpon>
+      <DependentUpon>ControllersGenerator.tt</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -315,6 +310,20 @@
     <Content Include="Connector\Views\_ViewStart.cshtml" />
     <Content Include="Connector\Views\Index.cshtml" />
     <Content Include="Connector\Web.config" />
+    <Content Include="WebConfigGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WebConfigGenerator.txt</LastGenOutput>
+    </Content>
+    <Content Include="WebConfigGenerator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebConfigGenerator.tt</DependentUpon>
+    </Content>
+    <Content Include="Assembly\Web.config" />
+    <Content Include="AssemblyComponent\Web.config" />
+    <Content Include="Component\Web.config" />
+    <Content Include="Contact\Web.config" />
+    <Content Include="Document\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -429,6 +438,15 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="ViewsGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ViewsGenerator.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewsGenerator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewsGenerator.tt</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -452,6 +470,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Tool\Web.config" />
+    <Content Include="User\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
