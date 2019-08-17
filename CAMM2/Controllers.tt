@@ -160,6 +160,6 @@ namespace Presentation
 		Directory.CreateDirectory(targetDirectoryPath);
     }
 
-	SaveOutput(targetDirectoryPath, className + "Controller");
+	SaveOutput(targetDirectoryPath, className + "Controller.cs");
 }
 #>

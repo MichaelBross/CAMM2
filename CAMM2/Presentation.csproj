@@ -143,8 +143,12 @@
       <DependentUpon>NinjectWebCommon.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AssemblyComponent\AssemblyComponentController.cs" />
+    <Compile Include="Assembly\AssemblyController.cs" />
+    <Compile Include="Component\ComponentController.cs" />
     <Compile Include="Connector\ConnectorController.cs" />
-    <Compile Include="Connectors\ConnectorsController.cs" />
+    <Compile Include="Contact\ContactController.cs" />
+    <Compile Include="Document\DocumentController.cs" />
     <Compile Include="Item\ItemController.cs" />
     <Compile Include="JavaScriptBuilder.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -154,6 +158,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tool\ToolController.cs" />
+    <Compile Include="User\UserController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Start\NinjectWebCommon.tt">
@@ -225,9 +231,14 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Controllers.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Controllers.txt</LastGenOutput>
+      <LastGenOutput>Controllers1.txt</LastGenOutput>
     </Content>
     <Content Include="Controllers.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controllers.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Controllers.tt</DependentUpon>
@@ -301,16 +312,9 @@
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls.swf" />
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls_pdf.swf" />
     <Content Include="App_Code\ViewHelper.cshtml" />
-    <Content Include="Connectors\Views\_ViewStart.cshtml" />
-    <Content Include="Connectors\Web.config" />
     <Content Include="Connector\Views\_ViewStart.cshtml" />
     <Content Include="Connector\Views\Index.cshtml" />
     <Content Include="Connector\Web.config" />
-    <Content Include="Assembly\AssemblyController" />
-    <Content Include="AssemblyComponent\AssemblyComponentController" />
-    <Content Include="Component\ComponentController" />
-    <Content Include="Contact\ContactController" />
-    <Content Include="Document\DocumentController" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -448,9 +452,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Connectors\Views\Index.cshtml" />
-    <Content Include="Tool\ToolController" />
-    <Content Include="User\UserController" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
