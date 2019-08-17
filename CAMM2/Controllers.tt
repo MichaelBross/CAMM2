@@ -1,0 +1,165 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\Application\T4Library.t4" #><#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+	var thisFileName = GetFileName();
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
+#>
+<#= doNotEditGeneratedFileWarning #>
+<#
+foreach (var aClass in xmlClasses) 
+{
+	var className = GetName(aClass);
+	if(className == "Base")
+	continue;
+	var classNameLower = className.ToLower();
+	var properties = GetProperties(aClass);
+	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
+	var inheritsText = GetInheritanceText(aClass);
+#> 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Application;
+using Application.Interfaces;
+using Application.Service;
+
+namespace Presentation
+{ 
+    public class <#=className#>Controller : BaseController
+    {
+        private readonly IUnitOfWork _unitOfWork;      
+        private readonly I<#=className#>Service _<#=classNameLower#>Service;        
+
+        public <#=className#>Controller(IUnitOfWork unitOfWork, I<#=className#>Service <#=classNameLower#>Service)
+        {            
+            _unitOfWork = unitOfWork;
+            _<#=classNameLower#>Service = <#=classNameLower#>Service;            
+        }
+
+        // GET: <#=className#>
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+<# if(propertiesTypesString.Count > 0){ #>
+        [HttpPost]
+        public JsonResult SearchServerSide()
+        {
+            // Get Server Side Parameters from Request
+            var searchParams = MapDataTableRequestToSearchParams(Request);
+
+            // Total record count
+            int totalrows = _unitOfWork.<#=className#>s.GetAll().Count();
+            
+            // Search
+            var searchResults = _<#=classNameLower#>Service.Search(searchParams);
+                       
+            // Filtered record count
+            int totalrowsafterfiltering = searchResults.Count();
+
+            return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+        }
+<# } #>
+
+        // POST: <#=className#>/Add
+        [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] <#=className#>DetailVM <#=classNameLower#>VM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _<#=classNameLower#>Service.Add(<#=classNameLower#>VM);
+                    return Json(new { success = true, model = <#=classNameLower#>VM });
+                }
+                catch (Exception ex)
+                {
+                    if(ex.Message.Contains("IX_Code"))
+                        ModelState.AddModelError("Code", "This <#=className#> Number already exists. Duplicate <#=className#> Numbers are not allowed.");
+                    else
+                        ModelState.AddModelError(string.Empty, "The save failed.");
+                }
+            }
+            return JsonErrorResult();
+        }
+
+        // POST: <#=className#>/Edit
+        [HttpPost]
+        [ValidateJsonAntiForgeryToken]        
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]<#=className#>VM revised)
+        public JsonResult Update(<#=className#>DetailVM revised)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var updated = _<#=classNameLower#>Service.Update(revised);                     
+                    return Json(new { success = true, model = updated });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("IX_Code"))
+                        ModelState.AddModelError("Code", "This <#=className#> Number already exists. Duplicate <#=className#> Numbers are not allowed.");
+                    else
+                        ModelState.AddModelError(string.Empty, "The save failed.");
+                }
+            }
+
+            return JsonErrorResult();
+        }
+
+        // POST: <#=className#>/Delete
+        [ValidateJsonAntiForgeryToken]
+        [HttpPost]
+        public JsonResult Delete([Bind(Include = "Id")] <#=className#>DetailVM toBeRemoved)
+        {
+            if (toBeRemoved.Id == 0)
+            {
+                return Json(new { success = false, ErrorMessage = "Id cannot be zero." });
+            }
+
+            try
+            {
+                _<#=classNameLower#>Service.Remove(toBeRemoved);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("<#=className#> not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the <#=classNameLower#> was not found.");
+                else
+                    ModelState.AddModelError(string.Empty, "The delete failed.");
+
+                return JsonErrorResult();
+            }            
+        }
+    }
+}
+<#
+	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	string targetDirectoryPath = Path.Combine(templateDirectory, className);
+	var needDirectory = !Directory.Exists(targetDirectoryPath);
+	if(needDirectory)
+    {
+		Directory.CreateDirectory(targetDirectoryPath);
+    }
+
+	SaveOutput(targetDirectoryPath, className + "Controller");
+}
+#>

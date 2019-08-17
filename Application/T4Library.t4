@@ -111,4 +111,34 @@
 
 		return annotationList;
     }
+
+	string GetFileName()
+    {
+		string thisFilePath = this.Host.TemplateFile;
+		var indexOf = thisFilePath.LastIndexOf('\\');
+		string thisFileName = thisFilePath.Substring(indexOf + 1);
+		return thisFileName;
+    }
+
+	string GetDoNotManuallyEditWarning()
+    {
+		var thisFileName = GetFileName();
+		var editWarning = "// Generated Code! Do not manually edit. Adjust template (" + thisFileName + ") to make changes to this file.";
+		return editWarning;
+    }
+
+	void SaveOutput(string outputFileName) 
+	{
+	  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	  string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	  File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+	}
+
+	void SaveOutput(string targetDirectory, string outputFileName)
+    {
+	  string outputFilePath = Path.Combine(targetDirectory, outputFileName);
+	  File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+    }
 #>

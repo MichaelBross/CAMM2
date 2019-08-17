@@ -3,19 +3,19 @@
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>
 <#@ Assembly Name="System.Xml.Linq.dll" #>
-<#@ Assembly Name="System.Windows.Forms.dll" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections" #>
-<#@ import namespace="System.Collections.Generic" #> 
-<#@ include file="..\..\T4Library.t4" #>
-<#
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\..\T4Library.t4" #><#
 	var XDoc = GetXDocument("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
 	var xmlClasses  = GetClassesFromXDoc(XDoc);
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
 #>
+<#= doNotEditGeneratedFileWarning #>
 using System;
 using System.Collections.Generic;
 using System.Linq;

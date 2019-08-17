@@ -1,4 +1,5 @@
-﻿using System;
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,19 +9,19 @@ using Application.Interfaces;
 using Application.Service;
 
 namespace Presentation
-{
-    public class ConnectorsController : BaseController
+{ 
+    public class ItemController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;        
-        private readonly IConnectorService _connectorService;        
+        private readonly IUnitOfWork _unitOfWork;      
+        private readonly IItemService _itemService;        
 
-        public ConnectorsController(IUnitOfWork unitOfWork, IConnectorService connectorService)
+        public ItemController(IUnitOfWork unitOfWork, IItemService itemService)
         {            
             _unitOfWork = unitOfWork;
-            _connectorService = connectorService;            
+            _itemService = itemService;            
         }
 
-        // GET: Connectors
+        // GET: Item
         public ActionResult Index()
         {
             return View();
@@ -33,10 +34,10 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Connectors.GetAll().Count();
+            int totalrows = _unitOfWork.Items.GetAll().Count();
             
             // Search
-            var searchResults = _connectorService.Search(searchParams);
+            var searchResults = _itemService.Search(searchParams);
                        
             // Filtered record count
             int totalrowsafterfiltering = searchResults.Count();
@@ -44,22 +45,22 @@ namespace Presentation
             return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Connectors/Add
+        // POST: Item/Add
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
-        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ConnectorDetailVM connectorVM)
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ItemDetailVM itemVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _connectorService.Add(connectorVM);
-                    return Json(new { success = true, model = connectorVM });
+                    _itemService.Add(itemVM);
+                    return Json(new { success = true, model = itemVM });
                 }
                 catch (Exception ex)
                 {
                     if(ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Connector Number already exists. Duplicate Connector Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -67,23 +68,23 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Edit
+        // POST: Item/Edit
         [HttpPost]
         [ValidateJsonAntiForgeryToken]        
-        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ConnectorVM revised)
-        public JsonResult Update(ConnectorDetailVM revised)
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
+        public JsonResult Update(ItemDetailVM revised)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var updated = _connectorService.Update(revised);                     
+                    var updated = _itemService.Update(revised);                     
                     return Json(new { success = true, model = updated });
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Connector Number already exists. Duplicate Connector Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -92,10 +93,10 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Delete
+        // POST: Item/Delete
         [ValidateJsonAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] ConnectorDetailVM toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] ItemDetailVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {
@@ -104,13 +105,13 @@ namespace Presentation
 
             try
             {
-                _connectorService.Remove(toBeRemoved);
+                _itemService.Remove(toBeRemoved);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("Connector not found."))
-                    ModelState.AddModelError(string.Empty, "The delete failed because the connector was not found.");
+                if (ex.Message.Contains("Item not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the item was not found.");
                 else
                     ModelState.AddModelError(string.Empty, "The delete failed.");
 

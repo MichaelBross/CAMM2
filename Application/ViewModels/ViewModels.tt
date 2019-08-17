@@ -27,7 +27,7 @@ namespace Application.Service
 <#
 foreach (var aClass in xmlClasses) 
 {
-	var className = GetName(aClass);
+	var className = GetName(aClass);	
 	var properties = GetProperties(aClass);
 	var inheritsText = GetInheritanceText(aClass);
 #>
@@ -57,7 +57,5 @@ foreach (var aClass in xmlClasses)
 
 <#
 }
-
-
 #>
 }

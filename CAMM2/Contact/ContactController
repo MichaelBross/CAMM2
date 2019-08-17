@@ -1,4 +1,5 @@
-﻿using System;
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,21 +8,20 @@ using Application;
 using Application.Interfaces;
 using Application.Service;
 
-namespace Presentation.Items
-{
-    public class ItemsController : BaseController
+namespace Presentation
+{ 
+    public class ContactController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        //private readonly IGetItemList _getItemList;
-        private readonly IItemService _itemService;        
+        private readonly IUnitOfWork _unitOfWork;      
+        private readonly IContactService _contactService;        
 
-        public ItemsController(IUnitOfWork unitOfWork, IItemService itemService)
+        public ContactController(IUnitOfWork unitOfWork, IContactService contactService)
         {            
             _unitOfWork = unitOfWork;
-            _itemService = itemService;            
+            _contactService = contactService;            
         }
 
-        // GET: Items
+        // GET: Contact
         public ActionResult Index()
         {
             return View();
@@ -34,10 +34,10 @@ namespace Presentation.Items
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Items.GetAll().Count();
+            int totalrows = _unitOfWork.Contacts.GetAll().Count();
             
             // Search
-            var searchResults = _itemService.Search(searchParams);
+            var searchResults = _contactService.Search(searchParams);
                        
             // Filtered record count
             int totalrowsafterfiltering = searchResults.Count();
@@ -45,22 +45,22 @@ namespace Presentation.Items
             return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Items/Add
+        // POST: Contact/Add
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
-        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ItemDetailVM itemVM)
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ContactDetailVM contactVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _itemService.Add(itemVM);
-                    return Json(new { success = true, model = itemVM });
+                    _contactService.Add(contactVM);
+                    return Json(new { success = true, model = contactVM });
                 }
                 catch (Exception ex)
                 {
                     if(ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Contact Number already exists. Duplicate Contact Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -68,23 +68,23 @@ namespace Presentation.Items
             return JsonErrorResult();
         }
 
-        // POST: Items/Edit
+        // POST: Contact/Edit
         [HttpPost]
         [ValidateJsonAntiForgeryToken]        
-        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ItemVM revised)
-        public JsonResult Update(ItemDetailVM revised)
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ContactVM revised)
+        public JsonResult Update(ContactDetailVM revised)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var updated = _itemService.Update(revised);                     
+                    var updated = _contactService.Update(revised);                     
                     return Json(new { success = true, model = updated });
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Item Number already exists. Duplicate Item Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Contact Number already exists. Duplicate Contact Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -93,10 +93,10 @@ namespace Presentation.Items
             return JsonErrorResult();
         }
 
-        // POST: Items/Delete
+        // POST: Contact/Delete
         [ValidateJsonAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] ItemDetailVM toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] ContactDetailVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {
@@ -105,21 +105,18 @@ namespace Presentation.Items
 
             try
             {
-                _itemService.Remove(toBeRemoved);
+                _contactService.Remove(toBeRemoved);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("Item not found."))
-                    ModelState.AddModelError(string.Empty, "The delete failed because the item was not found.");
+                if (ex.Message.Contains("Contact not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the contact was not found.");
                 else
                     ModelState.AddModelError(string.Empty, "The delete failed.");
 
                 return JsonErrorResult();
             }            
         }
-
-
-
     }
 }

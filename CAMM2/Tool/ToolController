@@ -1,4 +1,5 @@
-﻿using System;
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,19 +9,19 @@ using Application.Interfaces;
 using Application.Service;
 
 namespace Presentation
-{
-    public class ConnectorsController : BaseController
+{ 
+    public class ToolController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;        
-        private readonly IConnectorService _connectorService;        
+        private readonly IUnitOfWork _unitOfWork;      
+        private readonly IToolService _toolService;        
 
-        public ConnectorsController(IUnitOfWork unitOfWork, IConnectorService connectorService)
+        public ToolController(IUnitOfWork unitOfWork, IToolService toolService)
         {            
             _unitOfWork = unitOfWork;
-            _connectorService = connectorService;            
+            _toolService = toolService;            
         }
 
-        // GET: Connectors
+        // GET: Tool
         public ActionResult Index()
         {
             return View();
@@ -33,10 +34,10 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Connectors.GetAll().Count();
+            int totalrows = _unitOfWork.Tools.GetAll().Count();
             
             // Search
-            var searchResults = _connectorService.Search(searchParams);
+            var searchResults = _toolService.Search(searchParams);
                        
             // Filtered record count
             int totalrowsafterfiltering = searchResults.Count();
@@ -44,22 +45,22 @@ namespace Presentation
             return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Connectors/Add
+        // POST: Tool/Add
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
-        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ConnectorDetailVM connectorVM)
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ToolDetailVM toolVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _connectorService.Add(connectorVM);
-                    return Json(new { success = true, model = connectorVM });
+                    _toolService.Add(toolVM);
+                    return Json(new { success = true, model = toolVM });
                 }
                 catch (Exception ex)
                 {
                     if(ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Connector Number already exists. Duplicate Connector Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Tool Number already exists. Duplicate Tool Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -67,23 +68,23 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Edit
+        // POST: Tool/Edit
         [HttpPost]
         [ValidateJsonAntiForgeryToken]        
-        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ConnectorVM revised)
-        public JsonResult Update(ConnectorDetailVM revised)
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ToolVM revised)
+        public JsonResult Update(ToolDetailVM revised)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var updated = _connectorService.Update(revised);                     
+                    var updated = _toolService.Update(revised);                     
                     return Json(new { success = true, model = updated });
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This Connector Number already exists. Duplicate Connector Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This Tool Number already exists. Duplicate Tool Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -92,10 +93,10 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Delete
+        // POST: Tool/Delete
         [ValidateJsonAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] ConnectorDetailVM toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] ToolDetailVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {
@@ -104,13 +105,13 @@ namespace Presentation
 
             try
             {
-                _connectorService.Remove(toBeRemoved);
+                _toolService.Remove(toBeRemoved);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("Connector not found."))
-                    ModelState.AddModelError(string.Empty, "The delete failed because the connector was not found.");
+                if (ex.Message.Contains("Tool not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the tool was not found.");
                 else
                     ModelState.AddModelError(string.Empty, "The delete failed.");
 

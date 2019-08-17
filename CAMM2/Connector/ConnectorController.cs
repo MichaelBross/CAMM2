@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,19 +8,19 @@ using Application.Interfaces;
 using Application.Service;
 
 namespace Presentation
-{
-    public class ConnectorsController : BaseController
+{ 
+    public class ConnectorController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;        
+        private readonly IUnitOfWork _unitOfWork;      
         private readonly IConnectorService _connectorService;        
 
-        public ConnectorsController(IUnitOfWork unitOfWork, IConnectorService connectorService)
+        public ConnectorController(IUnitOfWork unitOfWork, IConnectorService connectorService)
         {            
             _unitOfWork = unitOfWork;
             _connectorService = connectorService;            
         }
 
-        // GET: Connectors
+        // GET: Connector
         public ActionResult Index()
         {
             return View();
@@ -44,7 +44,7 @@ namespace Presentation
             return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Connectors/Add
+        // POST: Connector/Add
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
         public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] ConnectorDetailVM connectorVM)
@@ -67,7 +67,7 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Edit
+        // POST: Connector/Edit
         [HttpPost]
         [ValidateJsonAntiForgeryToken]        
         //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]ConnectorVM revised)
@@ -92,7 +92,7 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: Connectors/Delete
+        // POST: Connector/Delete
         [ValidateJsonAntiForgeryToken]
         [HttpPost]
         public JsonResult Delete([Bind(Include = "Id")] ConnectorDetailVM toBeRemoved)

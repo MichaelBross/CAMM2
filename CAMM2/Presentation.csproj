@@ -143,7 +143,9 @@
       <DependentUpon>NinjectWebCommon.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connector\ConnectorController.cs" />
     <Compile Include="Connectors\ConnectorsController.cs" />
+    <Compile Include="Item\ItemController.cs" />
     <Compile Include="JavaScriptBuilder.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BaseController.cs" />
@@ -151,7 +153,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Items\ItemsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -222,13 +223,22 @@
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
+    <Content Include="Controllers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controllers.txt</LastGenOutput>
+    </Content>
+    <Content Include="Controllers.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controllers.tt</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
-    <Content Include="Items\Views\Index.cshtml" />
-    <Content Include="Items\Web.config" />
+    <Content Include="Item\Views\Index.cshtml" />
+    <Content Include="Item\Web.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -259,7 +269,7 @@
     <Content Include="Content\datatables.extensions\TableTools\images\psd\copy document.psd" />
     <Content Include="Content\datatables.extensions\TableTools\images\psd\collection.psd" />
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
-    <Content Include="Items\Views\_ViewStart.cshtml" />
+    <Content Include="Item\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker3.css.map" />
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
@@ -293,6 +303,14 @@
     <Content Include="App_Code\ViewHelper.cshtml" />
     <Content Include="Connectors\Views\_ViewStart.cshtml" />
     <Content Include="Connectors\Web.config" />
+    <Content Include="Connector\Views\_ViewStart.cshtml" />
+    <Content Include="Connector\Views\Index.cshtml" />
+    <Content Include="Connector\Web.config" />
+    <Content Include="Assembly\AssemblyController" />
+    <Content Include="AssemblyComponent\AssemblyComponentController" />
+    <Content Include="Component\ComponentController" />
+    <Content Include="Contact\ContactController" />
+    <Content Include="Document\DocumentController" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -431,6 +449,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Connectors\Views\Index.cshtml" />
+    <Content Include="Tool\ToolController" />
+    <Content Include="User\UserController" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
