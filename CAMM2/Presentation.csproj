@@ -324,6 +324,16 @@
     <Content Include="Component\Web.config" />
     <Content Include="Contact\Web.config" />
     <Content Include="Document\Web.config" />
+    <Content Include="Assembly\Views\Index.cshtml" />
+    <Content Include="AssemblyComponent\Views\Index.cshtml" />
+    <Content Include="Component\Views\Index.cshtml" />
+    <Content Include="Contact\Views\Index.cshtml" />
+    <Content Include="Document\Views\Index.cshtml" />
+    <Content Include="Assembly\Views\_ViewStart.cshtml" />
+    <Content Include="AssemblyComponent\Views\_ViewStart.cshtml" />
+    <Content Include="Component\Views\_ViewStart.cshtml" />
+    <Content Include="Contact\Views\_ViewStart.cshtml" />
+    <Content Include="Document\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -472,6 +482,10 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Tool\Web.config" />
     <Content Include="User\Web.config" />
+    <Content Include="Tool\Views\Index.cshtml" />
+    <Content Include="User\Views\Index.cshtml" />
+    <Content Include="Tool\Views\_ViewStart.cshtml" />
+    <Content Include="User\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

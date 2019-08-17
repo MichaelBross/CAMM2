@@ -14,10 +14,18 @@
 <#@ include file="..\Application\T4Library.t4" #><#
 	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
 	var thisFileName = GetFileName();
-	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarningXml();
 #>
-<#= doNotEditGeneratedFileWarning #>
+<#
+foreach (var aClass in xmlClasses) 
+{
+	var className = GetName(aClass);
+	if(className == "Base")
+	continue;
+#>
 <?xml version="1.0"?>
+
+<#= doNotEditGeneratedFileWarning #>
 
 <configuration>
   <configSections>
@@ -62,12 +70,6 @@
   </system.web>
 </configuration>
 <#
-foreach (var aClass in xmlClasses) 
-{
-	var className = GetName(aClass);
-	if(className == "Base")
-	continue;
-
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 	string targetDirectoryPath = Path.Combine(templateDirectory, className);
 	var needDirectory = !Directory.Exists(targetDirectoryPath);
@@ -77,7 +79,7 @@ foreach (var aClass in xmlClasses)
     }
 
 	string fullTargetPath = Path.Combine(targetDirectoryPath, "Web.config");
-	var needWebConfig = !File.Exists(fullTargetPath);
+	var needWebConfig = true;
 	if(needWebConfig)
     {
 		SaveOutput(targetDirectoryPath, "Web.config");

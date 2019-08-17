@@ -127,6 +127,20 @@
 		return editWarning;
     }
 
+	string GetDoNotManuallyEditWarningRazor()
+    {
+		var thisFileName = GetFileName();
+		var editWarning = "@* Generated Code! Do not manually edit. Adjust template (" + thisFileName + ") to make changes to this file. *@";
+		return editWarning;
+    }
+
+	string GetDoNotManuallyEditWarningXml()
+    {
+		var thisFileName = GetFileName();
+		var editWarning = "<!-- Generated Code! Do not manually edit. Adjust template (" + thisFileName + ") to make changes to this file. -->";
+		return editWarning;
+    }
+
 	void SaveOutput(string outputFileName) 
 	{
 	  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);

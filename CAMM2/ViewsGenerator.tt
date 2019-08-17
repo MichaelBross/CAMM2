@@ -14,9 +14,8 @@
 <#@ include file="..\Application\T4Library.t4" #><#
 	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
 	var thisFileName = GetFileName();
-	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarningRazor();
 #>
-<#= doNotEditGeneratedFileWarning #>
 <#
 foreach (var aClass in xmlClasses) 
 {
@@ -28,11 +27,12 @@ foreach (var aClass in xmlClasses)
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 	var inheritsText = GetInheritanceText(aClass);
 #>
+<#= doNotEditGeneratedFileWarning #>
 @using Application.Service
 @using Presentation
 
 @{
-    ViewBag.Title = "<#= className #>s";
+    ViewBag.Title = "<#= className #>";
     var detailVM = new <#= className #>DetailVM();
     var listVM = new <#= className #>ListVM();
 }
@@ -444,16 +444,22 @@ foreach (var aClass in xmlClasses)
 	var needParentDirectory = !Directory.Exists(parentDirectoryPath);
 	if(needParentDirectory)
     {
-		//Directory.CreateDirectory(parentDirectoryPath);
+		Directory.CreateDirectory(parentDirectoryPath);
     }
 
 	string targetDirectoryPath = Path.Combine(parentDirectoryPath, "Views");
 	var needTargetDirectory = !Directory.Exists(targetDirectoryPath);
 	if(needTargetDirectory)
     {
-		//Directory.CreateDirectory(needTargetDirectory);
+		Directory.CreateDirectory(targetDirectoryPath);
     }
 	
-	//SaveOutput(targetDirectoryPath, "Index.cshtml");
+	SaveOutput(targetDirectoryPath, "Index.cshtml");
+#>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<#
+	SaveOutput(targetDirectoryPath, "_ViewStart.cshtml");
 }
 #>
