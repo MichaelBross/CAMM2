@@ -126,14 +126,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BaseRepositories.cs</LastGenOutput>
     </Content>
-    <Content Include="Repositories\RepositoryGenerator.tt">
+    <Content Include="Repositories\RepositoryInitiator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepositoryGenerator.txt</LastGenOutput>
+      <LastGenOutput>RepositoryInitiator.txt</LastGenOutput>
     </Content>
-    <Content Include="Repositories\RepositoryGenerator.txt">
+    <Content Include="Repositories\RepositoryInitiator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RepositoryGenerator.tt</DependentUpon>
+      <DependentUpon>RepositoryInitiator.tt</DependentUpon>
     </Content>
     <Content Include="UnitOfWork\UnitOfWork.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

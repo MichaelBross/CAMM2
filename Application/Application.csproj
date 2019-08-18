@@ -151,14 +151,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ServiceInterfaces.cs</LastGenOutput>
     </Content>
-    <Content Include="Interfaces\RepositoryInterfacesGenerator.tt">
+    <Content Include="Interfaces\RepositoryInterfacesInitiator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepositoryInterfacesGenerator.txt</LastGenOutput>
+      <LastGenOutput>RepositoryInterfacesInitiator.txt</LastGenOutput>
     </Content>
-    <Content Include="Interfaces\RepositoryInterfacesGenerator.txt">
+    <Content Include="Interfaces\RepositoryInterfacesInitiator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RepositoryInterfacesGenerator.tt</DependentUpon>
+      <DependentUpon>RepositoryInterfacesInitiator.tt</DependentUpon>
     </Content>
     <Content Include="Service\Generated Code\Services.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

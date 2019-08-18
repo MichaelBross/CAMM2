@@ -25,21 +25,37 @@ foreach (var aClass in xmlClasses)
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 
 #>
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Dynamic;
+using Persistance.Repository;
 using Domain;
+using Application;
+using Application.Interfaces;
 
-namespace Application.Interfaces
+namespace Persistance
 {
-    public interface I<#=className#>Repository : I<#=className#>RepositoryBase 
+    public class <#=className#>Repository : <#=className#>RepositoryBase, I<#=className#>Repository
     {
-    }
+        public <#=className#>Repository(Camm2Context context)
+            :base(context)
+        {
+        }
+	}
 }
 <# 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 	
-	string fullTargetPath = Path.Combine(templateDirectory, "I" + className + "Repository.cs");
-	var needRepositoryInterface = !File.Exists(fullTargetPath);
-	if(needRepositoryInterface)
+	string fullTargetPath = Path.Combine(templateDirectory, className + "Repository.cs");
+	var needRepository = !File.Exists(fullTargetPath);
+	if(needRepository)
     {
-		SaveOutput(templateDirectory, "I" + className + "Repository.cs");
+		SaveOutput(templateDirectory, className + "Repository.cs");
+    }
+	else
+    {
+		this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
     }	
 } #>
