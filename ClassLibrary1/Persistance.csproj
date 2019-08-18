@@ -72,18 +72,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connectors\ConnectorsRepository.cs" />
-    <Compile Include="Generated Code\Repositories.cs">
+    <Compile Include="Repositories\Repositories.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated Code\UnitOfWork.cs">
+    <Compile Include="UnitOfWork\UnitOfWork.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Items\ItemsRepository.cs" />
     <Compile Include="Migrations\201905052046398_initial.cs" />
     <Compile Include="Migrations\201905052046398_initial.Designer.cs">
       <DependentUpon>201905052046398_initial.cs</DependentUpon>
@@ -115,11 +113,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Generated Code\Repositories.tt">
+    <Content Include="Repositories\Repositories.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Repositories.cs</LastGenOutput>
     </Content>
-    <Content Include="Generated Code\UnitOfWork.tt">
+    <Content Include="UnitOfWork\UnitOfWork.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UnitOfWork.cs</LastGenOutput>
     </Content>
