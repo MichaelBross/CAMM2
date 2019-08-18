@@ -7,7 +7,7 @@
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
-<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Linq" #> 
 <#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -17,6 +17,8 @@
 	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarningXml();
 #>
 <#
+this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+
 foreach (var aClass in xmlClasses) 
 {
 	var className = GetName(aClass);
