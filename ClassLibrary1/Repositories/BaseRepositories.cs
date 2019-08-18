@@ -14,9 +14,9 @@ using Application.Interfaces;
 
 namespace Persistance
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepositoryBase : Repository<User>, IUserRepositoryBase
     {
-        public UserRepository(Camm2Context context)
+        public UserRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -50,9 +50,9 @@ namespace Persistance
         }
     }
 
-    public class DocumentRepository : Repository<Document>, IDocumentRepository
+    public class DocumentRepositoryBase : Repository<Document>, IDocumentRepositoryBase
     {
-        public DocumentRepository(Camm2Context context)
+        public DocumentRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -86,9 +86,9 @@ namespace Persistance
         }
     }
 
-    public class ComponentRepository : Repository<Component>, IComponentRepository
+    public class ComponentRepositoryBase : Repository<Component>, IComponentRepositoryBase
     {
-        public ComponentRepository(Camm2Context context)
+        public ComponentRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -120,9 +120,9 @@ namespace Persistance
         }
     }
 
-    public class ConnectorRepository : Repository<Connector>, IConnectorRepository
+    public class ConnectorRepositoryBase : Repository<Connector>, IConnectorRepositoryBase
     {
-        public ConnectorRepository(Camm2Context context)
+        public ConnectorRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -155,9 +155,9 @@ namespace Persistance
         }
     }
 
-    public class ContactRepository : Repository<Contact>, IContactRepository
+    public class ContactRepositoryBase : Repository<Contact>, IContactRepositoryBase
     {
-        public ContactRepository(Camm2Context context)
+        public ContactRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -191,9 +191,9 @@ namespace Persistance
         }
     }
 
-    public class ItemRepository : Repository<Item>, IItemRepository
+    public class ItemRepositoryBase : Repository<Item>, IItemRepositoryBase
     {
-        public ItemRepository(Camm2Context context)
+        public ItemRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -226,9 +226,9 @@ namespace Persistance
         }
     }
 
-    public class ToolRepository : Repository<Tool>, IToolRepository
+    public class ToolRepositoryBase : Repository<Tool>, IToolRepositoryBase
     {
-        public ToolRepository(Camm2Context context)
+        public ToolRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -264,9 +264,9 @@ namespace Persistance
         }
     }
 
-    public class AssemblyRepository : Repository<Assembly>, IAssemblyRepository
+    public class AssemblyRepositoryBase : Repository<Assembly>, IAssemblyRepositoryBase
     {
-        public AssemblyRepository(Camm2Context context)
+        public AssemblyRepositoryBase(Camm2Context context)
             :base(context)
         {
         }
@@ -298,9 +298,9 @@ namespace Persistance
         }
     }
 
-    public class AssemblyComponentRepository : Repository<AssemblyComponent>, IAssemblyComponentRepository
+    public class AssemblyComponentRepositoryBase : Repository<AssemblyComponent>, IAssemblyComponentRepositoryBase
     {
-        public AssemblyComponentRepository(Camm2Context context)
+        public AssemblyComponentRepositoryBase(Camm2Context context)
             :base(context)
         {
         }

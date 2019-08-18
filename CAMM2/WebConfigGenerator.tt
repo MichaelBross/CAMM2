@@ -81,7 +81,7 @@ foreach (var aClass in xmlClasses)
     }
 
 	string fullTargetPath = Path.Combine(targetDirectoryPath, "Web.config");
-	var needWebConfig = true;
+	var needWebConfig = File.Exists(fullTargetPath);
 	if(needWebConfig)
     {
 		SaveOutput(targetDirectoryPath, "Web.config");

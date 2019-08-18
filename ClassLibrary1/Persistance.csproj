@@ -72,11 +72,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repositories\Repositories.cs">
+    <Compile Include="Repositories\AssemblyComponentRepository.cs" />
+    <Compile Include="Repositories\AssemblyRepository.cs" />
+    <Compile Include="Repositories\BaseRepositories.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Repositories.tt</DependentUpon>
+      <DependentUpon>BaseRepositories.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\ComponentRepository.cs" />
+    <Compile Include="Repositories\ConnectorRepository.cs" />
+    <Compile Include="Repositories\ContactRepository.cs" />
+    <Compile Include="Repositories\DocumentRepository.cs" />
+    <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\ToolRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -113,9 +122,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Repositories\Repositories.tt">
+    <Content Include="Repositories\BaseRepositories.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Repositories.cs</LastGenOutput>
+      <LastGenOutput>BaseRepositories.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositories\RepositoryGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RepositoryGenerator.txt</LastGenOutput>
+    </Content>
+    <Content Include="Repositories\RepositoryGenerator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryGenerator.tt</DependentUpon>
     </Content>
     <Content Include="UnitOfWork\UnitOfWork.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

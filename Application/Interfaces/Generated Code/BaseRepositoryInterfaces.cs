@@ -4,47 +4,47 @@ using Domain;
 
 namespace Application.Interfaces
 {
-    public partial interface IUserRepository : IRepository<User> 
+    public partial interface IUserRepositoryBase : IRepository<User> 
     {
         IEnumerable<User> Search(SearchParameters searchParams);
     }
 
-    public partial interface IDocumentRepository : IRepository<Document> 
+    public partial interface IDocumentRepositoryBase : IRepository<Document> 
     {
         IEnumerable<Document> Search(SearchParameters searchParams);
     }
 
-    public partial interface IComponentRepository : IRepository<Component> 
+    public partial interface IComponentRepositoryBase : IRepository<Component> 
     {
         IEnumerable<Component> Search(SearchParameters searchParams);
     }
 
-    public partial interface IConnectorRepository : IRepository<Connector> 
+    public partial interface IConnectorRepositoryBase : IRepository<Connector> 
     {
         IEnumerable<Connector> Search(SearchParameters searchParams);
     }
 
-    public partial interface IContactRepository : IRepository<Contact> 
+    public partial interface IContactRepositoryBase : IRepository<Contact> 
     {
         IEnumerable<Contact> Search(SearchParameters searchParams);
     }
 
-    public partial interface IItemRepository : IRepository<Item> 
+    public partial interface IItemRepositoryBase : IRepository<Item> 
     {
         IEnumerable<Item> Search(SearchParameters searchParams);
     }
 
-    public partial interface IToolRepository : IRepository<Tool> 
+    public partial interface IToolRepositoryBase : IRepository<Tool> 
     {
         IEnumerable<Tool> Search(SearchParameters searchParams);
     }
 
-    public partial interface IAssemblyRepository : IRepository<Assembly> 
+    public partial interface IAssemblyRepositoryBase : IRepository<Assembly> 
     {
         IEnumerable<Assembly> Search(SearchParameters searchParams);
     }
 
-    public partial interface IAssemblyComponentRepository : IRepository<AssemblyComponent> 
+    public partial interface IAssemblyComponentRepositoryBase : IRepository<AssemblyComponent> 
     {
     }
 

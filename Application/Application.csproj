@@ -81,19 +81,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IUnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Generated Code\RepositoryInterfaces.cs">
+    <Compile Include="Interfaces\Generated Code\BaseRepositoryInterfaces.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RepositoryInterfaces.tt</DependentUpon>
+      <DependentUpon>BaseRepositoryInterfaces.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IConnectorsRepository.cs" />
+    <Compile Include="Interfaces\IAssemblyComponentRepository.cs" />
+    <Compile Include="Interfaces\IAssemblyRepository.cs" />
+    <Compile Include="Interfaces\IComponentRepository.cs" />
+    <Compile Include="Interfaces\IConnectorRepository.cs" />
+    <Compile Include="Interfaces\IContactRepository.cs" />
+    <Compile Include="Interfaces\IDocumentRepository.cs" />
+    <Compile Include="Interfaces\IItemRepository.cs" />
+    <Compile Include="Interfaces\IToolRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="JsonAntiForgeryValidator.cs" />
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\ItemService.cs" />
     <Compile Include="Items\ItemVM.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="SearchParameters.cs" />
-    <Compile Include="Interfaces\IItemsRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Items\Queries\GetItemList\GetItemList.cs" />
     <Compile Include="Items\Queries\GetItemList\IGetItemList.cs" />
@@ -136,13 +143,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IUnitOfWork.cs</LastGenOutput>
     </Content>
-    <Content Include="Interfaces\Generated Code\RepositoryInterfaces.tt">
+    <Content Include="Interfaces\Generated Code\BaseRepositoryInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepositoryInterfaces.cs</LastGenOutput>
+      <LastGenOutput>BaseRepositoryInterfaces.cs</LastGenOutput>
     </Content>
     <Content Include="Interfaces\Generated Code\ServiceInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ServiceInterfaces.cs</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\RepositoryInterfacesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RepositoryInterfacesGenerator.txt</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\RepositoryInterfacesGenerator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryInterfacesGenerator.tt</DependentUpon>
     </Content>
     <Content Include="Service\Generated Code\Services.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

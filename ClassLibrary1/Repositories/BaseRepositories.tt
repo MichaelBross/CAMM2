@@ -40,9 +40,9 @@ foreach (var aClass in xmlClasses)
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 
 #>
-    public class <#=className#>Repository : Repository<<#=className#>>, I<#=className#>Repository
+    public class <#=className#>RepositoryBase : Repository<<#=className#>>, I<#=className#>RepositoryBase
     {
-        public <#=className#>Repository(Camm2Context context)
+        public <#=className#>RepositoryBase(Camm2Context context)
             :base(context)
         {
         }

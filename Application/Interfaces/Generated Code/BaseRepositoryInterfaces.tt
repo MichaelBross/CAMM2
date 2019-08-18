@@ -31,7 +31,7 @@ foreach (var aClass in xmlClasses)
 	var properties = GetProperties(aClass);
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 #>
-    public partial interface I<#=className#>Repository : IRepository<<#=className#>> 
+    public partial interface I<#=className#>RepositoryBase : IRepository<<#=className#>> 
     {
 <# if(propertiesTypesString.Count > 0){ #>
         IEnumerable<<#=className#>> Search(SearchParameters searchParams);
