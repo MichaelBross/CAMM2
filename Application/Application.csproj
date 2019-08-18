@@ -87,14 +87,23 @@
       <DependentUpon>BaseRepositoryInterfaces.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAssemblyComponentRepository.cs" />
+    <Compile Include="Interfaces\IAssemblyComponentService.cs" />
     <Compile Include="Interfaces\IAssemblyRepository.cs" />
+    <Compile Include="Interfaces\IAssemblyService.cs" />
     <Compile Include="Interfaces\IComponentRepository.cs" />
+    <Compile Include="Interfaces\IComponentService.cs" />
     <Compile Include="Interfaces\IConnectorRepository.cs" />
+    <Compile Include="Interfaces\IConnectorService.cs" />
     <Compile Include="Interfaces\IContactRepository.cs" />
+    <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IDocumentRepository.cs" />
+    <Compile Include="Interfaces\IDocumentService.cs" />
     <Compile Include="Interfaces\IItemRepository.cs" />
+    <Compile Include="Interfaces\IItemService.cs" />
     <Compile Include="Interfaces\IToolRepository.cs" />
+    <Compile Include="Interfaces\IToolService.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="JsonAntiForgeryValidator.cs" />
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\ItemService.cs" />
@@ -111,11 +120,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceInterfaces.tt</DependentUpon>
     </Compile>
-    <Compile Include="Service\Generated Code\Services.cs">
+    <Compile Include="Service\AssemblyComponentService.cs" />
+    <Compile Include="Service\AssemblyService.cs" />
+    <Compile Include="Service\ComponentService.cs" />
+    <Compile Include="Service\ConnectorService.cs" />
+    <Compile Include="Service\ContactService.cs" />
+    <Compile Include="Service\DocumentService.cs" />
+    <Compile Include="Service\Generated Code\BaseServices.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Services.tt</DependentUpon>
+      <DependentUpon>BaseServices.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\ItemService.cs" />
+    <Compile Include="Service\ToolService.cs" />
+    <Compile Include="Service\UserService.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\ViewModels.cs">
       <AutoGen>True</AutoGen>
@@ -160,9 +178,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RepositoryInterfacesInitiator.tt</DependentUpon>
     </Content>
-    <Content Include="Service\Generated Code\Services.tt">
+    <Content Include="Service\Generated Code\BaseServices.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Services.cs</LastGenOutput>
+      <LastGenOutput>BaseServices.cs</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\ServiceInterfaceInitiator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServiceInterfaceInitiator.txt</LastGenOutput>
+    </Content>
+    <Content Include="Interfaces\ServiceInterfaceInitiator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceInterfaceInitiator.tt</DependentUpon>
+    </Content>
+    <Content Include="Service\ServiceInitiator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServiceInitiator.txt</LastGenOutput>
+    </Content>
+    <Content Include="Service\ServiceInitiator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceInitiator.tt</DependentUpon>
     </Content>
     <Content Include="ViewModels\ViewModels.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

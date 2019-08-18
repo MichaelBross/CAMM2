@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Service
 {
-    public interface IUserService
+    public interface IUserServiceBase
     {
         IEnumerable<UserListVM> Search(SearchParameters searchParams);
         IEnumerable<UserListVM> GetAll();
@@ -17,7 +17,7 @@ namespace Application.Service
         UserDetailVM Update(UserDetailVM userVM);
         void Remove(UserDetailVM userVM);
     }
-    public interface IDocumentService
+    public interface IDocumentServiceBase
     {
         IEnumerable<DocumentListVM> Search(SearchParameters searchParams);
         IEnumerable<DocumentListVM> GetAll();
@@ -26,7 +26,7 @@ namespace Application.Service
         DocumentDetailVM Update(DocumentDetailVM documentVM);
         void Remove(DocumentDetailVM documentVM);
     }
-    public interface IComponentService
+    public interface IComponentServiceBase
     {
         IEnumerable<ComponentListVM> Search(SearchParameters searchParams);
         IEnumerable<ComponentListVM> GetAll();
@@ -35,7 +35,7 @@ namespace Application.Service
         ComponentDetailVM Update(ComponentDetailVM componentVM);
         void Remove(ComponentDetailVM componentVM);
     }
-    public interface IConnectorService
+    public interface IConnectorServiceBase
     {
         IEnumerable<ConnectorListVM> Search(SearchParameters searchParams);
         IEnumerable<ConnectorListVM> GetAll();
@@ -44,7 +44,7 @@ namespace Application.Service
         ConnectorDetailVM Update(ConnectorDetailVM connectorVM);
         void Remove(ConnectorDetailVM connectorVM);
     }
-    public interface IContactService
+    public interface IContactServiceBase
     {
         IEnumerable<ContactListVM> Search(SearchParameters searchParams);
         IEnumerable<ContactListVM> GetAll();
@@ -53,7 +53,7 @@ namespace Application.Service
         ContactDetailVM Update(ContactDetailVM contactVM);
         void Remove(ContactDetailVM contactVM);
     }
-    public interface IItemService
+    public interface IItemServiceBase
     {
         IEnumerable<ItemListVM> Search(SearchParameters searchParams);
         IEnumerable<ItemListVM> GetAll();
@@ -62,7 +62,7 @@ namespace Application.Service
         ItemDetailVM Update(ItemDetailVM itemVM);
         void Remove(ItemDetailVM itemVM);
     }
-    public interface IToolService
+    public interface IToolServiceBase
     {
         IEnumerable<ToolListVM> Search(SearchParameters searchParams);
         IEnumerable<ToolListVM> GetAll();
@@ -71,7 +71,7 @@ namespace Application.Service
         ToolDetailVM Update(ToolDetailVM toolVM);
         void Remove(ToolDetailVM toolVM);
     }
-    public interface IAssemblyService
+    public interface IAssemblyServiceBase
     {
         IEnumerable<AssemblyListVM> Search(SearchParameters searchParams);
         IEnumerable<AssemblyListVM> GetAll();
@@ -80,7 +80,7 @@ namespace Application.Service
         AssemblyDetailVM Update(AssemblyDetailVM assemblyVM);
         void Remove(AssemblyDetailVM assemblyVM);
     }
-    public interface IAssemblyComponentService
+    public interface IAssemblyComponentServiceBase
     {
         IEnumerable<AssemblyComponentListVM> GetAll();
         int GetTotalCount();

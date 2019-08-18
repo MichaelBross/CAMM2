@@ -1,4 +1,4 @@
-﻿// Generated Code! Do not manually edit. Adjust template (Services.tt) to make changes to this file.
+﻿// Generated Code! Do not manually edit. Adjust template (BaseServices.tt) to make changes to this file.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,11 @@ using Application.Service;
 
 namespace Application.Service
 {
-   public class UserService : IUserService
+   public class UserServiceBase : IUserServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUnitOfWork unitOfWork)
+        public UserServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -125,11 +125,11 @@ namespace Application.Service
         }
     }
 
-   public class DocumentService : IDocumentService
+   public class DocumentServiceBase : IDocumentServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public DocumentService(IUnitOfWork unitOfWork)
+        public DocumentServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -239,11 +239,11 @@ namespace Application.Service
         }
     }
 
-   public class ComponentService : IComponentService
+   public class ComponentServiceBase : IComponentServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ComponentService(IUnitOfWork unitOfWork)
+        public ComponentServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -349,11 +349,11 @@ namespace Application.Service
         }
     }
 
-   public class ConnectorService : IConnectorService
+   public class ConnectorServiceBase : IConnectorServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ConnectorService(IUnitOfWork unitOfWork)
+        public ConnectorServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -463,11 +463,11 @@ namespace Application.Service
         }
     }
 
-   public class ContactService : IContactService
+   public class ContactServiceBase : IContactServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ContactService(IUnitOfWork unitOfWork)
+        public ContactServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -583,11 +583,11 @@ namespace Application.Service
         }
     }
 
-   public class ItemService : IItemService
+   public class ItemServiceBase : IItemServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ItemService(IUnitOfWork unitOfWork)
+        public ItemServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -697,11 +697,11 @@ namespace Application.Service
         }
     }
 
-   public class ToolService : IToolService
+   public class ToolServiceBase : IToolServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ToolService(IUnitOfWork unitOfWork)
+        public ToolServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -819,11 +819,11 @@ namespace Application.Service
         }
     }
 
-   public class AssemblyService : IAssemblyService
+   public class AssemblyServiceBase : IAssemblyServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AssemblyService(IUnitOfWork unitOfWork)
+        public AssemblyServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -931,11 +931,11 @@ namespace Application.Service
         }
     }
 
-   public class AssemblyComponentService : IAssemblyComponentService
+   public class AssemblyComponentServiceBase : IAssemblyComponentServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AssemblyComponentService(IUnitOfWork unitOfWork)
+        public AssemblyComponentServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

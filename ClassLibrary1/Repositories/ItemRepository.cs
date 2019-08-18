@@ -20,7 +20,8 @@ namespace Persistance
 
         public IList<Item> GetObsoleteItems()
         {
-            throw new NotImplementedException();
+            var list = Camm2Context.Items.Where(i => i.IsObsolete == true).ToList();
+            return list;
         }
     }
 }

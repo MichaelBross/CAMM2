@@ -34,7 +34,7 @@ foreach (var aClass in xmlClasses)
 	var properties = GetProperties(aClass);
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 #>
-    public interface I<#=className#>Service
+    public interface I<#=className#>ServiceBase
     {
 <#	
 	if(propertiesTypesString.Count > 0){ 

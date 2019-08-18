@@ -38,11 +38,11 @@ foreach (var aClass in xmlClasses)
 	var properties = GetProperties(aClass);
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 #>
-   public class <#=className#>Service : I<#=className#>Service
+   public class <#=className#>ServiceBase : I<#=className#>ServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public <#=className#>Service(IUnitOfWork unitOfWork)
+        public <#=className#>ServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
