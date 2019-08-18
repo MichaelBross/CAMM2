@@ -1,4 +1,5 @@
 ﻿
+// Generated Code! Do not manually edit. Adjust template (NinjectWebCommon.tt) to make changes to this file.
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(App_Start.NinjectWebCommon), "Stop")]
 

@@ -11,13 +11,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class ToolController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IToolService _toolService;        
 
-        public ToolController(IUnitOfWork unitOfWork, IToolService toolService)
-        {            
-            _unitOfWork = unitOfWork;
+        public ToolController(IToolService toolService)
+        { 
             _toolService = toolService;            
         }
 
@@ -34,7 +32,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Tools.GetAll().Count();
+            int totalrows = _toolService.GetAll().Count();
             
             // Search
             var searchResults = _toolService.Search(searchParams);

@@ -11,10 +11,11 @@
 <#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ include file="..\..\T4Library.t4" #>
-<#
+<#@ include file="..\..\T4Library.t4" #><#
 	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
 #>
+<#= doNotEditGeneratedFileWarning #>
 using System;
 using System.Collections.Generic;
 using System.Linq;

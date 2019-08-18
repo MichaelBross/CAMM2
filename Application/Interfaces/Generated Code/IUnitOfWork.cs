@@ -1,4 +1,4 @@
-﻿
+﻿// Generated Code! Do not manually edit. Adjust template (IUnitOfWork.tt) to make changes to this file.
 using System;
 using System.Collections.Generic;
 using System.Linq;

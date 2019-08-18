@@ -50,7 +50,7 @@ namespace Application.Service
 	
 	string fullTargetPath = Path.Combine(templateDirectory, className + "Service.cs");
 	var needService = !File.Exists(fullTargetPath);
-	if(true)
+	if(needService)
     {
 		SaveOutput(templateDirectory, className + "Service.cs");
     }

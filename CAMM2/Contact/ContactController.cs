@@ -11,13 +11,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class ContactController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IContactService _contactService;        
 
-        public ContactController(IUnitOfWork unitOfWork, IContactService contactService)
-        {            
-            _unitOfWork = unitOfWork;
+        public ContactController(IContactService contactService)
+        { 
             _contactService = contactService;            
         }
 
@@ -34,7 +32,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Contacts.GetAll().Count();
+            int totalrows = _contactService.GetAll().Count();
             
             // Search
             var searchResults = _contactService.Search(searchParams);

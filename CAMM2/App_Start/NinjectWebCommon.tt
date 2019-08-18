@@ -14,7 +14,9 @@
 <#@ include file="..\..\Application\T4Library.t4" #>
 <#
 	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+		var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
 #>
+<#= doNotEditGeneratedFileWarning #>
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(App_Start.NinjectWebCommon), "Stop")]
 

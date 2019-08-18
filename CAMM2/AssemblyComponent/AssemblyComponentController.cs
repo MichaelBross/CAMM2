@@ -11,13 +11,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class AssemblyComponentController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IAssemblyComponentService _assemblycomponentService;        
 
-        public AssemblyComponentController(IUnitOfWork unitOfWork, IAssemblyComponentService assemblycomponentService)
-        {            
-            _unitOfWork = unitOfWork;
+        public AssemblyComponentController(IAssemblyComponentService assemblycomponentService)
+        { 
             _assemblycomponentService = assemblycomponentService;            
         }
 

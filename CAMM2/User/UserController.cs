@@ -12,13 +12,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class UserController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IUserService _userService;        
 
-        public UserController(IUnitOfWork unitOfWork, IUserService userService)
-        {            
-            _unitOfWork = unitOfWork;
+        public UserController(IUserService userService)
+        { 
             _userService = userService;            
         }
 
@@ -35,7 +33,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Users.GetAll().Count();
+            int totalrows = _userService.GetAll().Count();
             
             // Search
             var searchResults = _userService.Search(searchParams);

@@ -79,7 +79,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<UserListVM> Search(SearchParameters searchParams)
+        public IEnumerable<UserListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Users.Search(searchParams)
                 .Select(i => new UserListVM()
@@ -194,7 +194,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<DocumentListVM> Search(SearchParameters searchParams)
+        public IEnumerable<DocumentListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Documents.Search(searchParams)
                 .Select(i => new DocumentListVM()
@@ -308,7 +308,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<ComponentListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ComponentListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Components.Search(searchParams)
                 .Select(i => new ComponentListVM()
@@ -418,7 +418,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<ConnectorListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ConnectorListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Connectors.Search(searchParams)
                 .Select(i => new ConnectorListVM()
@@ -532,7 +532,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<ContactListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ContactListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Contacts.Search(searchParams)
                 .Select(i => new ContactListVM()
@@ -652,7 +652,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<ItemListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ItemListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Items.Search(searchParams)
                 .Select(i => new ItemListVM()
@@ -766,7 +766,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<ToolListVM> Search(SearchParameters searchParams)
+        public IEnumerable<ToolListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Tools.Search(searchParams)
                 .Select(i => new ToolListVM()
@@ -888,7 +888,7 @@ namespace Application.Service
             }
         }
 
-                public IEnumerable<AssemblyListVM> Search(SearchParameters searchParams)
+        public IEnumerable<AssemblyListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.Assemblys.Search(searchParams)
                 .Select(i => new AssemblyListVM()

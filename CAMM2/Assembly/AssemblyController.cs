@@ -11,13 +11,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class AssemblyController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IAssemblyService _assemblyService;        
 
-        public AssemblyController(IUnitOfWork unitOfWork, IAssemblyService assemblyService)
-        {            
-            _unitOfWork = unitOfWork;
+        public AssemblyController(IAssemblyService assemblyService)
+        { 
             _assemblyService = assemblyService;            
         }
 
@@ -34,7 +32,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Assemblys.GetAll().Count();
+            int totalrows = _assemblyService.GetAll().Count();
             
             // Search
             var searchResults = _assemblyService.Search(searchParams);

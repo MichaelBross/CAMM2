@@ -40,13 +40,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class <#=className#>Controller : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly I<#=className#>Service _<#=classNameLower#>Service;        
 
-        public <#=className#>Controller(IUnitOfWork unitOfWork, I<#=className#>Service <#=classNameLower#>Service)
-        {            
-            _unitOfWork = unitOfWork;
+        public <#=className#>Controller(I<#=className#>Service <#=classNameLower#>Service)
+        { 
             _<#=classNameLower#>Service = <#=classNameLower#>Service;            
         }
 
@@ -64,7 +62,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.<#=className#>s.GetAll().Count();
+            int totalrows = _<#=classNameLower#>Service.GetAll().Count();
             
             // Search
             var searchResults = _<#=classNameLower#>Service.Search(searchParams);

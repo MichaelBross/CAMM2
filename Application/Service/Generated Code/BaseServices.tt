@@ -108,7 +108,7 @@ foreach (var aClass in xmlClasses)
         }
 
 <# if(propertiesTypesString.Count > 0){ #>
-                public IEnumerable<<#=className#>ListVM> Search(SearchParameters searchParams)
+        public IEnumerable<<#=className#>ListVM> Search(SearchParameters searchParams)
         {
             var result = _unitOfWork.<#=className#>s.Search(searchParams)
                 .Select(i => new <#=className#>ListVM()

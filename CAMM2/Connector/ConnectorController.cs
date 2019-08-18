@@ -11,13 +11,11 @@ using Application.Service;
 namespace Presentation
 { 
     public class ConnectorController : BaseController
-    {
-        private readonly IUnitOfWork _unitOfWork;      
+    {              
         private readonly IConnectorService _connectorService;        
 
-        public ConnectorController(IUnitOfWork unitOfWork, IConnectorService connectorService)
-        {            
-            _unitOfWork = unitOfWork;
+        public ConnectorController(IConnectorService connectorService)
+        { 
             _connectorService = connectorService;            
         }
 
@@ -34,7 +32,7 @@ namespace Presentation
             var searchParams = MapDataTableRequestToSearchParams(Request);
 
             // Total record count
-            int totalrows = _unitOfWork.Connectors.GetAll().Count();
+            int totalrows = _connectorService.GetAll().Count();
             
             // Search
             var searchResults = _connectorService.Search(searchParams);

@@ -1,5 +1,4 @@
-﻿ 
-
+﻿// Generated Code! Do not manually edit. Adjust template (ServiceInterfaces.tt) to make changes to this file.
 using System;
 using System.Collections.Generic;
 using System.Linq;

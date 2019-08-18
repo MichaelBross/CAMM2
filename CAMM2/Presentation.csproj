@@ -231,8 +231,14 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="ControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ControllersGenerator1.txt</LastGenOutput>
     </Content>
     <Content Include="ControllersGenerator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllersGenerator.tt</DependentUpon>
+    </Content>
+    <Content Include="ControllersGenerator1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ControllersGenerator.tt</DependentUpon>
