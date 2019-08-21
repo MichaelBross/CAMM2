@@ -10,38 +10,38 @@ using Application.Service;
 
 namespace Presentation
 { 
-    public class AssemblyComponentController : BaseController
+    public class AssemblyItemController : BaseController
     {              
-        private readonly IAssemblyComponentService _assemblycomponentService;        
+        private readonly IAssemblyItemService _assemblyitemService;        
 
-        public AssemblyComponentController(IAssemblyComponentService assemblycomponentService)
+        public AssemblyItemController(IAssemblyItemService assemblyitemService)
         { 
-            _assemblycomponentService = assemblycomponentService;            
+            _assemblyitemService = assemblyitemService;            
         }
 
-        // GET: AssemblyComponent
+        // GET: AssemblyItem
         public ActionResult Index()
         {
             return View();
         }
 
 
-        // POST: AssemblyComponent/Add
+        // POST: AssemblyItem/Add
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
-        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] AssemblyComponentDetailVM assemblycomponentVM)
+        public ActionResult Add([Bind(Include = "Code,Description,UnitsOfMeasure,QtyOnHand")] AssemblyItemDetailVM assemblyitemVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _assemblycomponentService.Add(assemblycomponentVM);
-                    return Json(new { success = true, model = assemblycomponentVM });
+                    _assemblyitemService.Add(assemblyitemVM);
+                    return Json(new { success = true, model = assemblyitemVM });
                 }
                 catch (Exception ex)
                 {
                     if(ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This AssemblyComponent Number already exists. Duplicate AssemblyComponent Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This AssemblyItem Number already exists. Duplicate AssemblyItem Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -49,23 +49,23 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: AssemblyComponent/Edit
+        // POST: AssemblyItem/Edit
         [HttpPost]
         [ValidateJsonAntiForgeryToken]        
-        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]AssemblyComponentVM revised)
-        public JsonResult Update(AssemblyComponentDetailVM revised)
+        //public JsonResult Update([Bind(Include = "Id,Code,Description,UnitsOfMeasure,QtyOnHand")]AssemblyItemVM revised)
+        public JsonResult Update(AssemblyItemDetailVM revised)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var updated = _assemblycomponentService.Update(revised);                     
+                    var updated = _assemblyitemService.Update(revised);                     
                     return Json(new { success = true, model = updated });
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("IX_Code"))
-                        ModelState.AddModelError("Code", "This AssemblyComponent Number already exists. Duplicate AssemblyComponent Numbers are not allowed.");
+                        ModelState.AddModelError("Code", "This AssemblyItem Number already exists. Duplicate AssemblyItem Numbers are not allowed.");
                     else
                         ModelState.AddModelError(string.Empty, "The save failed.");
                 }
@@ -74,10 +74,10 @@ namespace Presentation
             return JsonErrorResult();
         }
 
-        // POST: AssemblyComponent/Delete
+        // POST: AssemblyItem/Delete
         [ValidateJsonAntiForgeryToken]
         [HttpPost]
-        public JsonResult Delete([Bind(Include = "Id")] AssemblyComponentDetailVM toBeRemoved)
+        public JsonResult Delete([Bind(Include = "Id")] AssemblyItemDetailVM toBeRemoved)
         {
             if (toBeRemoved.Id == 0)
             {
@@ -86,13 +86,13 @@ namespace Presentation
 
             try
             {
-                _assemblycomponentService.Remove(toBeRemoved);
+                _assemblyitemService.Remove(toBeRemoved);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("AssemblyComponent not found."))
-                    ModelState.AddModelError(string.Empty, "The delete failed because the assemblycomponent was not found.");
+                if (ex.Message.Contains("AssemblyItem not found."))
+                    ModelState.AddModelError(string.Empty, "The delete failed because the assemblyitem was not found.");
                 else
                     ModelState.AddModelError(string.Empty, "The delete failed.");
 

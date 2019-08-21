@@ -437,8 +437,8 @@
       <type>string</type>
     </property>
     <property>
-      <name>AssemblyComponents</name>
-      <type>IList&lt;AssemblyComponent&gt;</type>
+      <name>AssemblyItems</name>
+      <type>IList&lt;AssemblyItem&gt;</type>
     </property>
   </class>
   <class>
@@ -449,12 +449,12 @@
       <type>string</type>
     </property>
     <property>
-      <name>AssemblyComponents</name>
-      <type>IList&lt;AssemblyComponent&gt;</type>
+      <name>AssemblyItems</name>
+      <type>IList&lt;AssemblyItem&gt;</type>
     </property>
   </class>
   <class>
-    <name>AssemblyComponentDetailVM</name>
+    <name>AssemblyItemDetailVM</name>
     <inherits>BaseDetailVM</inherits>
     <property>
       <name>Id</name>
@@ -465,8 +465,8 @@
       <type>Assembly</type>
     </property>
     <property>
-      <name>Component</name>
-      <type>Component</type>
+      <name>Item</name>
+      <type>Item</type>
     </property>
     <property>
       <name>Qty</name>
@@ -474,7 +474,7 @@
     </property>
   </class>
   <class>
-    <name>AssemblyComponentListVM</name>
+    <name>AssemblyItemListVM</name>
     <inherits>BaseListVM</inherits>
     <property>
       <name>Id</name>
@@ -485,8 +485,8 @@
       <type>Assembly</type>
     </property>
     <property>
-      <name>Component</name>
-      <type>Component</type>
+      <name>Item</name>
+      <type>Item</type>
     </property>
     <property>
       <name>Qty</name>

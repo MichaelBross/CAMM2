@@ -11,9 +11,9 @@ using Application.Interfaces;
 
 namespace Persistance
 {
-    public class AssemblyComponentRepository : AssemblyComponentRepositoryBase, IAssemblyComponentRepository
+    public class AssemblyItemRepository : AssemblyItemRepositoryBase, IAssemblyItemRepository
     {
-        public AssemblyComponentRepository(Camm2Context context)
+        public AssemblyItemRepository(Camm2Context context)
             :base(context)
         {
         }

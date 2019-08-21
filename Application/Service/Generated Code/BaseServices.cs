@@ -905,7 +905,7 @@ namespace Application.Service
 					QtyOnHand = i.QtyOnHand,
 					Documents = i.Documents,
 					Rev = i.Rev,
-					AssemblyComponents = i.AssemblyComponents,
+					AssemblyItems = i.AssemblyItems,
                 }).ToList();
 
             return result;
@@ -917,7 +917,7 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Assemblys.Get(revisedVM.Id);
 				retrieved.Rev = revisedVM.Rev;
-				retrieved.AssemblyComponents = revisedVM.AssemblyComponents;
+				retrieved.AssemblyItems = revisedVM.AssemblyItems;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -931,33 +931,33 @@ namespace Application.Service
         }
     }
 
-   public class AssemblyComponentServiceBase : IAssemblyComponentServiceBase
+   public class AssemblyItemServiceBase : IAssemblyItemServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AssemblyComponentServiceBase(IUnitOfWork unitOfWork)
+        public AssemblyItemServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public AssemblyComponentDetailVM Add(AssemblyComponentDetailVM assemblycomponentVM)
+        public AssemblyItemDetailVM Add(AssemblyItemDetailVM assemblyitemVM)
         {
             try
             {
-                var newAssemblyComponent = new AssemblyComponent();
+                var newAssemblyItem = new AssemblyItem();
 
-                Map.AtoB(assemblycomponentVM, newAssemblyComponent);
+                Map.AtoB(assemblyitemVM, newAssemblyItem);
 
                 var now = DateTime.Now;
-                newAssemblyComponent.CreateDate = now;
-                newAssemblyComponent.UpdateDate = now;
+                newAssemblyItem.CreateDate = now;
+                newAssemblyItem.UpdateDate = now;
 
-                _unitOfWork.AssemblyComponents.Add(newAssemblyComponent);
+                _unitOfWork.AssemblyItems.Add(newAssemblyItem);
                 _unitOfWork.Complete();
 
-                Map.AtoB(newAssemblyComponent, assemblycomponentVM);
+                Map.AtoB(newAssemblyItem, assemblyitemVM);
 
-                return assemblycomponentVM;
+                return assemblyitemVM;
             }
             catch (Exception ex)
             {
@@ -967,30 +967,30 @@ namespace Application.Service
             }
         }
 
-        public IEnumerable<AssemblyComponentListVM> GetAll()
+        public IEnumerable<AssemblyItemListVM> GetAll()
         {
-            var assemblycomponents = _unitOfWork.AssemblyComponents.GetAll();
-            var assemblycomponentVMs = new List<AssemblyComponentListVM>();
+            var assemblyitems = _unitOfWork.AssemblyItems.GetAll();
+            var assemblyitemVMs = new List<AssemblyItemListVM>();
 
-            Map.AtoB(assemblycomponents, assemblycomponentVMs);
+            Map.AtoB(assemblyitems, assemblyitemVMs);
 
-            return assemblycomponentVMs;
+            return assemblyitemVMs;
         }
 
         public int GetTotalCount()
         {
-            var count = _unitOfWork.AssemblyComponents.GetAll().Count();
+            var count = _unitOfWork.AssemblyItems.GetAll().Count();
             return count;
         }
 
-        public void Remove(AssemblyComponentDetailVM assemblycomponentVM)
+        public void Remove(AssemblyItemDetailVM assemblyitemVM)
         {
             try
             {
-                var toBeRemoved = _unitOfWork.AssemblyComponents.Get(assemblycomponentVM.Id);
+                var toBeRemoved = _unitOfWork.AssemblyItems.Get(assemblyitemVM.Id);
                 if (toBeRemoved == null)
-                    throw new Exception("AssemblyComponent not found.");
-                _unitOfWork.AssemblyComponents.Remove(toBeRemoved);
+                    throw new Exception("AssemblyItem not found.");
+                _unitOfWork.AssemblyItems.Remove(toBeRemoved);
                 _unitOfWork.Complete();
             }
             catch (Exception ex)
@@ -1001,14 +1001,14 @@ namespace Application.Service
         }
 
 
-        public AssemblyComponentDetailVM Update(AssemblyComponentDetailVM revisedVM)
+        public AssemblyItemDetailVM Update(AssemblyItemDetailVM revisedVM)
         {
             try
             {
-                var retrieved = _unitOfWork.AssemblyComponents.Get(revisedVM.Id);
+                var retrieved = _unitOfWork.AssemblyItems.Get(revisedVM.Id);
 				retrieved.Id = revisedVM.Id;
 				retrieved.Assembly = revisedVM.Assembly;
-				retrieved.Component = revisedVM.Component;
+				retrieved.Item = revisedVM.Item;
 				retrieved.Qty = revisedVM.Qty;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;

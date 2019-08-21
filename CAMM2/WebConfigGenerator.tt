@@ -81,10 +81,14 @@ foreach (var aClass in xmlClasses)
     }
 
 	string fullTargetPath = Path.Combine(targetDirectoryPath, "Web.config");
-	var needWebConfig = File.Exists(fullTargetPath);
+	var needWebConfig = !File.Exists(fullTargetPath);
 	if(needWebConfig)
     {
 		SaveOutput(targetDirectoryPath, "Web.config");
+    }
+	else
+    {
+		this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
     }	
 }
 #>

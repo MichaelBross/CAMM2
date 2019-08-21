@@ -297,9 +297,9 @@ namespace Persistance
         }
     }
 
-    public class AssemblyComponentRepositoryBase : Repository<AssemblyComponent>, IAssemblyComponentRepositoryBase
+    public class AssemblyItemRepositoryBase : Repository<AssemblyItem>, IAssemblyItemRepositoryBase
     {
-        public AssemblyComponentRepositoryBase(Camm2Context context)
+        public AssemblyItemRepositoryBase(Camm2Context context)
             :base(context)
         {
         }

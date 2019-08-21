@@ -122,16 +122,16 @@ namespace Domain
 	{	 
 		public string Rev { get; set; }
 
-		public IList<AssemblyComponent> AssemblyComponents { get; set; }
+		public IList<AssemblyItem> AssemblyItems { get; set; }
 
 	}
-	public class AssemblyComponent : Base
+	public class AssemblyItem : Base
 	{	 
 		public int Id { get; set; }
 
 		public Assembly Assembly { get; set; }
 
-		public Component Component { get; set; }
+		public Item Item { get; set; }
 
 		public Decimal Qty { get; set; }
 

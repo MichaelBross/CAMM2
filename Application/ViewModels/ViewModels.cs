@@ -283,7 +283,7 @@ namespace Application.Service
     {
 		public string Rev { get; set; }
 
-		public IList<AssemblyComponent> AssemblyComponents { get; set; }
+		public IList<AssemblyItem> AssemblyItems { get; set; }
 
 	}
 
@@ -291,29 +291,29 @@ namespace Application.Service
     {
 		public string Rev { get; set; }
 
-		public IList<AssemblyComponent> AssemblyComponents { get; set; }
+		public IList<AssemblyItem> AssemblyItems { get; set; }
 
 	}
 
-    public class AssemblyComponentDetailVM : BaseDetailVM
+    public class AssemblyItemDetailVM : BaseDetailVM
     {
 		public int Id { get; set; }
 
 		public Assembly Assembly { get; set; }
 
-		public Component Component { get; set; }
+		public Item Item { get; set; }
 
 		public Decimal Qty { get; set; }
 
 	}
 
-    public class AssemblyComponentListVM : BaseListVM
+    public class AssemblyItemListVM : BaseListVM
     {
 		public int Id { get; set; }
 
 		public Assembly Assembly { get; set; }
 
-		public Component Component { get; set; }
+		public Item Item { get; set; }
 
 		public Decimal Qty { get; set; }
 

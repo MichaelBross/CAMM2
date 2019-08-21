@@ -72,7 +72,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repositories\AssemblyComponentRepository.cs" />
+    <Compile Include="Migrations\201908191222323_ChangedAssemblyComponent.cs" />
+    <Compile Include="Migrations\201908191222323_ChangedAssemblyComponent.Designer.cs">
+      <DependentUpon>201908191222323_ChangedAssemblyComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908210048274_ChangeAssemblyComponentToAssemblyItem.cs" />
+    <Compile Include="Migrations\201908210048274_ChangeAssemblyComponentToAssemblyItem.Designer.cs">
+      <DependentUpon>201908210048274_ChangeAssemblyComponentToAssemblyItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AssemblyItemRepository.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\Generated Code\BaseRepositories.cs">
       <AutoGen>True</AutoGen>
@@ -119,6 +127,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905052046398_initial.resx">
       <DependentUpon>201905052046398_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908191222323_ChangedAssemblyComponent.resx">
+      <DependentUpon>201908191222323_ChangedAssemblyComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908210048274_ChangeAssemblyComponentToAssemblyItem.resx">
+      <DependentUpon>201908210048274_ChangeAssemblyComponentToAssemblyItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

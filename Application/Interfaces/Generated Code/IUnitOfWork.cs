@@ -25,7 +25,7 @@ namespace Application.Interfaces
         
         IAssemblyRepository Assemblys { get; } 
         
-        IAssemblyComponentRepository AssemblyComponents { get; } 
+        IAssemblyItemRepository AssemblyItems { get; } 
         
         int Complete();
     }

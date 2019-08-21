@@ -39,7 +39,7 @@ namespace Application.Interfaces
 	
 	string fullTargetPath = Path.Combine(templateDirectory, "I" + className + "Service.cs");
 	var needServiceInterface = !File.Exists(fullTargetPath);
-	if(true)
+	if(needServiceInterface)
     {
 		SaveOutput(templateDirectory, "I" + className + "Service.cs");
     }

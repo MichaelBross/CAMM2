@@ -86,8 +86,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseRepositoryInterfaces.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IAssemblyComponentRepository.cs" />
-    <Compile Include="Interfaces\IAssemblyComponentService.cs" />
+    <Compile Include="Interfaces\IAssemblyItemRepository.cs" />
+    <Compile Include="Interfaces\IAssemblyItemService.cs" />
     <Compile Include="Interfaces\IAssemblyRepository.cs" />
     <Compile Include="Interfaces\IAssemblyService.cs" />
     <Compile Include="Interfaces\IComponentRepository.cs" />
@@ -120,7 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceInterfaces.tt</DependentUpon>
     </Compile>
-    <Compile Include="Service\AssemblyComponentService.cs" />
+    <Compile Include="Service\AssemblyItemService.cs" />
     <Compile Include="Service\AssemblyService.cs" />
     <Compile Include="Service\ComponentService.cs" />
     <Compile Include="Service\ConnectorService.cs" />
@@ -171,9 +171,14 @@
     </Content>
     <Content Include="Interfaces\RepositoryInterfacesInitiator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepositoryInterfacesInitiator.txt</LastGenOutput>
+      <LastGenOutput>RepositoryInterfacesInitiator1.txt</LastGenOutput>
     </Content>
     <Content Include="Interfaces\RepositoryInterfacesInitiator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryInterfacesInitiator.tt</DependentUpon>
+    </Content>
+    <Content Include="Interfaces\RepositoryInterfacesInitiator1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RepositoryInterfacesInitiator.tt</DependentUpon>

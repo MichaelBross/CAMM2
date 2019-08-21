@@ -9,11 +9,11 @@ using Application.Interfaces;
 
 namespace Application.Service
 {
-    public class AssemblyComponentService : AssemblyComponentServiceBase, IAssemblyComponentService
+    public class AssemblyItemService : AssemblyItemServiceBase, IAssemblyItemService
     {
 	    private readonly IUnitOfWork _unitOfWork;
 
-        public AssemblyComponentService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public AssemblyItemService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

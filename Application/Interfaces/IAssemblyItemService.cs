@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using Domain;
+using Application.Service;
 
 namespace Application.Interfaces
 {
-    public interface IAssemblyComponentRepository : IAssemblyComponentRepositoryBase 
+    public interface IAssemblyItemService : IAssemblyItemServiceBase 
     {
     }
 }

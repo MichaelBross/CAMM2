@@ -3,7 +3,7 @@ using Domain;
 
 namespace Application.Interfaces
 {
-    public interface IItemRepository : IItemRepositoryBase 
+    public interface IAssemblyItemRepository : IAssemblyItemRepositoryBase 
     {
     }
 }

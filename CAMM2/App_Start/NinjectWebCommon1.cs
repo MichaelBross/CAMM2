@@ -98,8 +98,8 @@ namespace App_Start
             kernel.Bind<IAssemblyRepository>().To<AssemblyRepository>();
             kernel.Bind<IAssemblyService>().To<AssemblyService>();
 
-            kernel.Bind<IAssemblyComponentRepository>().To<AssemblyComponentRepository>();
-            kernel.Bind<IAssemblyComponentService>().To<AssemblyComponentService>();
+            kernel.Bind<IAssemblyItemRepository>().To<AssemblyItemRepository>();
+            kernel.Bind<IAssemblyItemService>().To<AssemblyItemService>();
 
         }        
     }

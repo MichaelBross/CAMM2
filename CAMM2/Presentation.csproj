@@ -143,7 +143,7 @@
       <DependentUpon>NinjectWebCommon.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="AssemblyComponent\AssemblyComponentController.cs" />
+    <Compile Include="AssemblyItem\AssemblyItemController.cs" />
     <Compile Include="Assembly\AssemblyController.cs" />
     <Compile Include="Component\ComponentController.cs" />
     <Compile Include="Connector\ConnectorController.cs" />
@@ -325,20 +325,20 @@
       <DependentUpon>WebConfigGenerator.tt</DependentUpon>
     </Content>
     <Content Include="Assembly\Web.config" />
-    <Content Include="AssemblyComponent\Web.config" />
     <Content Include="Component\Web.config" />
     <Content Include="Contact\Web.config" />
     <Content Include="Document\Web.config" />
     <Content Include="Assembly\Views\Index.cshtml" />
-    <Content Include="AssemblyComponent\Views\Index.cshtml" />
     <Content Include="Component\Views\Index.cshtml" />
     <Content Include="Contact\Views\Index.cshtml" />
     <Content Include="Document\Views\Index.cshtml" />
     <Content Include="Assembly\Views\_ViewStart.cshtml" />
-    <Content Include="AssemblyComponent\Views\_ViewStart.cshtml" />
     <Content Include="Component\Views\_ViewStart.cshtml" />
     <Content Include="Contact\Views\_ViewStart.cshtml" />
     <Content Include="Document\Views\_ViewStart.cshtml" />
+    <Content Include="AssemblyItem\Views\Index.cshtml" />
+    <Content Include="AssemblyItem\Views\_ViewStart.cshtml" />
+    <Content Include="AssemblyItem\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

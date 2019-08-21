@@ -79,12 +79,12 @@ namespace Application.Service
         AssemblyDetailVM Update(AssemblyDetailVM assemblyVM);
         void Remove(AssemblyDetailVM assemblyVM);
     }
-    public interface IAssemblyComponentServiceBase
+    public interface IAssemblyItemServiceBase
     {
-        IEnumerable<AssemblyComponentListVM> GetAll();
+        IEnumerable<AssemblyItemListVM> GetAll();
         int GetTotalCount();
-        AssemblyComponentDetailVM Add(AssemblyComponentDetailVM assemblycomponentVM);
-        AssemblyComponentDetailVM Update(AssemblyComponentDetailVM assemblycomponentVM);
-        void Remove(AssemblyComponentDetailVM assemblycomponentVM);
+        AssemblyItemDetailVM Add(AssemblyItemDetailVM assemblyitemVM);
+        AssemblyItemDetailVM Update(AssemblyItemDetailVM assemblyitemVM);
+        void Remove(AssemblyItemDetailVM assemblyitemVM);
     }
 }
