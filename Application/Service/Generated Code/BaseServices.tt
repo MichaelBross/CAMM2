@@ -74,6 +74,16 @@ foreach (var aClass in xmlClasses)
             }
         }
 
+		public <#=className#>DetailVM Get(int id)
+        {
+            var <#=classNameLowerCase#> = _unitOfWork.<#=className#>s.Get(id);
+            var <#=classNameLowerCase#>VM = new <#=className#>DetailVM();
+
+            Map.AtoB(<#=classNameLowerCase#>, <#=classNameLowerCase#>VM);
+
+            return <#=classNameLowerCase#>VM;
+        }
+
         public IEnumerable<<#=className#>ListVM> GetAll()
         {
             var <#=classNameLowerCase#>s = _unitOfWork.<#=className#>s.GetAll();

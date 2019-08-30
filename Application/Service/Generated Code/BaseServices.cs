@@ -46,6 +46,16 @@ namespace Application.Service
             }
         }
 
+		public UserDetailVM Get(int id)
+        {
+            var user = _unitOfWork.Users.Get(id);
+            var userVM = new UserDetailVM();
+
+            Map.AtoB(user, userVM);
+
+            return userVM;
+        }
+
         public IEnumerable<UserListVM> GetAll()
         {
             var users = _unitOfWork.Users.GetAll();
@@ -159,6 +169,16 @@ namespace Application.Service
 
                 throw new Exception(message);
             }
+        }
+
+		public DocumentDetailVM Get(int id)
+        {
+            var document = _unitOfWork.Documents.Get(id);
+            var documentVM = new DocumentDetailVM();
+
+            Map.AtoB(document, documentVM);
+
+            return documentVM;
         }
 
         public IEnumerable<DocumentListVM> GetAll()
@@ -275,6 +295,16 @@ namespace Application.Service
             }
         }
 
+		public ComponentDetailVM Get(int id)
+        {
+            var component = _unitOfWork.Components.Get(id);
+            var componentVM = new ComponentDetailVM();
+
+            Map.AtoB(component, componentVM);
+
+            return componentVM;
+        }
+
         public IEnumerable<ComponentListVM> GetAll()
         {
             var components = _unitOfWork.Components.GetAll();
@@ -383,6 +413,16 @@ namespace Application.Service
 
                 throw new Exception(message);
             }
+        }
+
+		public ConnectorDetailVM Get(int id)
+        {
+            var connector = _unitOfWork.Connectors.Get(id);
+            var connectorVM = new ConnectorDetailVM();
+
+            Map.AtoB(connector, connectorVM);
+
+            return connectorVM;
         }
 
         public IEnumerable<ConnectorListVM> GetAll()
@@ -497,6 +537,16 @@ namespace Application.Service
 
                 throw new Exception(message);
             }
+        }
+
+		public ContactDetailVM Get(int id)
+        {
+            var contact = _unitOfWork.Contacts.Get(id);
+            var contactVM = new ContactDetailVM();
+
+            Map.AtoB(contact, contactVM);
+
+            return contactVM;
         }
 
         public IEnumerable<ContactListVM> GetAll()
@@ -619,6 +669,16 @@ namespace Application.Service
             }
         }
 
+		public ItemDetailVM Get(int id)
+        {
+            var item = _unitOfWork.Items.Get(id);
+            var itemVM = new ItemDetailVM();
+
+            Map.AtoB(item, itemVM);
+
+            return itemVM;
+        }
+
         public IEnumerable<ItemListVM> GetAll()
         {
             var items = _unitOfWork.Items.GetAll();
@@ -731,6 +791,16 @@ namespace Application.Service
 
                 throw new Exception(message);
             }
+        }
+
+		public ToolDetailVM Get(int id)
+        {
+            var tool = _unitOfWork.Tools.Get(id);
+            var toolVM = new ToolDetailVM();
+
+            Map.AtoB(tool, toolVM);
+
+            return toolVM;
         }
 
         public IEnumerable<ToolListVM> GetAll()
@@ -855,6 +925,16 @@ namespace Application.Service
             }
         }
 
+		public AssemblyDetailVM Get(int id)
+        {
+            var assembly = _unitOfWork.Assemblys.Get(id);
+            var assemblyVM = new AssemblyDetailVM();
+
+            Map.AtoB(assembly, assemblyVM);
+
+            return assemblyVM;
+        }
+
         public IEnumerable<AssemblyListVM> GetAll()
         {
             var assemblys = _unitOfWork.Assemblys.GetAll();
@@ -965,6 +1045,16 @@ namespace Application.Service
 
                 throw new Exception(message);
             }
+        }
+
+		public AssemblyItemDetailVM Get(int id)
+        {
+            var assemblyitem = _unitOfWork.AssemblyItems.Get(id);
+            var assemblyitemVM = new AssemblyItemDetailVM();
+
+            Map.AtoB(assemblyitem, assemblyitemVM);
+
+            return assemblyitemVM;
         }
 
         public IEnumerable<AssemblyItemListVM> GetAll()

@@ -44,6 +44,7 @@ foreach (var aClass in xmlClasses)
 <#
 		} 
 #>
+		<#=className#>DetailVM Get(int id);
         IEnumerable<<#=className#>ListVM> GetAll();
         int GetTotalCount();
         <#=className#>DetailVM Add(<#=className#>DetailVM <#=classnameLowerCase#>VM);

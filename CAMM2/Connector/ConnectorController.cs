@@ -12,11 +12,13 @@ namespace Presentation
 { 
     public class ConnectorController : BaseController
     {              
-        private readonly IConnectorService _connectorService;        
+        private readonly IConnectorService _connectorService;
+        private readonly IDocumentService _documentService;
 
-        public ConnectorController(IConnectorService connectorService)
+        public ConnectorController(IConnectorService connectorService, IDocumentService documentService)
         { 
-            _connectorService = connectorService;            
+            _connectorService = connectorService;
+            _documentService = documentService;
         }
 
         // GET: Connector
@@ -115,6 +117,19 @@ namespace Presentation
 
                 return JsonErrorResult();
             }            
+        }
+
+        [HttpGet]        
+        public ActionResult ConnectorDocuments(int connectorId)
+        {
+            if (connectorId == 0)
+            {
+                return Json(new { success = false, ErrorMessage = "Id cannot be zero." });
+            }
+
+            var connector = _connectorService.Get(connectorId);
+            
+            return View(connector);
         }
     }
 }

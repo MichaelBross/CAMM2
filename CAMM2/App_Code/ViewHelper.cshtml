@@ -37,7 +37,7 @@ var methodNames = new List<string>();
                     var displayAttr = p.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
                     if (displayAttr != null)
                     {
-                        displayName = displayAttr.Name;                        
+                        displayName = displayAttr.Name;
                     }
 
                     var hidden = false;
@@ -100,7 +100,10 @@ var methodNames = new List<string>();
                     {
                         <div class="camm-control-group">
                             <label class="control-label" for="@p.Name">@displayName</label>
-                            <input class="form-control datepicker" data-bind="value: @p.Name, enable: @if (readOnly) { <text>false</text> } else { <text>$parent.enableEditableTextBoxes</text> } "
+                            <input class="form-control datepicker" data-bind="value: @p.Name, enable: @if (readOnly)
+                            { <text>false</text> }
+                            else
+                            { <text>$parent.enableEditableTextBoxes</text> } "
                                    data-val="true" data-val-date="The field @displayName must be a date." data-val-required="The @displayName field is required."
                                    id="@p.Name" name="@p.Name" value="" disabled="" type="datetime">
                             <span class="field-validation-valid text-danger" data-valmsg-for="@p.Name" data-valmsg-replace="true" style="width: 100%; text-align:center;"></span>
@@ -110,7 +113,7 @@ var methodNames = new List<string>();
                     if (p.PropertyType.Name.Contains("IList"))
                     {
                         var buttonName = "get" + p.Name + "Btn";
-                        var methodName = "Get" + p.Name + "()";
+                        var methodName = _detailVM.GetType().Name.Replace("DetailVM", "") + p.Name + "()";
                         methodNames.Add(methodName);
                         <div class="camm-control-group-sm">
                             <label class="control-label" for="@buttonName">@displayName</label>
@@ -130,16 +133,20 @@ var methodNames = new List<string>();
     </style>
 
     <script>
-@foreach(var methodName in methodNames)
+
+@foreach (var methodName in methodNames)
 {
-    var functionName = methodName;
+    var actionUrl = methodName.Remove(methodName.Length - 2, 2);
+    
         <text>
-        function @functionName {
-            alert("@methodName pressed.");
-        }
+
+    function @methodName {
+        
+        window.location.href = "@actionUrl" + "?connectorId=" + Itemmodel.Item.Id();
+    }
 
         </text>
-        }
+    }
         $(document).ready(function () {
             $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6");
             $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6");
