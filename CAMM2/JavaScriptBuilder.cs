@@ -148,7 +148,7 @@ namespace Presentation
                 if (p.PropertyType.BaseType == typeof(Enum))
                 {
                     var render = "function(data, type, row, meta) { " +
-                        "return vm.getEnumItemName('" + p.Name + "', row['" + p.Name + "']);" +
+                        "return vm.getEnumItemName('" + p.PropertyType.Name + "', row['" + p.Name + "']);" +
                         "}";
 
                     columnsList.Add(new JsColumn(render, p.Name, title, visible));
@@ -182,7 +182,7 @@ namespace Presentation
             {
                 if (p.PropertyType.BaseType == typeof(Enum))
                 {
-                    var SelectListName = p.Name + "List";
+                    var SelectListName = p.PropertyType.Name + "List";
 
                     selectLists += "vm." + SelectListName + " = ko.observableArray(" + SelectListFromEnum(p.PropertyType) + ")";
 

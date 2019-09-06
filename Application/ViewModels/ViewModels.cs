@@ -78,7 +78,7 @@ namespace Application.Service
     public class ItemListVM : BaseListVM
     {
 		[HiddenInput(DisplayValue = false)]
-		[Display(Name = "Item Number", Order = -90)]
+		[Display(Name = "Item Id", Order = -90)]
 		public int Id { get; set; }
 
 		[Display(Name = "Item Number", Order = -80)]
@@ -148,12 +148,16 @@ namespace Application.Service
     {
 		public int Id { get; set; }
 
+		[Display(Name = "Document Number", Order = -90)]
 		public string Code { get; set; }
 
+		[Display(Name = "Rev", Order = -80)]
 		public string Rev { get; set; }
 
+		[Display(Name = "Title", Order = -70)]
 		public string Title { get; set; }
 
+		[Display(Name = "Category", Order = -60)]
 		public DocumentType DocType { get; set; }
 
 		public IList<Item> Items { get; set; }
@@ -162,14 +166,20 @@ namespace Application.Service
 
     public class DocumentListVM : BaseListVM
     {
+		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Document Id", Order = -90)]
 		public int Id { get; set; }
 
+		[Display(Name = "Document Number", Order = -80)]
 		public string Code { get; set; }
 
+		[Display(Name = "Rev", Order = -70)]
 		public string Rev { get; set; }
 
+		[Display(Name = "Title", Order = -60)]
 		public string Title { get; set; }
 
+		[Display(Name = "Type", Order = -50)]
 		public DocumentType DocType { get; set; }
 
 		public IList<Item> Items { get; set; }

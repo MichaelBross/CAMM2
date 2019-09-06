@@ -125,6 +125,9 @@
             };
 
             vm.getEnumItemName = function (myEnum, value) {
+                if (value === 0) {
+                    return "undefined";
+                }
                 var enumListName = myEnum + "List";
                 var enumList = vm[enumListName];
                 var n = ko.utils.arrayFirst(enumList(), function (i) {

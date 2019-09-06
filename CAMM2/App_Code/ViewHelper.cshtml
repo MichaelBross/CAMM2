@@ -75,10 +75,11 @@ var methodNames = new List<string>();
 
                     if (p.PropertyType.BaseType == typeof(Enum))
                     {
+                        var enumList = "$parent." + p.PropertyType.Name + "List";
                         <div class="camm-control-group">
 
                             @Html.Label(p.Name, displayName, new { @class = "control-label" })
-                            <select class="form-control" data-bind="options: $parent.UnitsOfMeasureList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>
+                            <select class="form-control" data-bind="options: @enumList, optionsText: 'name', optionsValue: 'id', value: @p.Name, enable: $parent.enableEditableTextBoxes"></select>
                             @Html.ValidationMessage(p.Name, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
 
                         </div>

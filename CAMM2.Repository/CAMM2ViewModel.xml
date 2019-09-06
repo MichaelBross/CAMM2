@@ -95,7 +95,7 @@
     <property>
       <name>Id</name>
       <type>int</type>
-      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Item Number", Order = -90)]</annotations>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Item Id", Order = -90)]</annotations>
     </property>
     <property>
       <name>Code</name>
@@ -211,18 +211,22 @@
     <property>
       <name>Code</name>
       <type>string</type>
+      <annotations>[Display(Name = "Document Number", Order = -90)]</annotations>
     </property>
     <property>
       <name>Rev</name>
       <type>string</type>
+      <annotations>[Display(Name = "Rev", Order = -80)]</annotations>
     </property>
     <property>
       <name>Title</name>
       <type>string</type>
+      <annotations>[Display(Name = "Title", Order = -70)]</annotations>
     </property>
     <property>
       <name>DocType</name>
       <type>DocumentType</type>
+      <annotations>[Display(Name = "Category", Order = -60)]</annotations>
     </property>
     <property>
       <name>Items</name>
@@ -235,22 +239,27 @@
     <property>
       <name>Id</name>
       <type>int</type>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Document Id", Order = -90)]</annotations>
     </property>
     <property>
       <name>Code</name>
       <type>string</type>
+      <annotations>[Display(Name = "Document Number", Order = -80)]</annotations>
     </property>
     <property>
       <name>Rev</name>
       <type>string</type>
+      <annotations>[Display(Name = "Rev", Order = -70)]</annotations>
     </property>
     <property>
       <name>Title</name>
       <type>string</type>
+      <annotations>[Display(Name = "Title", Order = -60)]</annotations>
     </property>
     <property>
       <name>DocType</name>
       <type>DocumentType</type>
+      <annotations>[Display(Name = "Type", Order = -50)]</annotations>
     </property>
     <property>
       <name>Items</name>

@@ -3,41 +3,15 @@
     ViewBag.Title = "Connector Documents";
 }
 
-
-@*<div class="form-horizontal card" style="padding: 20px; background-color:aliceblue; margin-top: 5px">
-
-
-    <div class="camm-control-group">
-
-        <div class="row">
-            <div class="col-sm-2">
-                <h2><span class="badge badge-primary" style="height: 70px; padding-top: 22px">CONNECTOR</span></h2>
-            </div>
-            <div class="col-sm-3">
-                @Html.LabelFor(i => i.Code, new { @class = "control-label" })
-                @Html.EditorFor(i => i.Code, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + "Item Number" + ", enable: $parent.enableEditableTextBoxes" } })
-                @Html.ValidationMessageFor(i => i.Code, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
-            </div>
-            <div class="col-sm-7">
-                @Html.LabelFor(i => i.Description, new { @class = "control-label" })
-                @Html.EditorFor(i => i.Description, new { htmlAttributes = new { @class = "form-control col-sm-12", @data_bind = "value: " + "Description" + ", enable: $parent.enableEditableTextBoxes" } })
-                @Html.ValidationMessageFor(i => i.Description, "", new { @class = "text-danger", @style = "width: 100%; text-align:center;" })
-            </div>
-        </div>
-
-    </div>
-</div>*@
-
     <div class="form-horizontal" style="padding: 0px; margin-top: 10px">
-        @*<input class="form-control" type="text" placeholder="DOCUMENTS applicable to CONNECTOR D38999WC26N" readonly style="width:100%; max-width: 100%">*@
         <nav class="navbar navbar-light bg-light justify-content-between">
-            <a class="navbar-brand" href="#">DOCUMENTS applicable to CONNECTOR D38999WC26N</a>
+            <a class="navbar-brand" href="#">DOCUMENTS applicable to connector @ViewData.Model.Code  </a>
 
             <form class="form-inline">
 
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Existing</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add New</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Remove</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
             </form>
 
         </nav>
@@ -49,15 +23,32 @@
                             <th>NUMBER</th>
                             <th>TITLE</th>
                             <th>CATEGORY</th>
-                            <th>DESCRIPTION</th>
+                            <th>REV</th>
                         </tr>
                     </thead>
+        @if (ViewData.Model.Documents == null)
+        {
                     <tr>
-                        <td>MS23053</td>
-                        <td>Heat Shrink Sleeving</td>
-                        <td>Data Sheet</td>
-                        <td>Heat Shrinkable Sleeving Military Specification</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>                        
+        }
+        else
+        {
+            foreach (var d in ViewData.Model.Documents)
+            {
+                <text>
+                    <tr>
+                        <td>@d.Code</td>
+                        <td>@d.Title</td>
+                        <td>@d.DocType</td>
+                        <td>@d.Rev</td>
                     </tr>
+                </text>
+            }
+        }
                 </table>
             </div>
         </div>
@@ -65,8 +56,13 @@
 
 <style>
     table, th, td {
-  border: 1px solid black;
-}
+        border: 1px solid black;
+    }
+
+    .form-inline > * {
+        margin: 5px 3px;
+    }
+
 </style>
 
 
