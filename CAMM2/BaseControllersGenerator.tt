@@ -16,7 +16,6 @@
 	var thisFileName = GetFileName();
 	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
 #>
-<#= doNotEditGeneratedFileWarning #>
 <#
 foreach (var aClass in xmlClasses) 
 {
@@ -27,7 +26,8 @@ foreach (var aClass in xmlClasses)
 	var properties = GetProperties(aClass);
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
 	var inheritsText = GetInheritanceText(aClass);
-#> 
+#>
+<#= doNotEditGeneratedFileWarning #> 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,11 +39,11 @@ using Application.Service;
 
 namespace Presentation
 { 
-    public class <#=className#>Controller : BaseController
+    public class <#=className#>BaseController : BaseController
     {              
         private readonly I<#=className#>Service _<#=classNameLower#>Service;        
 
-        public <#=className#>Controller(I<#=className#>Service <#=classNameLower#>Service)
+        public <#=className#>BaseController(I<#=className#>Service <#=classNameLower#>Service)
         { 
             _<#=classNameLower#>Service = <#=classNameLower#>Service;            
         }
@@ -158,6 +158,6 @@ namespace Presentation
 		Directory.CreateDirectory(targetDirectoryPath);
     }
 
-	SaveOutput(targetDirectoryPath, className + "Controller.cs");
+	SaveOutput(targetDirectoryPath, className + "BaseController.cs");
 }
 #>

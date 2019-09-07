@@ -143,12 +143,19 @@
       <DependentUpon>NinjectWebCommon.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AssemblyItem\AssemblyItemBaseController.cs" />
     <Compile Include="AssemblyItem\AssemblyItemController.cs" />
+    <Compile Include="Assembly\AssemblyBaseController.cs" />
     <Compile Include="Assembly\AssemblyController.cs" />
+    <Compile Include="Component\ComponentBaseController.cs" />
     <Compile Include="Component\ComponentController.cs" />
+    <Compile Include="Connector\ConnectorBaseController.cs" />
     <Compile Include="Connector\ConnectorController.cs" />
+    <Compile Include="Contact\ContactBaseController.cs" />
     <Compile Include="Contact\ContactController.cs" />
+    <Compile Include="Document\DocumentBaseController.cs" />
     <Compile Include="Document\DocumentController.cs" />
+    <Compile Include="Item\ItemBaseController.cs" />
     <Compile Include="Item\ItemController.cs" />
     <Compile Include="JavaScriptBuilder.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -158,7 +165,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tool\ToolBaseController.cs" />
     <Compile Include="Tool\ToolController.cs" />
+    <Compile Include="User\UserBaseController.cs" />
     <Compile Include="User\UserController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,19 +238,28 @@
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
-    <Content Include="ControllersGenerator.tt">
+    <Content Include="BaseControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ControllersGenerator1.txt</LastGenOutput>
+      <LastGenOutput>BaseControllersGenerator.txt</LastGenOutput>
+    </Content>
+    <Content Include="ControllersInitiator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ControllersInitiator.txt</LastGenOutput>
     </Content>
     <Content Include="ControllersGenerator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ControllersGenerator.tt</DependentUpon>
+      <DependentUpon>BaseControllersGenerator.tt</DependentUpon>
     </Content>
-    <Content Include="ControllersGenerator1.txt">
+    <Content Include="BaseControllersGenerator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ControllersGenerator.tt</DependentUpon>
+      <DependentUpon>BaseControllersGenerator.tt</DependentUpon>
+    </Content>
+    <Content Include="ControllersInitiator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllersInitiator.tt</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

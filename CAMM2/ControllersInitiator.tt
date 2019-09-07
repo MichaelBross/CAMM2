@@ -1,0 +1,73 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\Application\T4Library.t4" #><#
+	var xmlClasses  = GetClasses("CAMM2\\CAMM2.Repository\\CAMM2Model.xml");
+	var thisFileName = GetFileName();
+	var doNotEditGeneratedFileWarning = GetDoNotManuallyEditWarning();
+#>
+<#= doNotEditGeneratedFileWarning #>
+<#
+foreach (var aClass in xmlClasses) 
+{
+	var className = GetName(aClass);
+	if(className == "Base")
+	continue;
+	var classNameLower = className.ToLower();
+	var properties = GetProperties(aClass);
+	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
+	var inheritsText = GetInheritanceText(aClass);
+#> 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Application;
+using Application.Interfaces;
+using Application.Service;
+
+namespace Presentation
+{ 
+    public class <#=className#>Controller : <#=className#>BaseController
+    {              
+        private readonly I<#=className#>Service _<#=classNameLower#>Service;        
+
+        public <#=className#>Controller(I<#=className#>Service <#=classNameLower#>Service) : base(<#=classNameLower#>Service)
+        { 
+            _<#=classNameLower#>Service = <#=classNameLower#>Service;            
+        }
+
+    }
+}
+<#
+	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	string targetDirectoryPath = Path.Combine(templateDirectory, className);
+	var needDirectory = !Directory.Exists(targetDirectoryPath);
+	if(needDirectory)
+    {
+		Directory.CreateDirectory(targetDirectoryPath);
+    }
+
+	var targetFilePath = Path.Combine(targetDirectoryPath, className  + "Controller.cs");
+	var needController = !File.Exists(targetFilePath);
+	if(needController)
+    {
+		SaveOutput(targetDirectoryPath, className + "Controller.cs");
+    }
+	else
+    {
+		this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+    }	
+}
+#>
