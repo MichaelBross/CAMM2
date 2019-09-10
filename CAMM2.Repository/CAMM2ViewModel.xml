@@ -85,8 +85,8 @@
     </property>
     <property>
       <name>Documents</name>
-      <type>IList&lt;Document&gt;</type>
-    <annotations>[Display(Name = "Documents", Order = -50)]</annotations>
+      <type>IList&lt;DocumentListVM&gt;</type>
+      <annotations>[Display(Name = "Documents", Order = -50)]</annotations>
     </property>
   </class>
   <class>
@@ -119,7 +119,7 @@
     </property>
     <property>
       <name>Documents</name>
-      <type>IList&lt;Document&gt;</type>
+      <type>IList&lt;DocumentListVM&gt;</type>
       <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Documents", Order = -40)]</annotations>
     </property>
   </class>
@@ -230,7 +230,7 @@
     </property>
     <property>
       <name>Items</name>
-      <type>IList&lt;Item&gt;</type>
+      <type>IList&lt;ItemListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -263,7 +263,7 @@
     </property>
     <property>
       <name>Items</name>
-      <type>IList&lt;Item&gt;</type>
+      <type>IList&lt;ItemListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -297,7 +297,7 @@
     </property>
     <property>
       <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
+      <type>IList&lt;ToolListVM&gt;</type>
       <annotations>[Display(Name = "Tools", Order = -59)]</annotations>
     </property>
   </class>
@@ -314,7 +314,7 @@
     </property>
     <property>
       <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
+      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -342,7 +342,7 @@
     </property>
     <property>
       <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
+      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -370,7 +370,7 @@
     </property>
     <property>
       <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
+      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
 
@@ -399,11 +399,11 @@
     </property>
     <property>
       <name>Connectors</name>
-      <type>IList&lt;Connector&gt;</type>
+      <type>IList&lt;ConnectorListVM&gt;</type>
     </property>
     <property>
       <name>Contacts</name>
-      <type>IList&lt;Contact&gt;</type>
+      <type>IList&lt;ContactListVM&gt;</type>
     </property>
   </class>  
   <class>
@@ -431,11 +431,11 @@
     </property>
     <property>
       <name>Connectors</name>
-      <type>IList&lt;Connector&gt;</type>
+      <type>IList&lt;ConnectorListVM&gt;</type>
     </property>
     <property>
       <name>Contacts</name>
-      <type>IList&lt;Contact&gt;</type>
+      <type>IList&lt;ContactListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -447,7 +447,7 @@
     </property>
     <property>
       <name>AssemblyItems</name>
-      <type>IList&lt;AssemblyItem&gt;</type>
+      <type>IList&lt;AssemblyItemListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -459,7 +459,7 @@
     </property>
     <property>
       <name>AssemblyItems</name>
-      <type>IList&lt;AssemblyItem&gt;</type>
+      <type>IList&lt;AssemblyItemListVM&gt;</type>
     </property>
   </class>
   <class>

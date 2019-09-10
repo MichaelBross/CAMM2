@@ -32,8 +32,7 @@ namespace Application.Service
                     Code = i.Code,
                     Description = i.Description,
                     UnitsOfMeasure = i.UnitsOfMeasure,
-                    QtyOnHand = i.QtyOnHand,
-                    Documents = i.Documents,
+                    QtyOnHand = i.QtyOnHand
                 }).OrderBy(i => i.Code).ToList();
 
             return result;

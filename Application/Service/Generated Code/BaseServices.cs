@@ -113,6 +113,7 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Users.Get(revisedVM.Id);
+
 				retrieved.Id = revisedVM.Id;
 				retrieved.FirstName = revisedVM.FirstName;
 				retrieved.LastName = revisedVM.LastName;
@@ -229,7 +230,6 @@ namespace Application.Service
 					Rev = i.Rev,
 					Title = i.Title,
 					DocType = i.DocType,
-					Items = i.Items,
                 }).ToList();
 
             return result;
@@ -240,12 +240,23 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Documents.Get(revisedVM.Id);
+
 				retrieved.Id = revisedVM.Id;
 				retrieved.Code = revisedVM.Code;
 				retrieved.Rev = revisedVM.Rev;
 				retrieved.Title = revisedVM.Title;
 				retrieved.DocType = revisedVM.DocType;
-				retrieved.Items = revisedVM.Items;
+				var Itemlist = new List<Item>();
+				if (revisedVM.Items != null)
+				{                    
+					foreach(ItemListVM vm in revisedVM.Items)
+					{
+						var item = new Item();
+						Map.AtoB(vm, item);
+						Itemlist.Add(item);
+					}
+				}
+				retrieved.Items = Itemlist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -353,7 +364,6 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
 					Manufacturer = i.Manufacturer,
                 }).ToList();
 
@@ -365,6 +375,7 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Components.Get(revisedVM.Id);
+
 				retrieved.Manufacturer = revisedVM.Manufacturer;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
@@ -473,10 +484,8 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
 					Family = i.Family,
 					Comments = i.Comments,
-					Tools = i.Tools,
                 }).ToList();
 
             return result;
@@ -487,9 +496,20 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Connectors.Get(revisedVM.Id);
+
 				retrieved.Family = revisedVM.Family;
 				retrieved.Comments = revisedVM.Comments;
-				retrieved.Tools = revisedVM.Tools;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -597,13 +617,11 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
 					Size = i.Size,
 					Family = i.Family,
 					WireGageMin = i.WireGageMin,
 					WireGageMax = i.WireGageMax,
 					Comments = i.Comments,
-					Tools = i.Tools,
                 }).ToList();
 
             return result;
@@ -614,12 +632,23 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Contacts.Get(revisedVM.Id);
+
 				retrieved.Size = revisedVM.Size;
 				retrieved.Family = revisedVM.Family;
 				retrieved.WireGageMin = revisedVM.WireGageMin;
 				retrieved.WireGageMax = revisedVM.WireGageMax;
 				retrieved.Comments = revisedVM.Comments;
-				retrieved.Tools = revisedVM.Tools;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -727,7 +756,6 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
                 }).ToList();
 
             return result;
@@ -738,12 +766,23 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Items.Get(revisedVM.Id);
+
 				retrieved.Id = revisedVM.Id;
 				retrieved.Code = revisedVM.Code;
 				retrieved.Description = revisedVM.Description;
 				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
 				retrieved.QtyOnHand = revisedVM.QtyOnHand;
-				retrieved.Documents = revisedVM.Documents;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -851,14 +890,11 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
 					Manufacturer = i.Manufacturer,
 					BinNumber = i.BinNumber,
 					MilitarySpecification = i.MilitarySpecification,
 					SerialNumber = i.SerialNumber,
 					Comments = i.Comments,
-					Connectors = i.Connectors,
-					Contacts = i.Contacts,
                 }).ToList();
 
             return result;
@@ -869,13 +905,34 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Tools.Get(revisedVM.Id);
+
 				retrieved.Manufacturer = revisedVM.Manufacturer;
 				retrieved.BinNumber = revisedVM.BinNumber;
 				retrieved.MilitarySpecification = revisedVM.MilitarySpecification;
 				retrieved.SerialNumber = revisedVM.SerialNumber;
 				retrieved.Comments = revisedVM.Comments;
-				retrieved.Connectors = revisedVM.Connectors;
-				retrieved.Contacts = revisedVM.Contacts;
+				var Connectorlist = new List<Connector>();
+				if (revisedVM.Connectors != null)
+				{                    
+					foreach(ConnectorListVM vm in revisedVM.Connectors)
+					{
+						var connector = new Connector();
+						Map.AtoB(vm, connector);
+						Connectorlist.Add(connector);
+					}
+				}
+				retrieved.Connectors = Connectorlist;
+				var Contactlist = new List<Contact>();
+				if (revisedVM.Contacts != null)
+				{                    
+					foreach(ContactListVM vm in revisedVM.Contacts)
+					{
+						var contact = new Contact();
+						Map.AtoB(vm, contact);
+						Contactlist.Add(contact);
+					}
+				}
+				retrieved.Contacts = Contactlist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -983,9 +1040,7 @@ namespace Application.Service
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
-					Documents = i.Documents,
 					Rev = i.Rev,
-					AssemblyItems = i.AssemblyItems,
                 }).ToList();
 
             return result;
@@ -996,8 +1051,19 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.Assemblys.Get(revisedVM.Id);
+
 				retrieved.Rev = revisedVM.Rev;
-				retrieved.AssemblyItems = revisedVM.AssemblyItems;
+				var AssemblyItemlist = new List<AssemblyItem>();
+				if (revisedVM.AssemblyItems != null)
+				{                    
+					foreach(AssemblyItemListVM vm in revisedVM.AssemblyItems)
+					{
+						var assemblyitem = new AssemblyItem();
+						Map.AtoB(vm, assemblyitem);
+						AssemblyItemlist.Add(assemblyitem);
+					}
+				}
+				retrieved.AssemblyItems = AssemblyItemlist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -1096,6 +1162,7 @@ namespace Application.Service
             try
             {
                 var retrieved = _unitOfWork.AssemblyItems.Get(revisedVM.Id);
+
 				retrieved.Id = revisedVM.Id;
 				retrieved.Assembly = revisedVM.Assembly;
 				retrieved.Item = revisedVM.Item;

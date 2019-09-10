@@ -71,7 +71,7 @@ namespace Application.Service
 		public int QtyOnHand { get; set; }
 
 		[Display(Name = "Documents", Order = -50)]
-		public IList<Document> Documents { get; set; }
+		public IList<DocumentListVM> Documents { get; set; }
 
 	}
 
@@ -96,7 +96,7 @@ namespace Application.Service
 
 		[HiddenInput(DisplayValue = false)]
 		[Display(Name = "Documents", Order = -40)]
-		public IList<Document> Documents { get; set; }
+		public IList<DocumentListVM> Documents { get; set; }
 
 	}
 
@@ -160,7 +160,7 @@ namespace Application.Service
 		[Display(Name = "Category", Order = -60)]
 		public DocumentType DocType { get; set; }
 
-		public IList<Item> Items { get; set; }
+		public IList<ItemListVM> Items { get; set; }
 
 	}
 
@@ -182,7 +182,7 @@ namespace Application.Service
 		[Display(Name = "Type", Order = -50)]
 		public DocumentType DocType { get; set; }
 
-		public IList<Item> Items { get; set; }
+		public IList<ItemListVM> Items { get; set; }
 
 	}
 
@@ -207,7 +207,7 @@ namespace Application.Service
 		public string Comments { get; set; }
 
 		[Display(Name = "Tools", Order = -59)]
-		public IList<Tool> Tools { get; set; }
+		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -217,7 +217,7 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<Tool> Tools { get; set; }
+		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -233,7 +233,7 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<Tool> Tools { get; set; }
+		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -249,7 +249,7 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<Tool> Tools { get; set; }
+		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -265,9 +265,9 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<Connector> Connectors { get; set; }
+		public IList<ConnectorListVM> Connectors { get; set; }
 
-		public IList<Contact> Contacts { get; set; }
+		public IList<ContactListVM> Contacts { get; set; }
 
 	}
 
@@ -283,9 +283,9 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<Connector> Connectors { get; set; }
+		public IList<ConnectorListVM> Connectors { get; set; }
 
-		public IList<Contact> Contacts { get; set; }
+		public IList<ContactListVM> Contacts { get; set; }
 
 	}
 
@@ -293,7 +293,7 @@ namespace Application.Service
     {
 		public string Rev { get; set; }
 
-		public IList<AssemblyItem> AssemblyItems { get; set; }
+		public IList<AssemblyItemListVM> AssemblyItems { get; set; }
 
 	}
 
@@ -301,7 +301,7 @@ namespace Application.Service
     {
 		public string Rev { get; set; }
 
-		public IList<AssemblyItem> AssemblyItems { get; set; }
+		public IList<AssemblyItemListVM> AssemblyItems { get; set; }
 
 	}
 

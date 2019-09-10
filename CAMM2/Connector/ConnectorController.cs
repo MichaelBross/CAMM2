@@ -24,5 +24,20 @@ namespace Presentation
             var connector = _connectorService.Get(connectorId);
             return View(connector);
         }
+
+        public ActionResult AddExistingDocument(int connectorId, int documentId)
+        {
+            var result = _connectorService.LinkDocumentToConnector(connectorId, documentId);
+            if (result == "Success")
+            {
+                return RedirectToAction("ConnectorDocuments", "Connector", new { connectorId });
+            }
+            else
+            {
+                return JsonErrorResult();
+            }
+            
+        }
+
     }
 }

@@ -357,6 +357,8 @@
     <Content Include="AssemblyItem\Views\Index.cshtml" />
     <Content Include="AssemblyItem\Views\_ViewStart.cshtml" />
     <Content Include="AssemblyItem\Web.config" />
+    <Content Include="App_Code\CammGrid.cshtml" />
+    <Content Include="App_Code\CammInputs.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

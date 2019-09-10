@@ -131,9 +131,12 @@ foreach (var aClass in xmlClasses)
 	{
 		var propertyType = GetPropertyType(prop);
 		var propertyName = GetName(prop);
+		if(!propertyType.Contains("IList"))
+        {
 #>
 					<#= propertyName #> = i.<#= propertyName #>,
 <#
+        }
 	}
 #>
                 }).ToList();
@@ -147,14 +150,37 @@ foreach (var aClass in xmlClasses)
             try
             {
                 var retrieved = _unitOfWork.<#=className#>s.Get(revisedVM.Id);
+
 <#	
 	foreach (var prop in properties) 
 	{
 		var propertyType = GetPropertyType(prop);
 		var propertyName = GetName(prop);
+		if(propertyType.Contains("IList"))
+        {
+			var singular = propertyName.TrimEnd('s');
+			var lower = singular.ToLower();
+#>
+				var <#= singular #>list = new List<<#= singular #>>();
+				if (revisedVM.<#= propertyName #> != null)
+				{                    
+					foreach(<#= singular #>ListVM vm in revisedVM.<#= propertyName #>)
+					{
+						var <#= lower #> = new <#= singular #>();
+						Map.AtoB(vm, <#= lower #>);
+						<#= singular #>list.Add(<#= lower #>);
+					}
+				}
+				retrieved.<#= propertyName #> = <#= singular #>list;
+<#
+        }
+		else
+        {
 #>
 				retrieved.<#= propertyName #> = revisedVM.<#= propertyName #>;
 <#
+        }
+
 	}
 #>
                 var now = DateTime.Now;
