@@ -21,8 +21,15 @@ namespace Application
                 {
                     var p = destProps.First(x => x.Name == sourceProp.Name);
                     if (p.CanWrite)
-                    { // check if the property can be set or no.
-                        p.SetValue(B, sourceProp.GetValue(A));
+                    { 
+                        if(p.PropertyType.ToString().Contains("List"))
+                        {
+                            Map.AtoB(sourceProp, p);
+                        }
+                        else
+                        {
+                            p.SetValue(B, sourceProp.GetValue(A));
+                        }                        
                     }
                 }
 

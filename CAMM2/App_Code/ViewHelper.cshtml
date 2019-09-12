@@ -111,7 +111,7 @@ var methodNames = new List<string>();
                         </div>
                     }
 
-                    if (p.PropertyType.Name.Contains("IList"))
+                    if (p.PropertyType.Name.Contains("List"))
                     {
                         var buttonName = "get" + p.Name + "Btn";
                         var methodName = _detailVM.GetType().Name.Replace("DetailVM", "") + p.Name + "()";

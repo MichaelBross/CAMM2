@@ -7,5 +7,6 @@ namespace Application.Interfaces
     public interface IConnectorService : IConnectorServiceBase 
     {
         string LinkDocumentToConnector(int connectorId, int documentId);
+        ConnectorDetailVM GetConnectorAndDocuments(int connectorId);
     }
 }

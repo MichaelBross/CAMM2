@@ -21,7 +21,7 @@ namespace Presentation
 
         public ActionResult ConnectorDocuments(int connectorId)
         {
-            var connector = _connectorService.Get(connectorId);
+            var connector = _connectorService.GetConnectorAndDocuments(connectorId);
             return View(connector);
         }
 

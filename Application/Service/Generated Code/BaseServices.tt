@@ -35,8 +35,11 @@ foreach (var aClass in xmlClasses)
 		continue;
 	string classNameLowerCase = className.ToLower();
 
-	var properties = GetProperties(aClass);
+	var properties = GetProperties(aClass);	
 	var propertiesTypesString = GetPropertiesOfTypeString(aClass);
+	var allProperties = new List<XElement>();
+	allProperties.AddRange(GetInheritedProperties(aClass, XDoc));
+	allProperties.AddRange(properties);
 #>
    public class <#=className#>ServiceBase : I<#=className#>ServiceBase
     {
@@ -81,6 +84,32 @@ foreach (var aClass in xmlClasses)
 
             Map.AtoB(<#=classNameLowerCase#>, <#=classNameLowerCase#>VM);
 
+<#
+	foreach(var prop in properties)
+    {
+		var propertyType = GetPropertyType(prop);
+		var propertyName = GetName(prop);
+		if(propertyType.Contains("List"))
+        {
+			var singular = propertyName.Trim('s');
+			var lower = singular.ToLower();
+#>
+			var <#= singular #>List = new List<<#= singular #>ListVM>();
+			if(<#= classNameLowerCase #>.<#= propertyName #> != null)
+            {
+				foreach(<#= singular #> <#= lower #> in <#=classNameLowerCase#>.<#= propertyName #>)
+				{
+					var vm = new <#= singular #>ListVM();
+					Map.AtoB(<#= lower #>, vm);
+					<#= singular #>List.Add(vm);
+				}
+			}
+			<#=classNameLowerCase#>VM.<#=propertyName#> = <#= singular #>List;
+<#
+        }
+    } 
+#>
+
             return <#=classNameLowerCase#>VM;
         }
 
@@ -124,9 +153,7 @@ foreach (var aClass in xmlClasses)
                 .Select(i => new <#=className#>ListVM()
                 {
 <#	
-	var allProperties = new List<XElement>();	
-	allProperties.AddRange(GetInheritedProperties(aClass, XDoc));
-	allProperties.AddRange(properties);
+
 	foreach (var prop in allProperties) 
 	{
 		var propertyType = GetPropertyType(prop);
@@ -152,7 +179,7 @@ foreach (var aClass in xmlClasses)
                 var retrieved = _unitOfWork.<#=className#>s.Get(revisedVM.Id);
 
 <#	
-	foreach (var prop in properties) 
+	foreach (var prop in allProperties) 
 	{
 		var propertyType = GetPropertyType(prop);
 		var propertyName = GetName(prop);

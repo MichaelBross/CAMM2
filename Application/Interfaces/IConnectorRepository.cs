@@ -5,5 +5,6 @@ namespace Application.Interfaces
 {
     public interface IConnectorRepository : IConnectorRepositoryBase 
     {
-    }
+        Connector GetIncludeDocuments(int connectorId);
+    }    
 }

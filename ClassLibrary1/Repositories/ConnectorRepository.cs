@@ -17,5 +17,10 @@ namespace Persistance
             :base(context)
         {
         }
+
+        public Connector GetIncludeDocuments(int connectorId)
+        {
+            return _entity.Include("Documents").Where(c => c.Id == connectorId).FirstOrDefault();
+        }
 	}
 }

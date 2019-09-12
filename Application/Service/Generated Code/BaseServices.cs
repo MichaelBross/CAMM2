@@ -53,6 +53,7 @@ namespace Application.Service
 
             Map.AtoB(user, userVM);
 
+
             return userVM;
         }
 
@@ -179,6 +180,18 @@ namespace Application.Service
 
             Map.AtoB(document, documentVM);
 
+			var ItemList = new List<ItemListVM>();
+			if(document.Items != null)
+            {
+				foreach(Item item in document.Items)
+				{
+					var vm = new ItemListVM();
+					Map.AtoB(item, vm);
+					ItemList.Add(vm);
+				}
+			}
+			documentVM.Items = ItemList;
+
             return documentVM;
         }
 
@@ -241,6 +254,11 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Documents.Get(revisedVM.Id);
 
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Id = revisedVM.Id;
 				retrieved.Code = revisedVM.Code;
 				retrieved.Rev = revisedVM.Rev;
@@ -313,6 +331,7 @@ namespace Application.Service
 
             Map.AtoB(component, componentVM);
 
+
             return componentVM;
         }
 
@@ -354,16 +373,16 @@ namespace Application.Service
             var result = _unitOfWork.Components.Search(searchParams)
                 .Select(i => new ComponentListVM()
                 {
-					IsObsolete = i.IsObsolete,
-					CreateDate = i.CreateDate,
-					CreatedBy = i.CreatedBy,
-					UpdateDate = i.UpdateDate,
-					UpdatedBy = i.UpdatedBy,
 					Id = i.Id,
 					Code = i.Code,
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
 					Manufacturer = i.Manufacturer,
                 }).ToList();
 
@@ -376,6 +395,27 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Components.Get(revisedVM.Id);
 
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Manufacturer = revisedVM.Manufacturer;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
@@ -433,6 +473,18 @@ namespace Application.Service
 
             Map.AtoB(connector, connectorVM);
 
+			var ToolList = new List<ToolListVM>();
+			if(connector.Tools != null)
+            {
+				foreach(Tool tool in connector.Tools)
+				{
+					var vm = new ToolListVM();
+					Map.AtoB(tool, vm);
+					ToolList.Add(vm);
+				}
+			}
+			connectorVM.Tools = ToolList;
+
             return connectorVM;
         }
 
@@ -474,16 +526,16 @@ namespace Application.Service
             var result = _unitOfWork.Connectors.Search(searchParams)
                 .Select(i => new ConnectorListVM()
                 {
-					IsObsolete = i.IsObsolete,
-					CreateDate = i.CreateDate,
-					CreatedBy = i.CreatedBy,
-					UpdateDate = i.UpdateDate,
-					UpdatedBy = i.UpdatedBy,
 					Id = i.Id,
 					Code = i.Code,
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
 					Family = i.Family,
 					Comments = i.Comments,
                 }).ToList();
@@ -497,6 +549,27 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Connectors.Get(revisedVM.Id);
 
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Family = revisedVM.Family;
 				retrieved.Comments = revisedVM.Comments;
 				var Toollist = new List<Tool>();
@@ -566,6 +639,18 @@ namespace Application.Service
 
             Map.AtoB(contact, contactVM);
 
+			var ToolList = new List<ToolListVM>();
+			if(contact.Tools != null)
+            {
+				foreach(Tool tool in contact.Tools)
+				{
+					var vm = new ToolListVM();
+					Map.AtoB(tool, vm);
+					ToolList.Add(vm);
+				}
+			}
+			contactVM.Tools = ToolList;
+
             return contactVM;
         }
 
@@ -607,16 +692,16 @@ namespace Application.Service
             var result = _unitOfWork.Contacts.Search(searchParams)
                 .Select(i => new ContactListVM()
                 {
-					IsObsolete = i.IsObsolete,
-					CreateDate = i.CreateDate,
-					CreatedBy = i.CreatedBy,
-					UpdateDate = i.UpdateDate,
-					UpdatedBy = i.UpdatedBy,
 					Id = i.Id,
 					Code = i.Code,
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
 					Size = i.Size,
 					Family = i.Family,
 					WireGageMin = i.WireGageMin,
@@ -633,6 +718,27 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Contacts.Get(revisedVM.Id);
 
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Size = revisedVM.Size;
 				retrieved.Family = revisedVM.Family;
 				retrieved.WireGageMin = revisedVM.WireGageMin;
@@ -705,6 +811,18 @@ namespace Application.Service
 
             Map.AtoB(item, itemVM);
 
+			var DocumentList = new List<DocumentListVM>();
+			if(item.Documents != null)
+            {
+				foreach(Document document in item.Documents)
+				{
+					var vm = new DocumentListVM();
+					Map.AtoB(document, vm);
+					DocumentList.Add(vm);
+				}
+			}
+			itemVM.Documents = DocumentList;
+
             return itemVM;
         }
 
@@ -767,6 +885,11 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Items.Get(revisedVM.Id);
 
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Id = revisedVM.Id;
 				retrieved.Code = revisedVM.Code;
 				retrieved.Description = revisedVM.Description;
@@ -839,6 +962,29 @@ namespace Application.Service
 
             Map.AtoB(tool, toolVM);
 
+			var ConnectorList = new List<ConnectorListVM>();
+			if(tool.Connectors != null)
+            {
+				foreach(Connector connector in tool.Connectors)
+				{
+					var vm = new ConnectorListVM();
+					Map.AtoB(connector, vm);
+					ConnectorList.Add(vm);
+				}
+			}
+			toolVM.Connectors = ConnectorList;
+			var ContactList = new List<ContactListVM>();
+			if(tool.Contacts != null)
+            {
+				foreach(Contact contact in tool.Contacts)
+				{
+					var vm = new ContactListVM();
+					Map.AtoB(contact, vm);
+					ContactList.Add(vm);
+				}
+			}
+			toolVM.Contacts = ContactList;
+
             return toolVM;
         }
 
@@ -880,16 +1026,16 @@ namespace Application.Service
             var result = _unitOfWork.Tools.Search(searchParams)
                 .Select(i => new ToolListVM()
                 {
-					IsObsolete = i.IsObsolete,
-					CreateDate = i.CreateDate,
-					CreatedBy = i.CreatedBy,
-					UpdateDate = i.UpdateDate,
-					UpdatedBy = i.UpdatedBy,
 					Id = i.Id,
 					Code = i.Code,
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
 					Manufacturer = i.Manufacturer,
 					BinNumber = i.BinNumber,
 					MilitarySpecification = i.MilitarySpecification,
@@ -906,6 +1052,27 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Tools.Get(revisedVM.Id);
 
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Manufacturer = revisedVM.Manufacturer;
 				retrieved.BinNumber = revisedVM.BinNumber;
 				retrieved.MilitarySpecification = revisedVM.MilitarySpecification;
@@ -989,6 +1156,18 @@ namespace Application.Service
 
             Map.AtoB(assembly, assemblyVM);
 
+			var AssemblyItemList = new List<AssemblyItemListVM>();
+			if(assembly.AssemblyItems != null)
+            {
+				foreach(AssemblyItem assemblyitem in assembly.AssemblyItems)
+				{
+					var vm = new AssemblyItemListVM();
+					Map.AtoB(assemblyitem, vm);
+					AssemblyItemList.Add(vm);
+				}
+			}
+			assemblyVM.AssemblyItems = AssemblyItemList;
+
             return assemblyVM;
         }
 
@@ -1030,16 +1209,16 @@ namespace Application.Service
             var result = _unitOfWork.Assemblys.Search(searchParams)
                 .Select(i => new AssemblyListVM()
                 {
-					IsObsolete = i.IsObsolete,
-					CreateDate = i.CreateDate,
-					CreatedBy = i.CreatedBy,
-					UpdateDate = i.UpdateDate,
-					UpdatedBy = i.UpdatedBy,
 					Id = i.Id,
 					Code = i.Code,
 					Description = i.Description,
 					UnitsOfMeasure = i.UnitsOfMeasure,
 					QtyOnHand = i.QtyOnHand,
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
 					Rev = i.Rev,
                 }).ToList();
 
@@ -1052,6 +1231,27 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.Assemblys.Get(revisedVM.Id);
 
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.Description = revisedVM.Description;
+				retrieved.UnitsOfMeasure = revisedVM.UnitsOfMeasure;
+				retrieved.QtyOnHand = revisedVM.QtyOnHand;
+				var Documentlist = new List<Document>();
+				if (revisedVM.Documents != null)
+				{                    
+					foreach(DocumentListVM vm in revisedVM.Documents)
+					{
+						var document = new Document();
+						Map.AtoB(vm, document);
+						Documentlist.Add(document);
+					}
+				}
+				retrieved.Documents = Documentlist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Rev = revisedVM.Rev;
 				var AssemblyItemlist = new List<AssemblyItem>();
 				if (revisedVM.AssemblyItems != null)
@@ -1120,6 +1320,7 @@ namespace Application.Service
 
             Map.AtoB(assemblyitem, assemblyitemVM);
 
+
             return assemblyitemVM;
         }
 
@@ -1163,6 +1364,11 @@ namespace Application.Service
             {
                 var retrieved = _unitOfWork.AssemblyItems.Get(revisedVM.Id);
 
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Id = revisedVM.Id;
 				retrieved.Assembly = revisedVM.Assembly;
 				retrieved.Item = revisedVM.Item;

@@ -82,8 +82,8 @@
 		var superClass = inheritanceElement.Parent;
 		var elements = superClass.Elements("property").Select(ww => ww).ToList();
 		var inheritedElements = GetInheritedProperties(superClass, XDoc);
-		inheritedElements.AddRange(elements);
-		return inheritedElements;
+		elements.AddRange(inheritedElements);
+		return elements;
     }
 
 	List<System.Xml.Linq.XElement> GetPropertiesOfTypeString(System.Xml.Linq.XElement aClass)
