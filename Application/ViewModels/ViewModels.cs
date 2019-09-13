@@ -71,7 +71,7 @@ namespace Application.Service
 		public int QtyOnHand { get; set; }
 
 		[Display(Name = "Documents", Order = -50)]
-		public List<DocumentListVM> Documents { get; set; }
+		public IList<DocumentListVM> Documents { get; set; }
 
 	}
 

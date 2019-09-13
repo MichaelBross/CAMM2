@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace Application
                     { 
                         if(p.PropertyType.ToString().Contains("List"))
                         {
-                            Map.AtoB(sourceProp, p);
+                            //foreach(var sourceItem in (IList<dynamic>)sourceProp.GetValue(A))
+                            //{
+                            //    Map.AtoB(sourceItem, p);
+                            //}                            
                         }
                         else
                         {
