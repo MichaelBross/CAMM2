@@ -115,10 +115,10 @@ foreach (var aClass in xmlClasses)
 
         public IEnumerable<<#=className#>ListVM> GetAll()
         {
-            var <#=classNameLowerCase#>s = _unitOfWork.<#=className#>s.GetAll();
+            var <#=classNameLowerCase#>s = _unitOfWork.<#=className#>s.GetAll().ToList();
             var <#=classNameLowerCase#>VMs = new List<<#=className#>ListVM>();
 
-            Map.AtoB(<#=classNameLowerCase#>s, <#=classNameLowerCase#>VMs);
+            Map.ListToList(<#=classNameLowerCase#>s, <#=classNameLowerCase#>VMs);
 
             return <#=classNameLowerCase#>VMs;
         }

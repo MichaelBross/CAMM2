@@ -25,9 +25,26 @@ namespace Presentation
             return View(connector);
         }
 
-        public ActionResult AddExistingDocument(int connectorId, int documentId)
+        [HttpPost]
+        public JsonResult GetDocuments(int connectorId)
         {
-            var result = _connectorService.LinkDocumentToConnector(connectorId, documentId);
+            //var connectorId = 1010;
+            var connector = _connectorService.GetConnectorAndDocuments(connectorId);
+            var documents = connector.Documents;            
+            return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AddExistingDocuments(int connectorId, IEnumerable<int> documentIdList)
+        {  
+            var result = "Success";
+            foreach(int documentId in documentIdList)
+            {
+                if(_connectorService.LinkDocumentToConnector(connectorId, documentId) != "Success")
+                {
+                    result = "Failed";
+                }
+            }
+            
             if (result == "Success")
             {
                 return RedirectToAction("ConnectorDocuments", "Connector", new { connectorId });
@@ -36,7 +53,28 @@ namespace Presentation
             {
                 return JsonErrorResult();
             }
-            
+
+        }
+
+        public ActionResult RemoveDocuments(int connectorId, IEnumerable<int> documentIdList)
+        {
+            var result = "Success";
+            foreach (int documentId in documentIdList)
+            {
+                if (_connectorService.RemoveDocumentFromConnector(connectorId, documentId) != "Success")
+                {
+                    result = "Failed";
+                }
+            }
+
+            if (result == "Success")
+            {
+                return RedirectToAction("ConnectorDocuments", "Connector", new { connectorId });
+            }
+            else
+            {
+                return JsonErrorResult();
+            }
         }
 
     }

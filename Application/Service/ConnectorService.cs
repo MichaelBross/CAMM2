@@ -70,5 +70,30 @@ namespace Application.Service
             
             return result;
         }
-	}
+
+        public string RemoveDocumentFromConnector(int connectorId, int documentId)
+        {
+            var result = "failed";
+
+            try
+            {
+                var connAndDocuments = _unitOfWork.Connectors.GetIncludeDocuments(connectorId);
+                var targetDocument = connAndDocuments.Documents.Where(d => d.Id == documentId).FirstOrDefault();
+                if (connAndDocuments == null || targetDocument == null)
+                {
+                    return result;
+                }
+
+                connAndDocuments.Documents.Remove(targetDocument);
+                _unitOfWork.Complete();
+                result = "success";
+            }
+            catch (Exception ex)
+            {
+                result = "failed";
+            }
+
+            return result;
+        }
+    }
 }

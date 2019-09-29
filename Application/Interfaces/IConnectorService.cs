@@ -8,5 +8,7 @@ namespace Application.Interfaces
     {
         string LinkDocumentToConnector(int connectorId, int documentId);
         ConnectorDetailVM GetConnectorAndDocuments(int connectorId);
+
+        string RemoveDocumentFromConnector(int connectorId, int documentId);
     }
 }

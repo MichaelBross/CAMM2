@@ -1,5 +1,36 @@
-﻿@helper SearchBoxButtonCombo(System.Web.Mvc.WebViewPage page, string name) {
+﻿@helper ButtonInputCancelButton(System.Web.Mvc.WebViewPage page, string Name, string LabelText, string Width = "100%")
+{
     var Html = page.Html;
 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button onclick="@(Name).HandleButtonClick()" class="btn btn-outline-primary" type="button" >@LabelText</button>
+        </div>
+        <input type="text" class="form-control border-primary" placeholder="Enter search terms" id="@(Name)Input" style="max-width:@Width" aria-label="Search for existing documents" aria-describedby="button-addon1">
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
 
+    <script>
+
+        @Name = function() {
+
+            var self = this;
+
+            self.SearchTerm = "";
+
+            self.HandleButtonClick = function () {
+                self.SearchTerm = $("#@(Name)Input").val();
+                try {
+                    @(Name)_HandleClick(self.SearchTerm);
+                } catch (e) {}
+            }
+        };
+
+        var @Name = new @(Name)();
+
+    </script>
 }

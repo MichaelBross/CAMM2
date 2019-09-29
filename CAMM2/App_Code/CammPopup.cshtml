@@ -1,0 +1,66 @@
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using Application.Items;
+@using System.ComponentModel;
+@using System.ComponentModel.DataAnnotations;
+@using System.Reflection;
+@using System;
+@using Application.Service
+@using Presentation
+
+@helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name)
+{
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom:0">
+                    <div class="container">
+                        <div class="row">
+                            @CammInputs.ButtonInputCancelButton(page, "DocumentSearchBoxButton", "Search Documents")
+                        </div>
+                        <div class="row" style="padding-top:15px">
+                            <h5 class="modal-title" id="exampleModalLongTitle">SELECT EXISTING DOCUMENT TO ADD</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                    @CammGrid.SearchGrid(page, new DocumentListVM(), "DocumentSearchGrid", "/Document/SearchServerSide")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                    <button onclick="AddSelectedDocument()" type="button" class="btn btn-outline-primary">Link Selected Documents</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var selectedDocumentId = 0;
+
+        function AddSelectedDocument() {
+
+            var ids = DocumentSearchGrid.GetSelectedRows();
+
+            $.ajax({
+                "url": "AddExistingDocuments",
+                "data": $.param({ connectorId: connectorid, documentIdList: ids }, true),
+                "success": function () {
+                    try {
+                        @(Name)_HandleDocumentsLinked();
+                    } catch (e) { }
+                }
+            })
+
+
+        }
+
+        function DocumentSearchGrid_HandleRowSelected(rowData) {
+            selectedDocumentId = rowData.Id;
+        }
+
+        function DocumentSearchBoxButton_HandleClick(searchTerm) {
+            DocumentSearchGrid.search(searchTerm);
+        }
+    </script>
+}

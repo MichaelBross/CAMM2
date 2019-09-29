@@ -4,100 +4,102 @@
     ViewBag.Title = "Connector Documents";
 }
 
-<div class="form-horizontal" style="padding: 0px; margin-top: 10px">
-    <nav class="navbar navbar-light bg-light justify-content-between">
-        <a class="navbar-brand" href="#">DOCUMENTS applicable to connector @ViewData.Model.Code  </a>
+    <div class="form-horizontal" style="padding: 0px; margin-top: 10px">
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand" href="#">DOCUMENTS applicable to connector @ViewData.Model.Code  </a>
 
-        <form class="form-inline">
+            <form class="form-inline">
 
-            <button onclick="OpenAddExistingModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
-        </form>
+                <button onclick="OpenAddExistingModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
+                <button onclick="RemoveDocuments()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
+            </form>
 
-    </nav>
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-bordered" style="width:100%">
-                <thead class="thead-light">
-                    <tr>
-                        <th>NUMBER</th>
-                        <th>TITLE</th>
-                        <th>CATEGORY</th>
-                        <th>REV</th>
-                    </tr>
-                </thead>
-                @if (ViewData.Model.Documents == null)
-                {
-                    <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-
-                }
-                else
-                {
-                    foreach (var d in ViewData.Model.Documents)
+        </nav>
+        @*<div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered" id="ConnectorDocumentsTable" style="width:100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>NUMBER</th>
+                            <th>TITLE</th>
+                            <th>CATEGORY</th>
+                            <th>REV</th>
+                        </tr>
+                    </thead>
+                    @if (ViewData.Model.Documents == null)
                     {
-                        <text>
-                            <tr>
-                                <td>@d.Code</td>
-                                <td>@d.Title</td>
-                                <td>@d.DocType</td>
-                                <td>@d.Rev</td>
-                            </tr>
-                        </text>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+
                     }
-                }
-            </table>
-        </div>
+                    else
+                    {
+                        foreach (var d in ViewData.Model.Documents)
+                        {
+                            <text>
+                                <tr>
+                                    <td style="display:none;">@d.Id</td>
+                                    <td>@d.Code</td>
+                                    <td>@d.Title</td>
+                                    <td>@d.DocType</td>
+                                    <td>@d.Rev</td>
+                                </tr>
+                            </text>
+                        }
+                    }
+                </table>
+            </div>
+        </div>*@
+        @CammGrid.SimpleGrid(this, new DocumentListVM(), "ConnectorDocsGrid", "/Connector/GetDocuments", ViewData.Model.Id.ToString())
     </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">SELECT EXISTING DOCUMENT TO ADD</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
 
-                @CammGrid.SearchGrid(this, new DocumentListVM(), "/Document/SearchServerSide")
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button onclick="AddSelectedDocument()" type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+@CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
 
 <script>
 
     var connectorid = @ViewData.Model.Id;
+    var table = "";
 
     function OpenAddExistingModal() {
         $('#exampleModalCenter').modal('show');
     }
 
-    var selectedDocumentId = 0;
+    function LinkDocumentsPopup_HandleDocumentsLinked() {
+        ConnectorDocsGrid.refresh();
+    }
 
-    function AddSelectedDocument() {
+    function RemoveDocuments() {
+        
+        var rows = ConnectorDocsGrid.GetSelectedRows();
+        if (rows.length === 0)
+            return;
+        
+        var ids = [];
+        for (i = 0; i < rows.length; i++) {
+            ids.push(rows[i].Id);
+        }
+               
         $.ajax({
-            "url": "AddExistingDocument",
-            "data": {"connectorId": connectorid, "documentId": selectedDocumentId}
-        })
+            "url": "RemoveDocuments",
+            "data": $.param({ connectorId: connectorid, documentIdList: ids }, true),
+            "success": function (result) {
+                ConnectorDocsGrid.refresh()
+            }
+        });              
     }
-
-    function SearchGrid_HandleRowSelected(rowData) {
-        selectedDocumentId = rowData.Id; 
-    }
+       
+    $(document).ready(function () {
+        
+    });
        
 </script>
 

@@ -59,10 +59,10 @@ namespace Application.Service
 
         public IEnumerable<UserListVM> GetAll()
         {
-            var users = _unitOfWork.Users.GetAll();
+            var users = _unitOfWork.Users.GetAll().ToList();
             var userVMs = new List<UserListVM>();
 
-            Map.AtoB(users, userVMs);
+            Map.ListToList(users, userVMs);
 
             return userVMs;
         }
@@ -197,10 +197,10 @@ namespace Application.Service
 
         public IEnumerable<DocumentListVM> GetAll()
         {
-            var documents = _unitOfWork.Documents.GetAll();
+            var documents = _unitOfWork.Documents.GetAll().ToList();
             var documentVMs = new List<DocumentListVM>();
 
-            Map.AtoB(documents, documentVMs);
+            Map.ListToList(documents, documentVMs);
 
             return documentVMs;
         }
@@ -337,10 +337,10 @@ namespace Application.Service
 
         public IEnumerable<ComponentListVM> GetAll()
         {
-            var components = _unitOfWork.Components.GetAll();
+            var components = _unitOfWork.Components.GetAll().ToList();
             var componentVMs = new List<ComponentListVM>();
 
-            Map.AtoB(components, componentVMs);
+            Map.ListToList(components, componentVMs);
 
             return componentVMs;
         }
@@ -490,10 +490,10 @@ namespace Application.Service
 
         public IEnumerable<ConnectorListVM> GetAll()
         {
-            var connectors = _unitOfWork.Connectors.GetAll();
+            var connectors = _unitOfWork.Connectors.GetAll().ToList();
             var connectorVMs = new List<ConnectorListVM>();
 
-            Map.AtoB(connectors, connectorVMs);
+            Map.ListToList(connectors, connectorVMs);
 
             return connectorVMs;
         }
@@ -656,10 +656,10 @@ namespace Application.Service
 
         public IEnumerable<ContactListVM> GetAll()
         {
-            var contacts = _unitOfWork.Contacts.GetAll();
+            var contacts = _unitOfWork.Contacts.GetAll().ToList();
             var contactVMs = new List<ContactListVM>();
 
-            Map.AtoB(contacts, contactVMs);
+            Map.ListToList(contacts, contactVMs);
 
             return contactVMs;
         }
@@ -828,10 +828,10 @@ namespace Application.Service
 
         public IEnumerable<ItemListVM> GetAll()
         {
-            var items = _unitOfWork.Items.GetAll();
+            var items = _unitOfWork.Items.GetAll().ToList();
             var itemVMs = new List<ItemListVM>();
 
-            Map.AtoB(items, itemVMs);
+            Map.ListToList(items, itemVMs);
 
             return itemVMs;
         }
@@ -990,10 +990,10 @@ namespace Application.Service
 
         public IEnumerable<ToolListVM> GetAll()
         {
-            var tools = _unitOfWork.Tools.GetAll();
+            var tools = _unitOfWork.Tools.GetAll().ToList();
             var toolVMs = new List<ToolListVM>();
 
-            Map.AtoB(tools, toolVMs);
+            Map.ListToList(tools, toolVMs);
 
             return toolVMs;
         }
@@ -1173,10 +1173,10 @@ namespace Application.Service
 
         public IEnumerable<AssemblyListVM> GetAll()
         {
-            var assemblys = _unitOfWork.Assemblys.GetAll();
+            var assemblys = _unitOfWork.Assemblys.GetAll().ToList();
             var assemblyVMs = new List<AssemblyListVM>();
 
-            Map.AtoB(assemblys, assemblyVMs);
+            Map.ListToList(assemblys, assemblyVMs);
 
             return assemblyVMs;
         }
@@ -1326,10 +1326,10 @@ namespace Application.Service
 
         public IEnumerable<AssemblyItemListVM> GetAll()
         {
-            var assemblyitems = _unitOfWork.AssemblyItems.GetAll();
+            var assemblyitems = _unitOfWork.AssemblyItems.GetAll().ToList();
             var assemblyitemVMs = new List<AssemblyItemListVM>();
 
-            Map.AtoB(assemblyitems, assemblyitemVMs);
+            Map.ListToList(assemblyitems, assemblyitemVMs);
 
             return assemblyitemVMs;
         }

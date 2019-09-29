@@ -9,41 +9,35 @@
 @using Application.Service
 @using Presentation
 
-@helper SearchGrid(System.Web.Mvc.WebViewPage page, object listVM, string searchMethod)
+@helper SearchGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod)
 {
     var Html = page.Html;
 
-    <table id="searchResultsTable" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
+    <table id="@(Name)" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
 
     <script>
-        var SearchGrid = function() {
-            var vm = this;
+        var @Name = function() {
+            vm = this;
 
-            vm.search = function () {
+            vm.searchstring = "";
+
+            vm.search = function (searchTerm) {
                 vm.selectedRow = "";
-                vm.table.search(vm.searchstring()).draw();
+                vm.table.search(searchTerm).draw();
             }
 
             vm.selectedRow = "";
-
+            vm.selectedRowList = "";
+            vm.table = "";
             vm.configureTable = function (data) {
                 if (vm.table) {
                     vm.table.destroy();
                 }
-                vm.table = $('#searchResultsTable').DataTable({
+                vm.table = $('#@(Name)').DataTable({
                     "ajax": {
                         "url": "@searchMethod",
                         "type": "POST",
                         "datatype": "json"
-                    },
-                    "drawCallback": function (settings) {
-                        var api = this.api();
-                        if (vm.selectedRow === "") {
-                            api.rows(0).select();
-                        }
-                        else {
-                            vm.selectedRow.select();
-                        }
                     },
                     "columns":
                         @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
@@ -54,12 +48,11 @@
                     "language": {
                         "processing": "processing, please wait"
                     },
-                    "select": "single",
+                    "select": { style: 'multi' },
                     "dom": '<"top"i>rt<"bottom"lp><"clear">'
                 });
 
-                @*Load selected row into details *@
-                $('#searchResultsTable tbody').on('click', 'tr', function () {
+                $('#@(Name) tbody').on('click', 'tr', function () {
                     var data = vm.table.row($(this)).data();
                     vm.HandleRowSelected(data);
                 });
@@ -91,15 +84,131 @@
             vm.HandleRowSelected = function(rowData) {
                 try {
                     vm.selectedRow = rowData;
-                    SearchGrid_HandleRowSelected(rowData);
-
+                    @(Name)_HandleRowSelected(rowData);
+                    vm.selectedRowList = vm.table.rows({ selected: true });
                 } catch (e) { }
+            }
+
+            vm.GetSelectedRows = function () {
+
+                var ids = $.map(vm.table.rows({ selected: true }).data(), function (item) {
+                    return item.Id;
+                });
+
+                return ids;
             }
         }
 
         $(document).ready(function () {
-            SearchGrid = new SearchGrid();
-            ko.applyBindings(SearchGrid);
+            @(Name) = new @(Name)();
+            //ko.applyBindings(@(Name));
+        });
+
+    </script>
+}
+
+@helper SimpleGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod, string Id)
+{
+    var Html = page.Html;
+
+    <table id="@(Name)" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
+
+    <script>
+        var @Name = function() {
+            vm = this;
+
+            vm.searchstring = "@Id";
+
+            vm.search = function (searchTerm) {
+                vm.selectedRow = "";
+                vm.searchstring = searchTerm;
+                var table = $("#@(Name)").DataTable();
+                //vm.table.search(searchTerm).draw();
+                table.ajax.reload();
+            }
+
+            vm.refresh = function () {
+                var table = $("#@(Name)").DataTable();
+                table.ajax.reload();
+                table.search(vm.searchstring).draw();
+            }
+
+            vm.selectedRow = "";
+            vm.selectedRowList = "";
+            vm.table = "";
+            vm.configureTable = function (data) {
+
+                if (vm.table) {
+                    vm.table.destroy();
+                }
+
+                vm.table = $('#@(Name)').DataTable({
+                    "ajax": {
+                        "url": "@searchMethod",
+                        "datatype": "json",
+                        "type": "POST",
+                        "data": { "connectorId": vm.searchstring }
+                    },
+                    "columns":
+                        @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
+                    "searching": "true",                                        
+                    "order": [0, "asc"],
+                    "processing": "true",
+                    "language": {
+                        "processing": "processing, please wait"
+                    },
+                    "select": { style: 'multi' },
+                    "dom": '<"top"i>rt<"bottom"lp><"clear">'
+                });
+
+                $('#@(Name) tbody').on('click', 'tr', function () {
+                    var data = vm.table.row($(this)).data();
+                    vm.HandleRowSelected(data);
+                });
+
+            };
+
+            @Html.Raw(JavaScriptBuilder.SelectLists(listVM));
+
+            vm.getEnumItemName = function (myEnum, value) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = ko.utils.arrayFirst(enumList(), function (i) {
+                    return value === i.id;
+                });
+                return n.name;
+            };
+
+            vm.formatDate = function (d) {
+                if (d === null) {
+                    return "";
+                }
+                var dateInt = parseInt(d.substring(6, 19));
+                var duedate = new Date(dateInt);
+                return duedate.toLocaleDateString();
+            };
+
+            vm.configureTable();
+
+            vm.HandleRowSelected = function(rowData) {
+                try {
+                    vm.selectedRow = rowData;
+                    @(Name)_HandleRowSelected(rowData);
+                    vm.selectedRowList = vm.table.rows({ selected: true });
+                } catch (e) { }
+            }
+
+            vm.GetSelectedRows = function () {
+
+                var table = $("#@(Name)").DataTable();
+                var rows = table.rows('.selected').data();
+                return rows;
+            }
+        }
+
+        $(document).ready(function () {
+            @(Name) = new @(Name)();
+            //ko.applyBindings(@(Name));
         });
 
     </script>
