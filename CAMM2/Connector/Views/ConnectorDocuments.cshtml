@@ -16,53 +16,12 @@
             </form>
 
         </nav>
-        @*<div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered" id="ConnectorDocumentsTable" style="width:100%">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>NUMBER</th>
-                            <th>TITLE</th>
-                            <th>CATEGORY</th>
-                            <th>REV</th>
-                        </tr>
-                    </thead>
-                    @if (ViewData.Model.Documents == null)
-                    {
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-
-                    }
-                    else
-                    {
-                        foreach (var d in ViewData.Model.Documents)
-                        {
-                            <text>
-                                <tr>
-                                    <td style="display:none;">@d.Id</td>
-                                    <td>@d.Code</td>
-                                    <td>@d.Title</td>
-                                    <td>@d.DocType</td>
-                                    <td>@d.Rev</td>
-                                </tr>
-                            </text>
-                        }
-                    }
-                </table>
-            </div>
-        </div>*@
         @CammGrid.SimpleGrid(this, new DocumentListVM(), "ConnectorDocsGrid", "/Connector/GetDocuments", ViewData.Model.Id.ToString())
     </div>
 
 
 
-@CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
+@CammPopup.LinkDocuments(this, "LinkDocumentsPopup", "connectorId", ViewData.Model.Id.ToString())
 
 <script>
 

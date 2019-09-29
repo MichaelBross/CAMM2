@@ -8,7 +8,7 @@
 @using Application.Service
 @using Presentation
 
-@helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name)
+@helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name, string targetIdName, string targetIdValue)
 {
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -42,9 +42,11 @@
 
             var ids = DocumentSearchGrid.GetSelectedRows();
 
+            var targetIdValue = "@targetIdValue";
+
             $.ajax({
                 "url": "AddExistingDocuments",
-                "data": $.param({ connectorId: connectorid, documentIdList: ids }, true),
+                "data": $.param({ "@targetIdName": @targetIdValue, "documentIdList": ids }, true),
                 "success": function () {
                     try {
                         @(Name)_HandleDocumentsLinked();
