@@ -36,9 +36,7 @@ namespace Application
                         }                        
                     }
                 }
-
             }
-
         }
 
         public static void ListToList<T, TU>(this List<T> ListA, List<TU> ListB)

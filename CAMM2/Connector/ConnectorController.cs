@@ -28,7 +28,6 @@ namespace Presentation
         [HttpPost]
         public JsonResult GetDocuments(int connectorId)
         {
-            //var connectorId = 1010;
             var connector = _connectorService.GetConnectorAndDocuments(connectorId);
             var documents = connector.Documents;            
             return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
@@ -53,7 +52,6 @@ namespace Presentation
             {
                 return JsonErrorResult();
             }
-
         }
 
         public ActionResult RemoveDocuments(int connectorId, IEnumerable<int> documentIdList)
