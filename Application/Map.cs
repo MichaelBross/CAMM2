@@ -41,21 +41,20 @@ namespace Application
 
         public static void ListToList<T, TU>(this List<T> ListA, List<TU> ListB)
         {
-            TU b = (TU)Activator.CreateInstance(typeof(TU));
-
             foreach(var a in ListA)
             {
+                TU b = (TU)Activator.CreateInstance(typeof(TU));
                 Map.AtoB(a, b);
                 ListB.Add(b);
             }
         }
 
         public static void IEnumableToIEnumable<T, TU>(this IEnumerable<T> ListA, IEnumerable<TU> ListB)
-        {
-            TU b = (TU)Activator.CreateInstance(typeof(TU));
+        {            
             var list = new List<TU>();
             foreach (var a in ListA)
             {
+                TU b = (TU)Activator.CreateInstance(typeof(TU));
                 Map.AtoB(a, b);
                 list.Add(b);
             }

@@ -11,17 +11,18 @@
             <form class="form-inline">
 
                 <button onclick="OpenAddExistingModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
+                <button onclick="OpenAddNewModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
                 <button onclick="RemoveDocuments()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
             </form>
 
         </nav>
-        @CammGrid.SimpleGrid(this, new DocumentListVM(), "ConnectorDocsGrid", "/Connector/GetDocuments", ViewData.Model.Id.ToString())
+        @CammGrid.SimpleAjaxGrid(this, new DocumentListVM(), "ConnectorDocsGrid", "/Connector/GetDocuments", ViewData.Model.Id.ToString())
     </div>
 
 
 
 @CammPopup.LinkDocuments(this, "LinkDocumentsPopup", "connectorId", ViewData.Model.Id.ToString())
+@CammPopup.AddAndLinkDocuments(this, "AddNewDocuments", "connectorId", ViewData.Model.Id.ToString());
 
 <script>
 
@@ -44,7 +45,7 @@
         
         var ids = [];
         for (i = 0; i < rows.length; i++) {
-            ids.push(rows[i].Id);
+            ids.push(rows[i].Id); 
         }
                
         $.ajax({
@@ -54,6 +55,10 @@
                 ConnectorDocsGrid.refresh()
             }
         });              
+    }
+
+    function OpenAddNewModal() {
+        $('#AddNewDocuments').modal('show');
     }
        
 </script>

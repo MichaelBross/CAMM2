@@ -4,7 +4,7 @@
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <button onclick="@(Name).HandleButtonClick()" class="btn btn-outline-primary" type="button" >@LabelText</button>
+            <button onclick="@(Name).HandleButtonClick()" class="btn btn-outline-primary" type="button">@LabelText</button>
         </div>
         <input type="text" class="form-control border-primary" placeholder="Enter search terms" id="@(Name)Input" style="max-width:@Width" aria-label="Search for existing documents" aria-describedby="button-addon1">
         <div class="input-group-append">
@@ -31,6 +31,97 @@
         };
 
         var @Name = new @(Name)();
+
+    </script>
+}
+
+@helper DragDropZone(System.Web.Mvc.WebViewPage page, string Name, string Text)
+{
+    var Html = page.Html;
+
+    <div id="@(Name)DZ" 
+         class="inactive-drop" 
+         ondrop="@(Name).dropHandler(event);" 
+         ondragover="@(Name).dragOverHandler(event);" 
+         ondragleave="@(Name).dragLeaveHandler(event);"
+         style="display:inline-block;">
+        @Text
+    </div>
+
+    <style>
+        #@(Name)DZ {            
+            border-radius: 10px;
+            width: 250px;
+            height: 50px;
+            text-align: center;
+            line-height: 45px
+        }
+
+        .inactive-drop {
+            border: 2px dashed black;
+            background-color: lightgray;
+            color: black;
+        }
+
+        .active-drop {
+            border: 2px solid #007bff;
+            background-color: lightblue;
+            color: #007bff;
+        }
+
+    </style>
+
+    <script>
+
+        function @(Name)() {
+
+            this.selectedFiles = [];
+
+            this.dropHandler = function(ev) {
+
+                ev.preventDefault();
+
+                if (ev.dataTransfer.items) {
+
+                    selectedFiles = ev.dataTransfer.files;
+
+                    if (selectedFiles.length > 0) {
+                          try {
+                            HandleFileDrop(selectedFiles, "@Name");
+                        } catch (e) { }
+                    }
+
+                } else {
+
+                    selectedFiles = ev.dataTransfer.file;
+
+                    if (selectedFiles.length > 0) {
+                        try {
+                            @(Name)_HandleFileDrop(selectedFiles);
+                        } catch (e) { }
+                    }
+                }
+                $('#@(Name)DZ').removeClass('active-drop');
+                $('#@(Name)DZ').addClass('inactive-drop');
+            }
+
+            this.dragOverHandler = function(ev) {
+
+                ev.preventDefault();
+                $('#@(Name)DZ').addClass('active-drop');
+                $('#@(Name)DZ').removeClass('inactive-drop');
+            }
+
+            this.dragLeaveHandler = function(ev) {
+
+                ev.preventDefault();
+                $('#@(Name)DZ').removeClass('active-drop');
+                $('#@(Name)DZ').addClass('inactive-drop');
+
+            }
+        }
+
+        @Name = new @(Name)();
 
     </script>
 }

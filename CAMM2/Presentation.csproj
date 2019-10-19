@@ -333,6 +333,7 @@
     <Content Include="Connector\Views\_ViewStart.cshtml" />
     <Content Include="Connector\Views\Index.cshtml" />
     <Content Include="Connector\Web.config" />
+    <Content Include="Scripts\jquery.filedrop.js" />
     <Content Include="WebConfigGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WebConfigGenerator.txt</LastGenOutput>
@@ -360,6 +361,7 @@
     <Content Include="App_Code\CammGrid.cshtml" />
     <Content Include="App_Code\CammInputs.cshtml" />
     <Content Include="App_Code\CammPopup.cshtml" />
+    <Content Include="Document\Views\UploadDocuments.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

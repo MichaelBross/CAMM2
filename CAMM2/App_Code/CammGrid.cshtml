@@ -59,7 +59,7 @@
 
             };
 
-            @Html.Raw(JavaScriptBuilder.SelectLists(listVM));
+            @Html.Raw(JavaScriptBuilder.SelectListsObservableArray(listVM));
 
             vm.getEnumItemName = function (myEnum, value) {
                 var enumListName = myEnum + "List";
@@ -107,7 +107,7 @@
     </script>
 }
 
-@helper SimpleGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod, string Id)
+@helper SimpleAjaxGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod, string Id)
 {
     var Html = page.Html;
 
@@ -168,7 +168,7 @@
 
             };
 
-            @Html.Raw(JavaScriptBuilder.SelectLists(listVM));
+            @Html.Raw(JavaScriptBuilder.SelectListsObservableArray(listVM));
 
             vm.getEnumItemName = function (myEnum, value) {
                 var enumListName = myEnum + "List";
@@ -209,6 +209,77 @@
         $(document).ready(function () {
             @(Name) = new @(Name)();
             //ko.applyBindings(@(Name));
+        });
+
+    </script>
+}
+
+@helper JavascriptSourcedGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name)
+{
+    var Html = page.Html;
+
+    <table id="@(Name)" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
+
+    <script>
+
+        function @(Name)() {
+
+            vm = this;
+
+            vm.data = [];
+
+            @Html.Raw(JavaScriptBuilder.SelectListsArray(listVM));
+
+            vm.getEnumItemName = function (myEnum, id) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = "";
+                for (var i = 0; i < enumList.length; i++) {
+                    if (enumList[i].id === id) {
+                        n = enumList[i];
+                    }
+                }
+                return n.name;
+            };
+
+            vm.getEnumItemId = function (myEnum, name) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = "";
+                for (var i = 0; i < enumList.length; i++) {
+                    if (enumList[i].name === name) {
+                        n = enumList[i];
+                    }
+                }
+                return n.id;
+            };
+
+            vm.table = $('#@(Name)').DataTable({
+                data: vm.data,
+                columns: [
+                    { "data": "Id", "name": "Id", "title": "Document Id", "visible": false },
+                    { "data": "Code", "name": "Code", "title": "Document Number", "visible": true },
+                    { "data": "Rev", "name": "Rev", "title": "Rev", "visible": true },
+                    { "data": "Title", "name": "Title", "title": "Title", "visible": true },
+                    { "render": function (data, type, row, meta) { return vm.getEnumItemName('DocumentType', row['DocType']); }, "name": "DocType", "title": "Type", "visible": true }
+                ],
+                paging: false,
+                ordering: false,
+                info: false,
+                searching: false
+            });
+
+            vm.loadTable = function(newData){
+                vm.table.clear();
+                vm.table.rows.add(newData);
+                vm.table.draw();
+            }
+        }
+
+        @Name = new @(Name)();
+
+        $(document).ready(function () {
+            @(Name).table;
         });
 
     </script>

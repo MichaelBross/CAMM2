@@ -175,7 +175,7 @@ namespace Presentation
             return backToMvcHtmlString;
         }
 
-        public static string SelectLists(object detailVM)
+        public static string SelectListsObservableArray(object detailVM)
         {
             var selectLists = "";
             foreach (var p in detailVM.GetType().GetProperties())
@@ -185,6 +185,23 @@ namespace Presentation
                     var SelectListName = p.PropertyType.Name + "List";
 
                     selectLists += "vm." + SelectListName + " = ko.observableArray(" + SelectListFromEnum(p.PropertyType) + ")";
+
+                }
+
+            }
+            return selectLists;
+        }
+
+        public static string SelectListsArray(object detailVM)
+        {
+            var selectLists = "";
+            foreach (var p in detailVM.GetType().GetProperties())
+            {
+                if (p.PropertyType.BaseType == typeof(Enum))
+                {
+                    var SelectListName = p.PropertyType.Name + "List";
+
+                    selectLists += "vm." + SelectListName + " = " + SelectListFromEnum(p.PropertyType);
 
                 }
 

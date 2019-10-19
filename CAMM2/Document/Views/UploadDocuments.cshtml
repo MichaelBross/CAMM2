@@ -1,0 +1,222 @@
+﻿@using Application.Service
+@using Presentation
+
+@{
+    ViewBag.Title = "Document";
+    var detailVM = new DocumentDetailVM();
+    var listVM = new DocumentListVM();
+}
+
+<div class="container">
+    <div class="row" style="padding-top:15px">
+        <h5>UPLOAD DOCUMENTS</h5>
+    </div>
+</div>
+<div>
+    @CammInputs.DragDropZone(this, "Drawing", "DRAWING drop zone")
+    @CammInputs.DragDropZone(this, "PartsList", "PARTS LIST drop zone")
+    @CammInputs.DragDropZone(this, "DataSheet", "Data Sheet drop zone")
+    @CammInputs.DragDropZone(this, "MSDS", "MSDS drop zone")
+    @CammInputs.DragDropZone(this, "Catalog", "Catalog drop zone")
+</div>
+<div id="documentgrid" style="padding-top: 20px; padding-bottom: 20px">
+    <table id="uploadsTable">
+        <thead>
+            <tr>
+                <th id="NumberTh">DOCUMENT NUMBER</th>
+                <th id="RevTh">REV</th>
+                <th id="FileNameTh">FILE NAME</th>
+                <th id="CategoryTh">CATEGORY</th>
+                <th id="DescriptionTh">DESCRIPTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="initialRow">
+                <td colspan="5"><input type="text" class="form-control Number" style="text-align: center"
+                    placeholder="Drag and Drop files onto drop zones above to upload files." /></td>
+            </tr>
+        </tbody>        
+    </table>
+</div>
+<div>
+    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+    <button onclick="AddSelectedDocuments()" type="button" class="btn btn-outline-primary">Upload and Link Documents</button>
+</div>
+
+<script>
+
+    var droppedFiles = [];
+    var formData = new FormData();
+
+    var fileCount = 0;
+
+    function UploadDocuments() {
+        vm = this;
+
+        @Html.Raw(JavaScriptBuilder.SelectListsArray(listVM));
+
+        vm.getEnumItemId = function (myEnum, name) {
+            var enumListName = myEnum + "List";
+            var enumList = vm[enumListName];
+            var n = "";
+            for (var i = 0; i < enumList.length; i++) {
+                if (enumList[i].name === name) {
+                    n = enumList[i];
+                }
+            }
+            return n.id;
+        };
+    }
+
+    var UploadDocuments = new UploadDocuments();
+
+    function HandleFileDrop(data, category) {        
+
+        if (data.length > 0) {
+
+            for (i = 0; i < data.length; i++) {
+
+                var document = {
+                    FileData: data[i],
+                    Category: category,
+                    Number: data[i].name,
+                    Rev: "",
+                    Description: data[i].name
+                }
+
+                var categoryId = UploadDocuments.getEnumItemId("DocumentType", category);
+                var doc = new Document(0, data[i].name, "-", data[i].name, categoryId);
+
+                droppedFiles.push(doc);
+
+                formData.append(data[i].name, data[i]);
+
+                var rowIndex = i + fileCount;
+
+                if (fileCount === 0) {
+                    $("#initialRow").remove();
+                }
+               
+                $("#uploadsTable > tbody:last-child").append(
+                    '<tr id="row' + rowIndex + '">' +
+                    '<td style="display:none;"><input type="text" class="form-control Id" /></td>' +
+                    '<td><input type="text" class="form-control Number" /></td>' +
+                    '<td><input type="text" class="form-control Rev" /></td>' +
+                    '<td><input type="text" class="form-control FileName" /></td>' +
+                    '<td><input type="text" class="form-control Category" /></td>' +
+                    '<td><input type="text" class="form-control Description" /></td>' +
+                    '</tr>');
+
+                $("#row" + rowIndex + " .Number").val(data[i].name);
+                $("#row" + rowIndex + " .Rev").val("-");
+                $("#row" + rowIndex + " .FileName").val(data[i].name);
+                $("#row" + rowIndex + " .Category").val(category);
+                $("#row" + rowIndex + " .Description").val(data[i].name);
+            }
+
+            fileCount = fileCount + data.length;
+
+            AddSelectedDocuments();
+        }
+    }
+
+    function Document(id, code, rev, title, doctype) {
+
+        this.Id = id;
+        this.Code = code;
+        this.Rev = rev;
+        this.Title = title;
+        this.DocType = doctype;
+    };
+
+    function AddSelectedDocuments() {
+
+        $.ajax({
+            "type": "POST",
+            "url": "UploadFiles",
+            "contentType": false,
+            "processData": false,
+            "data": formData,
+            "success": function (result) {
+                alert(result);
+                formData = new FormData();
+                droppedFiles = [];
+            },
+            "error": function () {
+                alert("There was an error uploading files!");
+            }
+        });
+    }
+
+
+
+    $(document).ready(function () {
+
+    });
+
+</script>
+
+<style>
+
+    tr {
+        padding-top: 10px;
+    }
+
+    table {
+        width: 100%; 
+        border-collapse: separate;
+        border-spacing: 7px 7px;
+    }
+
+    tbody {
+        width: 100%;
+    }
+
+    #documentgrid th {
+        padding-left: 5px;
+    }
+
+    #NumberTh {
+        width: 20%;        
+    }
+       
+    .Number {       
+        min-width: 100%;
+    }
+
+    #RevTh {
+        width: 5%;
+    }
+
+    .Rev {
+        min-width: 100%;
+    }
+
+    #FileNameTh {
+        width: 20%;
+    }
+
+    .FileName {
+        min-width: 100%;
+    }
+
+    #CategoryTh {
+        width: 20%;
+    }
+
+    .Category {
+        min-width: 100%;
+    }
+
+    #DescriptionTh {
+        width: 35%;
+    }
+
+    .Description {
+        min-width: 100%;
+    }
+
+
+    
+
+</style>
