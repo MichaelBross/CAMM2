@@ -224,6 +224,16 @@
       <annotations>[Display(Name = "Title", Order = -70)]</annotations>
     </property>
     <property>
+      <name>FileName</name>
+      <type>string</type>
+      <annotations>[Display(Name = "File Name", Order = -56)]</annotations>
+    </property>
+    <property>
+      <name>Path</name>
+      <type>string</type>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Path", Order = -54)]</annotations>
+    </property>
+    <property>
       <name>DocType</name>
       <type>DocumentType</type>
       <annotations>[Display(Name = "Category", Order = -60)]</annotations>
@@ -255,6 +265,16 @@
       <name>Title</name>
       <type>string</type>
       <annotations>[Display(Name = "Title", Order = -60)]</annotations>
+    </property>
+    <property>
+      <name>FileName</name>
+      <type>string</type>
+      <annotations>[Display(Name = "File Name", Order = -56)]</annotations>
+    </property>
+    <property>
+      <name>Path</name>
+      <type>string</type>
+      <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Path", Order = -54)]</annotations>
     </property>
     <property>
       <name>DocType</name>

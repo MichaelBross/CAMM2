@@ -242,6 +242,8 @@ namespace Application.Service
 					Code = i.Code,
 					Rev = i.Rev,
 					Title = i.Title,
+					FileName = i.FileName,
+					Path = i.Path,
 					DocType = i.DocType,
                 }).ToList();
 
@@ -263,6 +265,8 @@ namespace Application.Service
 				retrieved.Code = revisedVM.Code;
 				retrieved.Rev = revisedVM.Rev;
 				retrieved.Title = revisedVM.Title;
+				retrieved.FileName = revisedVM.FileName;
+				retrieved.Path = revisedVM.Path;
 				retrieved.DocType = revisedVM.DocType;
 				var Itemlist = new List<Item>();
 				if (revisedVM.Items != null)

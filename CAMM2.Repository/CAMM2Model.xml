@@ -81,6 +81,14 @@
       <type>string</type>
     </property>
     <property>
+      <name>FileName</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>Path</name>
+      <type>string</type>
+    </property>
+    <property>
       <name>DocType</name>
       <type>DocumentType</type>
     </property>

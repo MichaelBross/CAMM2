@@ -87,7 +87,7 @@ foreach (var aClass in xmlClasses)
             
             @JavaScriptBuilder.JsonKoObject(detailVM)
 
-            @Html.Raw(JavaScriptBuilder.SelectLists(detailVM))
+            @Html.Raw(JavaScriptBuilder.SelectListsArray(detailVM))
 
             @Html.Raw(JavaScriptBuilder.ClearModelFunction(detailVM))
 
@@ -156,7 +156,7 @@ foreach (var aClass in xmlClasses)
             vm.getEnumItemName = function (myEnum, value) {
                 var enumListName = myEnum + "List";
                 var enumList = vm[enumListName];
-                var n = ko.utils.arrayFirst(enumList(), function (i) {
+                var n = ko.utils.arrayFirst(enumList, function (i) {
                     return value === i.id;
                 });
                 return n.name;

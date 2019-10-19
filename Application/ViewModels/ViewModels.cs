@@ -157,6 +157,13 @@ namespace Application.Service
 		[Display(Name = "Title", Order = -70)]
 		public string Title { get; set; }
 
+		[Display(Name = "File Name", Order = -56)]
+		public string FileName { get; set; }
+
+		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Path", Order = -54)]
+		public string Path { get; set; }
+
 		[Display(Name = "Category", Order = -60)]
 		public DocumentType DocType { get; set; }
 
@@ -178,6 +185,13 @@ namespace Application.Service
 
 		[Display(Name = "Title", Order = -60)]
 		public string Title { get; set; }
+
+		[Display(Name = "File Name", Order = -56)]
+		public string FileName { get; set; }
+
+		[HiddenInput(DisplayValue = false)]
+		[Display(Name = "Path", Order = -54)]
+		public string Path { get; set; }
 
 		[Display(Name = "Type", Order = -50)]
 		public DocumentType DocType { get; set; }

@@ -70,6 +70,8 @@ namespace Persistance
 					   q.Code.Contains(term)
 					|| q.Rev.Contains(term)
 					|| q.Title.Contains(term)
+					|| q.FileName.Contains(term)
+					|| q.Path.Contains(term)
 					);					
                 }
             }
