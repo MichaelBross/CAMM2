@@ -67,7 +67,13 @@
                 var n = ko.utils.arrayFirst(enumList(), function (i) {
                     return value === i.id;
                 });
-                return n.name;
+                if (n !== undefined) {
+                    return n.name;
+                }
+                else {
+                    return "";
+                }
+                
             };
 
             vm.formatDate = function (d) {
