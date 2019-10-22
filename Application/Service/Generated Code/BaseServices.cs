@@ -109,6 +109,12 @@ namespace Application.Service
             return result;
         }
 
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Users.SearchResultsCount(searchParams);
+            return result;
+        }
+
         public UserDetailVM Update(UserDetailVM revisedVM)
         {
             try
@@ -247,6 +253,12 @@ namespace Application.Service
 					DocType = i.DocType,
                 }).ToList();
 
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Documents.SearchResultsCount(searchParams);
             return result;
         }
 
@@ -390,6 +402,12 @@ namespace Application.Service
 					Manufacturer = i.Manufacturer,
                 }).ToList();
 
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Components.SearchResultsCount(searchParams);
             return result;
         }
 
@@ -544,6 +562,12 @@ namespace Application.Service
 					Comments = i.Comments,
                 }).ToList();
 
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Connectors.SearchResultsCount(searchParams);
             return result;
         }
 
@@ -716,6 +740,12 @@ namespace Application.Service
             return result;
         }
 
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Contacts.SearchResultsCount(searchParams);
+            return result;
+        }
+
         public ContactDetailVM Update(ContactDetailVM revisedVM)
         {
             try
@@ -883,6 +913,12 @@ namespace Application.Service
             return result;
         }
 
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Items.SearchResultsCount(searchParams);
+            return result;
+        }
+
         public ItemDetailVM Update(ItemDetailVM revisedVM)
         {
             try
@@ -1047,6 +1083,12 @@ namespace Application.Service
 					Comments = i.Comments,
                 }).ToList();
 
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Tools.SearchResultsCount(searchParams);
             return result;
         }
 
@@ -1226,6 +1268,12 @@ namespace Application.Service
 					Rev = i.Rev,
                 }).ToList();
 
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.Assemblys.SearchResultsCount(searchParams);
             return result;
         }
 

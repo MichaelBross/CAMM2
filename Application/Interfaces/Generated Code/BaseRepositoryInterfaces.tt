@@ -37,6 +37,7 @@ foreach (var aClass in xmlClasses)
     {
 <# if(propertiesTypesString.Count > 0){ #>
         IEnumerable<<#=className#>> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 <# } #>
     }
 

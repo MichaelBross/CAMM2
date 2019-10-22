@@ -38,9 +38,9 @@ namespace Presentation
             var searchResults = _toolService.Search(searchParams);
                        
             // Filtered record count
-            int totalrowsafterfiltering = searchResults.Count();
+            int totalrowsafterfiltering = _toolService.SearchResultsCount(searchParams);
 
-            return Json(new { data = searchResults, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = searchResults, draw = Request.Form["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Tool/Add

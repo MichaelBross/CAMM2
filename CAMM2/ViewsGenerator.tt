@@ -133,11 +133,12 @@ foreach (var aClass in xmlClasses)
                         }
                     },
                     "columns": 
-                        @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
-                    "searching": "true",
-                    "serverSide": "true",
+                        @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),                    
+                    "serverSide": true,
+					"info": true,
+					"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],					
                     "order": [0, "asc"],
-                    "processing": "true",
+                    "processing": true,
                     "language": {
                         "processing": "processing, please wait"
                     },
@@ -159,7 +160,12 @@ foreach (var aClass in xmlClasses)
                 var n = ko.utils.arrayFirst(enumList, function (i) {
                     return value === i.id;
                 });
-                return n.name;
+				if(n !== undefined){
+					return n.name;
+				}
+				else{
+					return "";
+				}
             };
 
             vm.configureTable();

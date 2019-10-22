@@ -170,6 +170,12 @@ foreach (var aClass in xmlClasses)
 
             return result;
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.<#=className#>s.SearchResultsCount(searchParams);
+            return result;
+        }
 <# } #>
 
         public <#=className#>DetailVM Update(<#=className#>DetailVM revisedVM)

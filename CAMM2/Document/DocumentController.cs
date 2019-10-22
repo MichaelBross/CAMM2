@@ -36,6 +36,8 @@ namespace Presentation
 
             HttpFileCollectionBase files = Request.Files;
 
+            var docList = new List<DocumentDetailVM>();
+
             for (int i = 0; i < files.Count; i++)
             {
                 HttpPostedFileBase file = files[i];
@@ -50,9 +52,22 @@ namespace Presentation
 
                 file.SaveAs(newPath);
 
-                //Here you can write code for save this information in your database if you want
+                var fileNameWithoutExtention = Path.GetFileNameWithoutExtension(newPath);
+
+                var documentVM = new DocumentDetailVM()
+                {
+                    FileName = Path.GetFileName(newPath),
+                    Path = newPath,
+                    Code = fileNameWithoutExtention,
+                    Rev = "-",
+                    Title = fileNameWithoutExtention                                       
+                };
+
+                var savedDoc = _documentService.Add(documentVM);
+                docList.Add(savedDoc);
             }
-            return Json("file uploaded successfully");
+
+             return Json(docList);
         }
 
         private string GetPath(HttpPostedFileBase file)
@@ -102,6 +117,63 @@ namespace Presentation
             }
 
             return newPath;
+        }
+
+        [HttpPost]
+        public JsonResult IdentifyDuplicateNames(List<string> fileNames)
+        {
+            var duplicateNames = new List<NameVM>();
+            var uploadDirectory = "~/Uploads/";
+
+            foreach(var fileName in fileNames)
+            {
+                var path = Path.Combine(Server.MapPath(uploadDirectory), fileName);
+                if (System.IO.File.Exists(path))
+                {
+                    var nameVM = new NameVM();
+                    nameVM.Duplicate = fileName;
+                    var uniquePath = CreateUniquePath(path, uploadDirectory);
+                    nameVM.Unique = Path.GetFileName(uniquePath);
+                    duplicateNames.Add(nameVM);
+                }
+            }
+
+            return Json(duplicateNames, JsonRequestBehavior.AllowGet);
+        }
+
+        //DocumentVM[] docs
+
+        [HttpPost]
+        public JsonResult UpdateDocuments(List<DocumentVM> revisedDocuments)
+        {
+            var updatedDocs = new List<DocumentDetailVM>();
+            
+            foreach (var doc in revisedDocuments)
+            {
+                var existing = _documentService.Get(doc.Id);
+                if (doc.FileName != existing.FileName)
+                {
+                    var directory = Path.GetDirectoryName(existing.Path);
+                    var newPath = Path.Combine(directory, doc.FileName);
+                    if (!System.IO.File.Exists(newPath))
+                    {
+                        System.IO.File.Move(existing.Path, newPath);
+                        existing.Path = newPath;
+                    }
+
+                }
+
+                existing.Code = doc.Code;
+                existing.DocType = (Domain.DocumentType)Enum.ToObject(typeof(Domain.DocumentType), doc.DocType);
+                existing.FileName = doc.FileName;
+                existing.Rev = doc.Rev;
+                existing.Title = doc.Title;
+
+                var updated = _documentService.Update(existing);
+                updatedDocs.Add(updated);
+            }
+
+            return Json(updatedDocs, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <table id="searchResultsTable" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
+                <table id="searchResultsTable" class="table table-striped table-bordered" style="width:100%"></table>
             </div>
         </div>
     </div>
@@ -87,33 +87,20 @@
                 vm.table = $('#searchResultsTable').DataTable({
                     "ajax": {
                         "url": "SearchServerSide",
-                        "type": "POST",
-                        "datatype": "json"
-                    },
-                    "drawCallback": function (settings) {
-                        var api = this.api();
-                        if (vm.selectedRow === "") {
-                            var newdata = api.rows({ page: 'current' }).data();
-                            if (vm.mode() === 'Get') {
-                                vm.loadDetails(newdata[0]);
-                            }
-                            api.rows(0).select();
-                        }
-                        else {
-                            vm.selectedRow.select();
-                        }
+                        "type": "POST"
                     },
                     "columns": 
-                        @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
-                    "searching": "true",
-                    "serverSide": "true",
+                        @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),                    
+                    "serverSide": true,
+					"info": true,
+					"lengthMenu": [10, 20, 50, 75, 100, "All"],					
                     "order": [0, "asc"],
-                    "processing": "true",
+                    "processing": true,
+                    "paging": true,
                     "language": {
                         "processing": "processing, please wait"
                     },
-                    "select": "single",
-                    "dom": '<"top"i>rt<"bottom"lp><"clear">'
+                    "select": "single"
                 });
 
                 @*Load selected row into details *@
@@ -130,7 +117,12 @@
                 var n = ko.utils.arrayFirst(enumList, function (i) {
                     return value === i.id;
                 });
-                return n.name;
+				if(n !== undefined){
+					return n.name;
+				}
+				else{
+					return "";
+				}
             };
 
             vm.configureTable();

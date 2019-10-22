@@ -43,6 +43,28 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Users.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.FirstName.Contains(term)
+					|| q.LastName.Contains(term)
+					|| q.EmailAddress.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -81,6 +103,30 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Documents.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Code.Contains(term)
+					|| q.Rev.Contains(term)
+					|| q.Title.Contains(term)
+					|| q.FileName.Contains(term)
+					|| q.Path.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -115,6 +161,26 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Components.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Manufacturer.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -150,6 +216,27 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Connectors.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Family.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -186,6 +273,28 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Contacts.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Size.Contains(term)
+					|| q.Family.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -221,6 +330,27 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Items.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -259,6 +389,30 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Tools.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Manufacturer.Contains(term)
+					|| q.BinNumber.Contains(term)
+					|| q.MilitarySpecification.Contains(term)
+					|| q.SerialNumber.Contains(term)
+					|| q.Comments.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }
@@ -293,6 +447,26 @@ namespace Persistance
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.Assemblies.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Rev.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
         public Camm2Context Camm2Context
         {
             get { return Context as Camm2Context; }

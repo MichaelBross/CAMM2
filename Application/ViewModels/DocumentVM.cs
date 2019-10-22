@@ -14,6 +14,6 @@ namespace Application.Service
 
         public string Title { get; set; }
 
-        public string DocType { get; set; }
+        public int DocType { get; set; }
     }
 }

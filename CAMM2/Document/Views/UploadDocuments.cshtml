@@ -7,12 +7,23 @@
     var listVM = new DocumentListVM();
 }
 
-<div class="container">
-    <div class="row" style="padding-top:15px">
-        <h5>UPLOAD DOCUMENTS</h5>
-    </div>
+<div style="padding-top:15px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <h5 style="padding-top: 7px">UPLOAD DOCUMENTS</h5>
+        </div>
+        <div class="col-sm-6">
+
+        </div>
+        <div class="col-sm-4" style="text-align:right">
+            <button type="button" class="btn btn-outline-primary">Back</button>
+            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary">Save Changes</button>
+            <button onclick="UploadDocuments.SaveChangesAndLink()" type="button" class="btn btn-outline-primary">Save Changes and Link Documents</button>
+        </div>
+    </div> 
 </div>
-<div>
+
+<div style="padding-top:15px;">
     @CammInputs.DragDropZone(this, "Drawing", "DRAWING drop zone")
     @CammInputs.DragDropZone(this, "PartsList", "PARTS LIST drop zone")
     @CammInputs.DragDropZone(this, "DataSheet", "Data Sheet drop zone")
@@ -32,23 +43,21 @@
         </thead>
         <tbody>
             <tr id="initialRow">
-                <td colspan="5"><input type="text" class="form-control Number" style="text-align: center"
-                    placeholder="Drag and Drop files onto drop zones above to upload files." /></td>
+                <td colspan="5">
+                    <input type="text" class="form-control Number" style="text-align: center"
+                           placeholder="Drag and Drop files onto drop zones above to upload files." />
+                </td>
             </tr>
-        </tbody>        
+        </tbody>
     </table>
-</div>
-<div>
-    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-    <button onclick="AddSelectedDocuments()" type="button" class="btn btn-outline-primary">Upload and Link Documents</button>
 </div>
 
 <script>
 
-    var droppedFiles = [];
+    var documentList = [];
     var formData = new FormData();
 
-    var fileCount = 0;
+    var rowCount = 0;
 
     function UploadDocuments() {
         vm = this;
@@ -66,93 +75,235 @@
             }
             return n.id;
         };
+
+        vm.getEnumItemName = function (myEnum, id) {
+            var enumListName = myEnum + "List";
+            var enumList = vm[enumListName];
+            var n = "";
+            for (var i = 0; i < enumList.length; i++) {
+                if (enumList[i].id === id) {
+                    n = enumList[i];
+                }
+            }
+            return n.name;
+        };
+
+        vm.SaveChanges = function () {
+
+            var revisedDocuments = [];
+
+            for (i = 0; i < rowCount; i++) {
+                var rowIndex = i;
+
+                var id = $("#row" + rowIndex + " .Id").val();
+                var number = $("#row" + rowIndex + " .Number").val();
+                var rev = $("#row" + rowIndex + " .Rev").val();
+                var filename = $("#row" + rowIndex + " .FileName").val();
+                var category = $("#row" + rowIndex + " .Category").val();
+                var description = $("#row" + rowIndex + " .Description").val();
+
+                var document = new Document(id, number, rev, filename, category, description);
+                
+                revisedDocuments.push(document);
+            }
+
+            $.ajax({
+                url: "UpdateDocuments",
+                data: JSON.stringify(revisedDocuments),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (updatedDocs) {
+                    alert("Save successful.");                    
+                },
+                error: function (response) {
+                    alert("Error saving edits.");
+                }
+            });
+        }
     }
 
     var UploadDocuments = new UploadDocuments();
 
-    function HandleFileDrop(data, category) {        
+    function HandleFileDrop(files, category) {
 
-        if (data.length > 0) {
+        if (files.length > 0) {
 
-            for (i = 0; i < data.length; i++) {
-
-                var document = {
-                    FileData: data[i],
-                    Category: category,
-                    Number: data[i].name,
-                    Rev: "",
-                    Description: data[i].name
-                }
-
-                var categoryId = UploadDocuments.getEnumItemId("DocumentType", category);
-                var doc = new Document(0, data[i].name, "-", data[i].name, categoryId);
-
-                droppedFiles.push(doc);
-
-                formData.append(data[i].name, data[i]);
-
-                var rowIndex = i + fileCount;
-
-                if (fileCount === 0) {
-                    $("#initialRow").remove();
-                }
-               
-                $("#uploadsTable > tbody:last-child").append(
-                    '<tr id="row' + rowIndex + '">' +
-                    '<td style="display:none;"><input type="text" class="form-control Id" /></td>' +
-                    '<td><input type="text" class="form-control Number" /></td>' +
-                    '<td><input type="text" class="form-control Rev" /></td>' +
-                    '<td><input type="text" class="form-control FileName" /></td>' +
-                    '<td><input type="text" class="form-control Category" /></td>' +
-                    '<td><input type="text" class="form-control Description" /></td>' +
-                    '</tr>');
-
-                $("#row" + rowIndex + " .Number").val(data[i].name);
-                $("#row" + rowIndex + " .Rev").val("-");
-                $("#row" + rowIndex + " .FileName").val(data[i].name);
-                $("#row" + rowIndex + " .Category").val(category);
-                $("#row" + rowIndex + " .Description").val(data[i].name);
-            }
-
-            fileCount = fileCount + data.length;
-
-            AddSelectedDocuments();
+            IdentifyDuplicateNames(files, category);  
         }
     }
 
-    function Document(id, code, rev, title, doctype) {
+    function IdentifyDuplicateNames(files, category) {
 
-        this.Id = id;
-        this.Code = code;
-        this.Rev = rev;
-        this.Title = title;
-        this.DocType = doctype;
-    };
+        var fileNames = [];
 
-    function AddSelectedDocuments() {
+        for (i = 0; i < files.length; i++) {
+
+            fileNames.push(files[i].name)
+        }
 
         $.ajax({
-            "type": "POST",
-            "url": "UploadFiles",
-            "contentType": false,
-            "processData": false,
-            "data": formData,
-            "success": function (result) {
-                alert(result);
-                formData = new FormData();
-                droppedFiles = [];
+            url: "IdentifyDuplicateNames",            
+            data: JSON.stringify({ fileNames:fileNames }),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (duplicates) {
+                HandleDuplicateNames(duplicates, files, category);
             },
-            "error": function () {
+            error: function (response) {
+                alert("Error identifying duplicate names.");
+            }
+        });
+    }
+
+    function HandleDuplicateNames(names, files, category) {
+
+        var cleanFiles = ReplaceDuplicateNamesWithUniqueNames(names, files);
+
+        CreateDocumentList(cleanFiles, category);
+
+        AddFilesToFormData(cleanFiles);
+
+        UploadFiles();
+    }
+
+    function ReplaceDuplicateNamesWithUniqueNames(names, files) {
+
+        var updatedFiles = [];
+
+        for (var i = 0; i < names.length; i++) {
+
+            for (var f = 0; f < files.length; f++) {
+
+                if (files[f].name = names[i].Duplicate) {
+                    var blob = files[f];
+                    newFile = new File([blob], names[i].Unique, { type: blob.type });
+                    updatedFiles.push(newFile);
+                }
+                else {
+                    updatedFiles.push(files[f]);
+                }
+            }
+        }
+
+        return updatedFiles;
+    }
+
+    function CreateDocumentList(files, category) {
+
+        for (i = 0; i < files.length; i++) {
+
+            var document = {
+                FileData: files[i],
+                Category: category,
+                Number: files[i].name,
+                Rev: "",
+                Description: files[i].name
+            }
+
+            var categoryId = UploadDocuments.getEnumItemId("DocumentType", category);
+            var doc = new Document(0, "", "", files[i].name, categoryId, "");
+
+            documentList.push(doc);
+        }
+    }
+
+    function AddFilesToFormData(files) {
+
+        for (i = 0; i < files.length; i++) {
+
+            formData.append(files[i].name, files[i]);
+        }
+    }
+
+    function UploadFiles() {
+
+        $.ajax({
+            type: "POST",
+            url: "UploadFiles",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                formData = new FormData();
+                UpdateDocumentList(documentList, response);
+                rowCount = AddRowsToGrid(rowCount, response);
+            },
+            error: function () {
+                formData = new FormData();
                 alert("There was an error uploading files!");
             }
         });
     }
 
+    function UpdateDocumentList(clientDocList, serverDocList) {
 
+        for (f = 0; f < serverDocList.length; f++) {
 
-    $(document).ready(function () {
+            for (r = 0; r < documentList.length; r++) {
 
-    });
+                if (clientDocList[r].FileName == serverDocList[f].FileName) {
+
+                    clientDocList[r].Id = serverDocList[f].Id;
+                    clientDocList[r].Code = serverDocList[f].Code;
+                    clientDocList[r].Rev = serverDocList[f].Rev;
+                    clientDocList[r].Title = serverDocList[f].Title;
+
+                    serverDocList[f].DocType = clientDocList[r].DocType;
+                }
+            }
+        }
+    }
+
+    var CategorySelectString = '<select class="form-control Category">' +
+        '<option value="1">Drawing</option>' +
+        '<option value="2">Parts List</option>' +
+        '<option value="3">DataSheet</option>' +
+        '<option value="4">MSDS</option>' +
+        '<option value="5">Catalog</option>' +
+        '</select>'
+
+    function AddRowsToGrid(exisitingRowCount, newDocuments) {
+
+        if (exisitingRowCount === 0 && newDocuments.length > 0) {
+            $("#initialRow").remove();
+        }
+
+        for (i = 0; i < newDocuments.length; i++) {
+            var rowIndex = i + exisitingRowCount;
+
+            $("#uploadsTable > tbody:last-child").append(
+                '<tr id="row' + rowIndex + '">' +
+                '<td style="display:none;"><input type="text" class="form-control Id" /></td>' +
+                '<td><input type="text" class="form-control Number" /></td>' +
+                '<td><input type="text" class="form-control Rev" /></td>' +
+                '<td><input type="text" class="form-control FileName" /></td>' +
+                '<td>' + CategorySelectString + '</td>' +
+                '<td><input type="text" class="form-control Description" /></td>' +
+                '</tr>');
+
+            $("#row" + rowIndex + " .Id").val(newDocuments[i].Id);
+            $("#row" + rowIndex + " .Number").val(newDocuments[i].Code);
+            $("#row" + rowIndex + " .Rev").val(newDocuments[i].Rev);
+            $("#row" + rowIndex + " .FileName").val(newDocuments[i].FileName);
+            $("#row" + rowIndex + " .Category").val(newDocuments[i].DocType);
+            $("#row" + rowIndex + " .Description").val(newDocuments[i].Title);
+        }
+
+        return exisitingRowCount + newDocuments.length;
+    }
+
+    function Document(id, code, rev, fileName, docType, title) {
+
+        this.Id = id;
+        this.Code = code;
+        this.Rev = rev;
+        this.FileName = fileName;
+        this.DocType = docType;
+        this.Title = title;
+    };
 
 </script>
 
@@ -163,7 +314,7 @@
     }
 
     table {
-        width: 100%; 
+        width: 100%;
         border-collapse: separate;
         border-spacing: 7px 7px;
     }
@@ -177,10 +328,10 @@
     }
 
     #NumberTh {
-        width: 20%;        
+        width: 20%;
     }
-       
-    .Number {       
+
+    .Number {
         min-width: 100%;
     }
 
@@ -215,8 +366,4 @@
     .Description {
         min-width: 100%;
     }
-
-
-    
-
 </style>

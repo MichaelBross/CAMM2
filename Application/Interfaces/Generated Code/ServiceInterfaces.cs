@@ -10,6 +10,7 @@ namespace Application.Service
     public interface IUserServiceBase
     {
         IEnumerable<UserListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		UserDetailVM Get(int id);
         IEnumerable<UserListVM> GetAll();
         int GetTotalCount();
@@ -20,6 +21,7 @@ namespace Application.Service
     public interface IDocumentServiceBase
     {
         IEnumerable<DocumentListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		DocumentDetailVM Get(int id);
         IEnumerable<DocumentListVM> GetAll();
         int GetTotalCount();
@@ -30,6 +32,7 @@ namespace Application.Service
     public interface IComponentServiceBase
     {
         IEnumerable<ComponentListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		ComponentDetailVM Get(int id);
         IEnumerable<ComponentListVM> GetAll();
         int GetTotalCount();
@@ -40,6 +43,7 @@ namespace Application.Service
     public interface IConnectorServiceBase
     {
         IEnumerable<ConnectorListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		ConnectorDetailVM Get(int id);
         IEnumerable<ConnectorListVM> GetAll();
         int GetTotalCount();
@@ -50,6 +54,7 @@ namespace Application.Service
     public interface IContactServiceBase
     {
         IEnumerable<ContactListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		ContactDetailVM Get(int id);
         IEnumerable<ContactListVM> GetAll();
         int GetTotalCount();
@@ -60,6 +65,7 @@ namespace Application.Service
     public interface IItemServiceBase
     {
         IEnumerable<ItemListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		ItemDetailVM Get(int id);
         IEnumerable<ItemListVM> GetAll();
         int GetTotalCount();
@@ -70,6 +76,7 @@ namespace Application.Service
     public interface IToolServiceBase
     {
         IEnumerable<ToolListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		ToolDetailVM Get(int id);
         IEnumerable<ToolListVM> GetAll();
         int GetTotalCount();
@@ -80,6 +87,7 @@ namespace Application.Service
     public interface IAssemblyServiceBase
     {
         IEnumerable<AssemblyListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		AssemblyDetailVM Get(int id);
         IEnumerable<AssemblyListVM> GetAll();
         int GetTotalCount();

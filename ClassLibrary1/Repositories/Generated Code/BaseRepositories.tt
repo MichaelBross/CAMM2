@@ -88,6 +88,45 @@ foreach (var aClass in xmlClasses)
 
             return query.ToList();
         }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.<#=classNamePlural#>s.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+<#
+	firstProp = true;
+	foreach(var prop in propertiesTypesString)
+    {
+		var propertyName = GetName(prop);
+		if(firstProp)
+        {
+#>
+					   q.<#=propertyName#>.Contains(term)
+<#
+			firstProp = false;
+        }
+		else
+        {
+#>
+					|| q.<#=propertyName#>.Contains(term)
+<#
+        }
+
+    } 
+#>					);					
+                }
+            }
+
+            return query.Count();
+        }
+
 <# } #>
         public Camm2Context Camm2Context
         {
