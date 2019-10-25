@@ -7,23 +7,36 @@
     var listVM = new DocumentListVM();
 }
 
-<div style="padding-top:15px;">
-    <div class="row">
-        <div class="col-sm-2">
-            <h5 style="padding-top: 7px">UPLOAD DOCUMENTS</h5>
+<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%; padding-top: 15px">
+    <div class="input-group">
+        <h5 style="padding-top: 7px">UPLOAD DOCUMENTS</h5>
+    </div>
+    <div class="input-group" style="padding-top:5px">
+        <div class="input-group" aria-label="First group">
+            <button type="button" class="btn btn-outline-primary" style="margin-right:10px">Back</button>
+            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save Changes</button>
         </div>
-        <div class="col-sm-6">
-
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save Changes and Link Documents to</button>
+            </div>
+            <select class="custom-select" id="inputGroupSelect03">                
+                <option value="1">Assembly</option>
+                <option selected="selected" value="2">Connector</option>
+                <option value="3">Contact</option>
+            </select>
+            <div class="input-group-append">
+                <select class="custom-select" id="inputGroupSelect04">                    
+                    <option selected="selected" value="1">D3899926WB26N</option>
+                    <option value="2">MS3476W12N</option>
+                    <option value="3">MS3476W14N</option>
+                </select>
+            </div>
         </div>
-        <div class="col-sm-4" style="text-align:right">
-            <button type="button" class="btn btn-outline-primary">Back</button>
-            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary">Save Changes</button>
-            <button onclick="UploadDocuments.SaveChangesAndLink()" type="button" class="btn btn-outline-primary">Save Changes and Link Documents</button>
-        </div>
-    </div> 
+    </div>
 </div>
 
-<div style="padding-top:15px;">
+<div style="padding-top:20px;">
     @CammInputs.DragDropZone(this, "Drawing", "DRAWING drop zone")
     @CammInputs.DragDropZone(this, "PartsList", "PARTS LIST drop zone")
     @CammInputs.DragDropZone(this, "DataSheet", "Data Sheet drop zone")
