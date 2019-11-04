@@ -18,7 +18,7 @@ namespace Persistance
         {
         }
 
-        public Connector GetIncludeDocuments(int connectorId)
+        public Connector GetWithDocuments(int connectorId)
         {
             return _entity.Include("Documents").Where(c => c.Id == connectorId).FirstOrDefault();
         }

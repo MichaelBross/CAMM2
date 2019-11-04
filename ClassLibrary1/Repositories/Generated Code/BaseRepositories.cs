@@ -151,7 +151,9 @@ namespace Persistance
                 foreach (string term in terms)
                 {
                     query = query.Where(q =>
-					   q.Manufacturer.Contains(term)
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					|| q.Manufacturer.Contains(term)
 					);					
                 }
             }
@@ -205,7 +207,9 @@ namespace Persistance
                 foreach (string term in terms)
                 {
                     query = query.Where(q =>
-					   q.Family.Contains(term)
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					|| q.Family.Contains(term)
 					|| q.Comments.Contains(term)
 					);					
                 }
@@ -261,7 +265,9 @@ namespace Persistance
                 foreach (string term in terms)
                 {
                     query = query.Where(q =>
-					   q.Size.Contains(term)
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					|| q.Size.Contains(term)
 					|| q.Family.Contains(term)
 					|| q.Comments.Contains(term)
 					);					
@@ -375,7 +381,9 @@ namespace Persistance
                 foreach (string term in terms)
                 {
                     query = query.Where(q =>
-					   q.Manufacturer.Contains(term)
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					|| q.Manufacturer.Contains(term)
 					|| q.BinNumber.Contains(term)
 					|| q.MilitarySpecification.Contains(term)
 					|| q.SerialNumber.Contains(term)
@@ -437,7 +445,9 @@ namespace Persistance
                 foreach (string term in terms)
                 {
                     query = query.Where(q =>
-					   q.Rev.Contains(term)
+					   q.Code.Contains(term)
+					|| q.Description.Contains(term)
+					|| q.Rev.Contains(term)
 					);					
                 }
             }

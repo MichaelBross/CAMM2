@@ -17,5 +17,10 @@ namespace Persistance
             :base(context)
         {
         }
+
+        public List<Document> GetListByConnectorID(int connectorID)
+        {
+            return Camm2Context.Connectors.Find(connectorID).Documents.ToList();
+        }
     }
 }

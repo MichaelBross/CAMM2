@@ -14,23 +14,19 @@
     <div class="input-group" style="padding-top:5px">
         <div class="input-group" aria-label="First group">
             <button type="button" class="btn btn-outline-primary" style="margin-right:10px">Back</button>
-            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save Changes</button>
+            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save</button>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
-                <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save Changes and Link Documents to</button>
+                <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save and Link to</button>
             </div>
-            <select class="custom-select" id="inputGroupSelect03">                
+            <select class="form-control btn-outline-primary" id="inputGroupSelect03">
                 <option value="1">Assembly</option>
                 <option selected="selected" value="2">Connector</option>
                 <option value="3">Contact</option>
             </select>
             <div class="input-group-append">
-                <select class="custom-select" id="inputGroupSelect04">                    
-                    <option selected="selected" value="1">D3899926WB26N</option>
-                    <option value="2">MS3476W12N</option>
-                    <option value="3">MS3476W14N</option>
-                </select>
+                <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search">
             </div>
         </div>
     </div>
@@ -39,9 +35,9 @@
 <div style="padding-top:20px;">
     @CammInputs.DragDropZone(this, "Drawing", "DRAWING drop zone")
     @CammInputs.DragDropZone(this, "PartsList", "PARTS LIST drop zone")
-    @CammInputs.DragDropZone(this, "DataSheet", "Data Sheet drop zone")
+    @CammInputs.DragDropZone(this, "DataSheet", "DATA SHEET drop zone")
     @CammInputs.DragDropZone(this, "MSDS", "MSDS drop zone")
-    @CammInputs.DragDropZone(this, "Catalog", "Catalog drop zone")
+    @CammInputs.DragDropZone(this, "Catalog", "CATALOG drop zone")
 </div>
 <div id="documentgrid" style="padding-top: 20px; padding-bottom: 20px">
     <table id="uploadsTable">
@@ -66,7 +62,7 @@
 </div>
 
 <script>
-
+       
     var documentList = [];
     var formData = new FormData();
 
@@ -116,7 +112,7 @@
                 var description = $("#row" + rowIndex + " .Description").val();
 
                 var document = new Document(id, number, rev, filename, category, description);
-                
+
                 revisedDocuments.push(document);
             }
 
@@ -127,7 +123,7 @@
                 dataType: "json",
                 contentType: "application/json",
                 success: function (updatedDocs) {
-                    alert("Save successful.");                    
+                    alert("Save successful.");
                 },
                 error: function (response) {
                     alert("Error saving edits.");
@@ -142,7 +138,7 @@
 
         if (files.length > 0) {
 
-            IdentifyDuplicateNames(files, category);  
+            IdentifyDuplicateNames(files, category);
         }
     }
 
@@ -156,7 +152,7 @@
         }
 
         $.ajax({
-            url: "IdentifyDuplicateNames",            
+            url: "IdentifyDuplicateNames",
             data: JSON.stringify({ fileNames:fileNames }),
             type: "POST",
             dataType: "json",
@@ -317,6 +313,12 @@
         this.DocType = docType;
         this.Title = title;
     };
+
+    $(document).ready(function () {
+        $('#myInput').autocomplete({
+            source: '/Connector/GetConnectors'
+        });
+    });
 
 </script>
 

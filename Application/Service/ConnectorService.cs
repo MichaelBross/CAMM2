@@ -22,7 +22,7 @@ namespace Application.Service
         {
             var vm = new ConnectorDetailVM();
             vm.Documents = new List<DocumentListVM>();
-            var connector = _unitOfWork.Connectors.GetIncludeDocuments(connectorId);
+            var connector = _unitOfWork.Connectors.GetWithDocuments(connectorId);
             Map.AtoB(connector, vm);
             foreach(Document doc in connector.Documents)
             {
@@ -77,7 +77,7 @@ namespace Application.Service
 
             try
             {
-                var connAndDocuments = _unitOfWork.Connectors.GetIncludeDocuments(connectorId);
+                var connAndDocuments = _unitOfWork.Connectors.GetWithDocuments(connectorId);
                 var targetDocument = connAndDocuments.Documents.Where(d => d.Id == documentId).FirstOrDefault();
                 if (connAndDocuments == null || targetDocument == null)
                 {
