@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Application;
 using Application.Interfaces;
 using Application.Service;
+using Application.ViewModels;
 
 namespace Presentation
 { 
@@ -22,7 +23,9 @@ namespace Presentation
 
         public ActionResult UploadDocuments()
         {
-            return View();
+            var uploadDocuments = new UploadDocumentsVM();
+            uploadDocuments.ItemSelectList = _documentService.LinkToSelectList();
+            return View(uploadDocuments);
         }
 
         [HttpPost]

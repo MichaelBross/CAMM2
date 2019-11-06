@@ -1,4 +1,5 @@
-﻿@using Application.Service
+﻿@model Application.ViewModels.UploadDocumentsVM
+@using Application.Service
 @using Presentation
 
 @{
@@ -21,9 +22,10 @@
                 <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save and Link to</button>
             </div>
             <select class="form-control btn-outline-primary" id="inputGroupSelect03">
-                <option value="1">Assembly</option>
-                <option selected="selected" value="2">Connector</option>
-                <option value="3">Contact</option>
+                @foreach (var item in Model.ItemSelectList)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
             </select>
             <div class="input-group-append">
                 <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search">
