@@ -155,7 +155,7 @@ namespace Presentation
             return newPath;
         }
 
-        public ActionResult GetConnectors(string term)
+        public ActionResult GetAutoCompleteList(string term)
         {
             var searchParams = new SearchParameters();
             searchParams.SearchValue = term;

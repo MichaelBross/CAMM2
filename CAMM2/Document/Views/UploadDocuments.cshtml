@@ -21,7 +21,7 @@
             <div class="input-group-prepend">
                 <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save and Link to</button>
             </div>
-            <select class="form-control btn-outline-primary" id="inputGroupSelect03">
+            <select class="form-control btn-outline-primary" id="linkToSelect">
                 @foreach (var item in Model.ItemSelectList)
                 {
                     <option value="@item.Value">@item.Text</option>
@@ -99,7 +99,13 @@
             return n.name;
         };
 
-        vm.SaveChanges = function () {
+        vm.SaveChangesAndLink = function () {
+            var revisedDocuments = vm.GetDocuments();
+            vm.Save(revisedDocuments);
+            vm.LinkDocuments(revisedDocuments);
+        }
+
+        vm.GetDocuments = function () {
 
             var revisedDocuments = [];
 
@@ -118,6 +124,16 @@
                 revisedDocuments.push(document);
             }
 
+            return revisedDocuments;
+        }
+
+        vm.SaveChanges = function () {
+            var revisedDocuments = vm.GetDocuments();
+            vm.Save(revisedDocuments);
+        }
+
+        vm.Save = function (revisedDocuments) {
+                       
             $.ajax({
                 url: "UpdateDocuments",
                 data: JSON.stringify(revisedDocuments),
@@ -131,6 +147,10 @@
                     alert("Error saving edits.");
                 }
             });
+        }
+
+        vm.LinkDocuments = function () {
+            
         }
     }
 
@@ -315,10 +335,21 @@
         this.DocType = docType;
         this.Title = title;
     };
-
+    var linkToItem = "";
+    var linkToID = "";
     $(document).ready(function () {
         $('#myInput').autocomplete({
-            source: '/Connector/GetConnectors'
+            source: '/' + linkToItem + '/GetAutoCompleteList',
+            select: function (event, ui) {
+                linkToID = ui.item.id;
+            }
+        });
+
+        $('#linkToSelect').change(function () {
+            linkToItem = $(this).find("option:selected").attr('value');
+            $('#myInput').autocomplete({
+                source: '/' + linkToItem + '/GetAutoCompleteList'
+            });
         });
     });
 
