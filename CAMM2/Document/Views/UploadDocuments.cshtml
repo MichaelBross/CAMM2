@@ -212,9 +212,9 @@
         });
     }
 
-    function HandleDuplicateNames(names, files, category) {
+    function HandleDuplicateNames(duplicates, files, category) {
 
-        var cleanFiles = ReplaceDuplicateNamesWithUniqueNames(names, files);
+        var cleanFiles = ReplaceDuplicateNamesWithUniqueNames(duplicates, files);
 
         CreateDocumentList(cleanFiles, category);
 
@@ -223,23 +223,23 @@
         UploadFiles();
     }
 
-    function ReplaceDuplicateNamesWithUniqueNames(names, files) {
+    function ReplaceDuplicateNamesWithUniqueNames(duplicates, files) {
 
-        var updatedFiles = [];
+        var updatedFiles = [];        
 
-        for (var i = 0; i < names.length; i++) {
+        for (var f = 0; f < files.length; f++) {
 
-            for (var f = 0; f < files.length; f++) {
+            var uniqueNameFile = files[f];
 
-                if (files[f].name = names[i].Duplicate) {
+            for (var d = 0; d < duplicates.length; d++) {
+
+                if (uniqueNameFile.name === duplicates[d].Duplicate) {
                     var blob = files[f];
-                    newFile = new File([blob], names[i].Unique, { type: blob.type });
-                    updatedFiles.push(newFile);
-                }
-                else {
-                    updatedFiles.push(files[f]);
+                    uniqueNameFile = new File([blob], duplicates[d].Unique, { type: blob.type });
                 }
             }
+
+            updatedFiles.push(uniqueNameFile);
         }
 
         return updatedFiles;
