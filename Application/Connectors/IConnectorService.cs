@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.ViewModels;
 
 namespace Application.Connectors
 {
@@ -14,5 +15,6 @@ namespace Application.Connectors
         ConnectorDetailVM Add(ConnectorDetailVM connectorVM);
         ConnectorDetailVM Update(ConnectorDetailVM connectorVM);
         void Remove(ConnectorDetailVM connectorVM);
+       
     }
 }

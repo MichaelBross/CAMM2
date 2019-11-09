@@ -6,6 +6,7 @@ using System.Linq;
 using Domain;
 using Application;
 using Application.Interfaces;
+using Application.ViewModels;
 
 namespace Application.Service
 {
@@ -94,6 +95,18 @@ namespace Application.Service
             }
 
             return result;
+        }
+
+        public UploadDocumentsVM LinkDocuments(UploadDocumentsVM uploadDocumentsVM)
+        {
+            foreach (var idString in uploadDocumentsVM.DocumentIdList)
+            {
+                var id = int.Parse(idString);
+
+                LinkDocumentToConnector(uploadDocumentsVM.LinkToId, id);
+            }
+
+            return uploadDocumentsVM;
         }
     }
 }

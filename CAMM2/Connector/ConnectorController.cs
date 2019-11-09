@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Application;
 using Application.Interfaces;
 using Application.Service;
+using Application.ViewModels;
 
 namespace Presentation
 { 
@@ -168,6 +169,11 @@ namespace Presentation
             }).ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LinkDocuments(UploadDocumentsVM uploadDocumentsVM)
+        {
+            return Json(_connectorService.LinkDocuments(uploadDocumentsVM), JsonRequestBehavior.AllowGet);
         }
     }
 }

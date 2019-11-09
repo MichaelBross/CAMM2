@@ -9,6 +9,10 @@ namespace Application.ViewModels
 {
     public class UploadDocumentsVM
     {
-        public List<SelectListItem> ItemSelectList { get; set; }
+        public List<SelectListItem> ItemSelectList { get; set; }        
+        public string LinkToType { get; set; }
+        public int LinkToId { get; set; }
+        public string LinkToCD { get; set; }
+        public List<string> DocumentIdList { get; set; }
     }
 }

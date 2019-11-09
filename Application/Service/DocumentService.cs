@@ -14,7 +14,7 @@ namespace Application.Service
     {
 	    private readonly IUnitOfWork _unitOfWork;
 
-        public DocumentService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public DocumentService(IUnitOfWork unitOfWork) : base(unitOfWork) 
         {
             _unitOfWork = unitOfWork;
         }

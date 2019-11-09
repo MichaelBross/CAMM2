@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Application.ViewModels;
 using Domain;
 
 
@@ -60,7 +61,7 @@ namespace Application.Connectors
             var count = _unitOfWork.Connectors.GetAll().Count();
             return count;
         }
-
+               
         public void Remove(ConnectorDetailVM connectorVM)
         {
             try
@@ -116,5 +117,7 @@ namespace Application.Connectors
                 throw new Exception(message);
             }
         }
+
+
     }
 }

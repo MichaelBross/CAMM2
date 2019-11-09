@@ -21,10 +21,14 @@ namespace Presentation
             _documentService = documentService;            
         }
 
-        public ActionResult UploadDocuments()
+        public ActionResult UploadDocuments(string linkToType = "", int linkToId = 0, string linkToCD = "")
         {
             var uploadDocuments = new UploadDocumentsVM();
+            uploadDocuments.LinkToType = linkToType;
+            uploadDocuments.LinkToId = linkToId;
+            uploadDocuments.LinkToCD = linkToCD;
             uploadDocuments.ItemSelectList = _documentService.LinkToSelectList();
+
             return View(uploadDocuments);
         }
 

@@ -149,8 +149,32 @@
             });
         }
 
-        vm.LinkDocuments = function () {
-            
+        vm.LinkDocuments = function (revisedDocuments) {
+
+            var documentIdList = [];
+
+            for (var i = 0; i < revisedDocuments.length; i++) {
+                documentIdList.push(revisedDocuments[i].Id);
+            }
+
+            var UploadDocumentsVM = {
+                LinkToId: linkToID,
+                DocumentIdList: documentIdList
+            }
+
+            $.ajax({
+                url: "/" + linkToType + "/LinkDocuments",
+                data: JSON.stringify(UploadDocumentsVM),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (updatedDocs) {
+                    alert("Save successful.");
+                },
+                error: function (response) {
+                    alert("Error saving edits.");
+                }
+            });
         }
     }
 
@@ -335,22 +359,29 @@
         this.DocType = docType;
         this.Title = title;
     };
-    var linkToItem = "";
-    var linkToID = "";
+    var linkToType = "@Model.LinkToType";
+    var linkToID = @Model.LinkToId;
+    var linkToCD = "@Model.LinkToCD";
+
     $(document).ready(function () {
+
         $('#myInput').autocomplete({
-            source: '/' + linkToItem + '/GetAutoCompleteList',
+            source: '/' + linkToType + '/GetAutoCompleteList',
             select: function (event, ui) {
                 linkToID = ui.item.id;
             }
         });
 
         $('#linkToSelect').change(function () {
-            linkToItem = $(this).find("option:selected").attr('value');
+            linkToType = $(this).find("option:selected").attr('value');
             $('#myInput').autocomplete({
-                source: '/' + linkToItem + '/GetAutoCompleteList'
+                source: '/' + linkToType + '/GetAutoCompleteList'
             });
         });
+
+        $('#linkToSelect').val(linkToType);
+
+        $('#myInput').val(linkToCD);
     });
 
 </script>

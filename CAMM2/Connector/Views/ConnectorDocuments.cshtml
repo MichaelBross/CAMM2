@@ -11,7 +11,7 @@
             <form class="form-inline">
 
                 <button onclick="OpenAddExistingModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
-                <button onclick="OpenAddNewModal()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
+                <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
                 <button onclick="RemoveDocuments()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
             </form>
 
@@ -22,7 +22,7 @@
 
 
 @CammPopup.LinkDocuments(this, "LinkDocumentsPopup", "connectorId", ViewData.Model.Id.ToString())
-@CammPopup.AddAndLinkDocuments(this, "AddNewDocuments", "connectorId", ViewData.Model.Id.ToString());
+@CammPopup.AddAndLinkDocuments(this, "AddNewDocuments", "connectorId", ViewData.Model.Id.ToString())
 
 <script>
 
@@ -57,8 +57,9 @@
         });              
     }
 
-    function OpenAddNewModal() {
-        $('#AddNewDocuments').modal('show');
+    function HandleAddNewButtonClick() {
+        
+        window.location.href = '@Url.Action("UploadDocuments", "Document")?linkToType=Connector&linkToId=@ViewData.Model.Id&linkToCD=@ViewData.Model.Code';
     }
        
 </script>
