@@ -5,5 +5,6 @@ namespace Application.Interfaces
 {
     public interface IAssemblyRepository : IAssemblyRepositoryBase 
     {
+        Assembly GetInculding(string itemsToInclude, int id);
     }
 }

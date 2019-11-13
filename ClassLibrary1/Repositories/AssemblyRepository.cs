@@ -17,5 +17,11 @@ namespace Persistance
             :base(context)
         {
         }
-	}
+
+        public Assembly GetInculding(string itemsToInclude, int id)
+        {
+            return _entity.Include(itemsToInclude).Where(c => c.Id == id).FirstOrDefault();
+        }
+
+    }
 }

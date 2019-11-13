@@ -77,84 +77,84 @@ namespace Presentation
             }
         }
 
-        [HttpPost]
-        public ActionResult UploadFiles()
-        {
+        //[HttpPost]
+        //public ActionResult UploadFiles()
+        //{
 
-            if(Request.Files.Count == 0)
-            {
-                return Json("Failed to upload files.");
-            }
+        //    if (Request.Files.Count == 0)
+        //    {
+        //        return Json("Failed to upload files.");
+        //    }
 
-            HttpFileCollectionBase files = Request.Files;
+        //    HttpFileCollectionBase files = Request.Files;
 
-            for (int i = 0; i < files.Count; i++)
-            {                
-                HttpPostedFileBase file = files[i];
+        //    for (int i = 0; i < files.Count; i++)
+        //    {
+        //        HttpPostedFileBase file = files[i];
 
-                var path = GetPath(file);
+        //        var path = GetPath(file);
 
-                var uploadDirectory = "~/Uploads/";
+        //        var uploadDirectory = "~/Uploads/";
 
-                CreateDirectoryIfNotPresent(uploadDirectory);
-                   
-                var newPath = CreateUniquePath(path, uploadDirectory);
+        //        CreateDirectoryIfNotPresent(uploadDirectory);
 
-                file.SaveAs(newPath);
+        //        var newPath = CreateUniquePath(path, uploadDirectory);
 
-                //Here you can write code for save this information in your database if you want
-            }
-            return Json("file uploaded successfully");
-        }
+        //        file.SaveAs(newPath);
 
-        private string GetPath(HttpPostedFileBase file)
-        {
-            string fname;
-            if (BrowserIsInternetExplorer(Request))
-            {
-                string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                fname = testfiles[testfiles.Length - 1];
-            }
-            else
-            {
-                fname = file.FileName;
-            }
+        //        //Here you can write code for save this information in your database if you want
+        //    }
+        //    return Json("file uploaded successfully");
+        //}
 
-            return fname;
-        }
+        //private string GetPath(HttpPostedFileBase file)
+        //{
+        //    string fname;
+        //    if (BrowserIsInternetExplorer(Request))
+        //    {
+        //        string[] testfiles = file.FileName.Split(new char[] { '\\' });
+        //        fname = testfiles[testfiles.Length - 1];
+        //    }
+        //    else
+        //    {
+        //        fname = file.FileName;
+        //    }
 
-        private bool BrowserIsInternetExplorer(HttpRequestBase Request)
-        {
-            return Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER";
-        }
+        //    return fname;
+        //}
 
-        private void CreateDirectoryIfNotPresent(string directoryPath)
-        {
-            if (!Directory.Exists(Server.MapPath(directoryPath)))
-            {
-                Directory.CreateDirectory(Server.MapPath(directoryPath));
-            }
-        }
+        //private bool BrowserIsInternetExplorer(HttpRequestBase Request)
+        //{
+        //    return Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER";
+        //}
 
-        private string CreateUniquePath(string path, string uploadDirectory)
-        {
-            var fileName = Path.GetFileNameWithoutExtension(path);
-            var extension = Path.GetExtension(path);
-            //string fileName = Guid.NewGuid() + extension;
-            string newPath;
-            var fullName = fileName + extension;
-            newPath = Path.Combine(Server.MapPath(uploadDirectory), fullName);
+        //private void CreateDirectoryIfNotPresent(string directoryPath)
+        //{
+        //    if (!Directory.Exists(Server.MapPath(directoryPath)))
+        //    {
+        //        Directory.CreateDirectory(Server.MapPath(directoryPath));
+        //    }
+        //}
 
-            var index = 1;
-            while (System.IO.File.Exists(newPath) && index < 100)
-            {
-                fullName = fileName + "(" + index + ")" + extension;
-                newPath = Path.Combine(Server.MapPath(uploadDirectory), fullName);
-                index++;
-            }
+        //private string CreateUniquePath(string path, string uploadDirectory)
+        //{
+        //    var fileName = Path.GetFileNameWithoutExtension(path);
+        //    var extension = Path.GetExtension(path);
+        //    //string fileName = Guid.NewGuid() + extension;
+        //    string newPath;
+        //    var fullName = fileName + extension;
+        //    newPath = Path.Combine(Server.MapPath(uploadDirectory), fullName);
 
-            return newPath;
-        }
+        //    var index = 1;
+        //    while (System.IO.File.Exists(newPath) && index < 100)
+        //    {
+        //        fullName = fileName + "(" + index + ")" + extension;
+        //        newPath = Path.Combine(Server.MapPath(uploadDirectory), fullName);
+        //        index++;
+        //    }
+
+        //    return newPath;
+        //}
 
         public ActionResult GetAutoCompleteList(string term)
         {

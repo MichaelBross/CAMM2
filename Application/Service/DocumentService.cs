@@ -110,13 +110,17 @@ namespace Application.Service
             //string fileName = Guid.NewGuid() + extension;
             string newPath;
             var fullName = fileName + extension;
-            newPath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(uploadDirectory), fullName);
+            if (uploadDirectory.Contains("~"))
+            {
+                uploadDirectory = System.Web.HttpContext.Current.Server.MapPath(uploadDirectory);
+            }
+            newPath = Path.Combine(uploadDirectory, fullName);
 
             var index = 1;
-            while (System.IO.File.Exists(newPath) && index < 100)
+            while (System.IO.File.Exists(newPath) && index < 1000)
             {
                 fullName = fileName + "(" + index + ")" + extension;
-                newPath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(uploadDirectory), fullName);
+                newPath = Path.Combine(uploadDirectory, fullName);
                 index++;
             }
 
@@ -148,32 +152,151 @@ namespace Application.Service
         {
             var updatedDocs = new List<DocumentDetailVM>();
 
-            foreach (var doc in revisedDocuments)
+            foreach (var revisedVM in revisedDocuments)
             {
-                var existing = Get(doc.Id);
-                if (doc.FileName != existing.FileName)
+                var retrieved = Get(revisedVM.Id);
+                if (revisedVM.FileName != retrieved.FileName)
                 {
-                    var directory = Path.GetDirectoryName(existing.Path);
-                    var newPath = Path.Combine(directory, doc.FileName);
-                    if (!System.IO.File.Exists(newPath))
-                    {
-                        System.IO.File.Move(existing.Path, newPath);
-                        existing.Path = newPath;
-                    }
-
+                    retrieved.Path = ChangeFileName(revisedVM.FileName, retrieved.Path);
                 }
 
-                existing.Code = doc.Code;
-                existing.DocType = (Domain.DocumentType)Enum.ToObject(typeof(Domain.DocumentType), doc.DocType);
-                existing.FileName = doc.FileName;
-                existing.Rev = doc.Rev;
-                existing.Title = doc.Title;
+                retrieved.Code = revisedVM.Code;
+                retrieved.DocType = (Domain.DocumentType)Enum.ToObject(typeof(Domain.DocumentType), revisedVM.DocType);
+                retrieved.FileName = revisedVM.FileName;
+                retrieved.Rev = revisedVM.Rev;
+                retrieved.Title = revisedVM.Title;
 
-                var updated = Update(existing);
+                var updated = Update(retrieved);
                 updatedDocs.Add(updated);
             }
 
             return updatedDocs;
+        }
+
+        private string ChangeFileName(string newFileName, string existingPath)
+        {            
+            var directory = Path.GetDirectoryName(existingPath);
+            var newPath = Path.Combine(directory, newFileName);
+            newPath = CreateUniquePath(newPath, directory);
+            if (!System.IO.File.Exists(newPath))
+            {
+                System.IO.File.Move(existingPath, newPath);                
+            }
+            else
+            {
+                throw new Exception("Unique path creation failed for file name " + newFileName + ".");
+            }
+            return newPath;
+        }
+
+        public new DocumentDetailVM Update(DocumentDetailVM revisedVM)
+        {
+            try
+            {
+                var retrieved = _unitOfWork.Documents.Get(revisedVM.Id);
+
+                retrieved.IsObsolete = revisedVM.IsObsolete;
+                retrieved.CreateDate = revisedVM.CreateDate;
+                retrieved.CreatedBy = revisedVM.CreatedBy;
+                retrieved.UpdateDate = revisedVM.UpdateDate;
+                retrieved.UpdatedBy = revisedVM.UpdatedBy;
+                retrieved.Id = revisedVM.Id;
+                retrieved.Code = revisedVM.Code;
+                retrieved.Rev = revisedVM.Rev;
+                retrieved.Title = revisedVM.Title;                
+                if (revisedVM.FileName != retrieved.FileName)
+                {
+                    retrieved.Path = ChangeFileName(revisedVM.FileName, retrieved.Path);
+                }
+                retrieved.FileName = revisedVM.FileName;
+                retrieved.DocType = revisedVM.DocType;
+                var Itemlist = new List<Item>();
+                if (revisedVM.Items != null)
+                {
+                    foreach (ItemListVM vm in revisedVM.Items)
+                    {
+                        var item = new Item();
+                        Map.AtoB(vm, item);
+                        Itemlist.Add(item);
+                    }
+                }
+                retrieved.Items = Itemlist;
+                var now = DateTime.Now;
+                retrieved.UpdateDate = now;
+                _unitOfWork.Complete();
+                return revisedVM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
+        }
+
+        public string LinkToItem(string type, int typeId, int documentId)
+        {
+            var item = new Item();
+
+            switch (type)
+            {
+                case "Assembly":
+                    item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Connector":
+                    item = _unitOfWork.Connectors.GetInculding("Documents", typeId);
+                    break;
+                case "Contact":
+                    item = _unitOfWork.Contacts.GetInculding("Documents", typeId);
+                    break;
+                case "Tool":
+                    item = _unitOfWork.Tools.GetInculding("Documents", typeId);
+                    break;
+                default:
+                    throw new Exception("Type " + type + " not found.");                    
+            }
+
+            if (item.Documents == null)
+            {
+                item.Documents = new List<Document>();
+            }
+            else
+            {
+                if (item.Documents.Where(d => d.Id == documentId).Count() > 0)
+                    return "duplicate";
+            }
+
+            var document = _unitOfWork.Documents.Get(documentId);
+            item.Documents.Add(document);
+            _unitOfWork.Complete();
+            return "success";
+        }
+
+        public string UnlinkDocument(string type, int typeId, int documentId)
+        {
+            var item = new Item();
+
+            switch (type)
+            {
+                case "Assembly":
+                    item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Connector":
+                    item = _unitOfWork.Connectors.GetInculding("Documents", typeId);
+                    break;
+                case "Contact":
+                    item = _unitOfWork.Contacts.GetInculding("Documents", typeId);
+                    break;
+                case "Tool":
+                    item = _unitOfWork.Tools.GetInculding("Documents", typeId);
+                    break;
+                default:
+                    throw new Exception("Type " + type + " not found.");
+            }
+
+            var document = _unitOfWork.Documents.Get(documentId);
+            item.Documents.Remove(document);
+            _unitOfWork.Complete();
+            return "success";
         }
     }
 }

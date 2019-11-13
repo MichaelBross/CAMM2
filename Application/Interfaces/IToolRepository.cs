@@ -5,5 +5,6 @@ namespace Application.Interfaces
 {
     public interface IToolRepository : IToolRepositoryBase 
     {
+        Tool GetInculding(string itemsToInclude, int id);
     }
 }

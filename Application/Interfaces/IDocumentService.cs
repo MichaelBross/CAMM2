@@ -12,5 +12,7 @@ namespace Application.Interfaces
         List<DocumentDetailVM> UploadFiles(HttpRequestBase Request);
         List<NameVM> IdentifyDuplicateNames(List<string> fileNames);
         List<DocumentDetailVM> UpdateDocuments(List<DocumentVM> revisedDocuments);
+        string LinkToItem(string type, int typeId, int documentId);
+        string UnlinkDocument(string type, int typeId, int documentId);
     }    
 }

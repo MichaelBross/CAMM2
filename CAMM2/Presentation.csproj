@@ -405,6 +405,7 @@
     <Content Include="App_Code\CammInputs.cshtml" />
     <Content Include="App_Code\CammPopup.cshtml" />
     <Content Include="Document\Views\UploadDocuments.cshtml" />
+    <Content Include="Document\Views\Linked.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

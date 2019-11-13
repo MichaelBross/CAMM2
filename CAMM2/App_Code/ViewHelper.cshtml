@@ -14,6 +14,7 @@ var Html = page.Html;
 var _detailVM = detailVM;
 
 var methodNames = new List<string>();
+var childNames = new List<string>();
 
     <div id="validationSummary">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -113,9 +114,10 @@ var methodNames = new List<string>();
 
                     if (p.PropertyType.Name.Contains("List"))
                     {
-                        var buttonName = "get" + p.Name + "Btn";
-                        var methodName = _detailVM.GetType().Name.Replace("DetailVM", "") + p.Name + "()";
+                        var buttonName = "ShowChild" + p.Name + "Btn";
+                        var methodName = "ShowChild" + p.Name + "()";
                         methodNames.Add(methodName);
+
                         <div class="camm-control-group-sm">
                             <label class="control-label" for="@buttonName">@displayName</label>
                             <button type="button" class="btn btn-primary btn-block" id="@buttonName" name="@buttonName" onclick="@methodName">Open @p.Name List</button>
@@ -137,17 +139,19 @@ var methodNames = new List<string>();
 
 @foreach (var methodName in methodNames)
 {
-    var actionUrl = methodName.Remove(methodName.Length - 2, 2);
-    
+    var parentType = _detailVM.GetType().Name.Replace("DetailVM", "");
+    var childType = methodName.Replace("ShowChild", "").Replace("()", "").TrimEnd('s');
+    var actionUrl = "/" + childType + "/Linked?type=" + parentType + "&id=\" + vm.ID + \"&code=\" + vm.Code\"";
+
         <text>
 
     function @methodName {
         
-        window.location.href = "@actionUrl" + "?connectorId=" + Itemmodel.Item.Id();
+        window.location.href = @Html.Raw("\"/" + childType + "/Linked?type=" + parentType + "&id=\" + Itemmodel.Item.Id() + \"&code=\" + Itemmodel.Item.Code()")
     }
 
         </text>
-    }
+}
         $(document).ready(function () {
             $(".camm-control-group").addClass("col-lg-3 col-md-4 col-sm-6");
             $(".camm-control-group-sm").addClass("col-lg-2 col-md-4 col-sm-6");

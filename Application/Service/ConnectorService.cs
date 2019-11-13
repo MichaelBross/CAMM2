@@ -44,16 +44,16 @@ namespace Application.Service
                 var conn = _unitOfWork.Connectors.Get(connectorId);
                 var duplicate = false;
 
-                if(conn.Documents == null)
+                if (conn.Documents == null)
                 {
                     conn.Documents = new List<Document>();
                 }
                 else
                 {
-                    duplicate = conn.Documents.Where(d => d.Id == documentId).Count() > 0;                    
+                    duplicate = conn.Documents.Where(d => d.Id == documentId).Count() > 0;
                 }
 
-                if(duplicate)
+                if (duplicate)
                 {
                     result = "duplicate";
                 }
@@ -68,7 +68,7 @@ namespace Application.Service
             {
                 result = "failed";
             }
-            
+
             return result;
         }
 

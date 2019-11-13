@@ -23,5 +23,10 @@ namespace Persistance
             var list = Camm2Context.Items.Where(i => i.IsObsolete == true).ToList();
             return list;
         }
+
+        public Item GetInculding(string itemsToInclude, int id)
+        {
+            return _entity.Include(itemsToInclude).Where(c => c.Id == id).FirstOrDefault();
+        }
     }
 }

@@ -65,5 +65,41 @@ namespace Presentation
 
             return Json(updatedDocs, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Linked(string type, int id, string code)
+        {
+            var parentVM = new ParentItemVM
+            {
+                Type = type,
+                Id = id,
+                Code = code
+            };
+
+            return View(parentVM);
+        }
+
+        public ActionResult LinkDocuments(string type, int typeId, IEnumerable<int> documentIdList)
+        {           
+            foreach (int documentId in documentIdList)
+            {
+                _documentService.LinkToItem(type, typeId, documentId);
+            }
+
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RemoveDocuments(string type, int typeId, IEnumerable<int> documentIdList)
+        {
+            var result = "success";
+            foreach (int documentId in documentIdList)
+            {
+                if (_documentService.UnlinkDocument(type, typeId, documentId) != "success")
+                {
+                    result = "Failed";
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

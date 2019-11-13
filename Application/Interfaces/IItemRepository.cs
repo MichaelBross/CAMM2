@@ -5,5 +5,6 @@ namespace Application.Interfaces
 {
     public interface IItemRepository : IItemRepositoryBase 
     {
+        Item GetInculding(string itemsToInclude, int id);
     }
 }

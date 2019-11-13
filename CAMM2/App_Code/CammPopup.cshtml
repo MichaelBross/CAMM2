@@ -8,9 +8,9 @@
 @using Application.Service
 @using Presentation
 
-@helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name, string targetIdName, string targetIdValue)
+@helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name)
 {
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="@(Name)" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="padding-bottom:0">
@@ -24,47 +24,55 @@
                     </div>
                 </div>
                 <div class="modal-body">
-
                     @CammGrid.SearchGrid(page, new DocumentListVM(), "DocumentSearchGrid", "/Document/SearchServerSide")
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button onclick="AddSelectedDocument()" type="button" class="btn btn-outline-primary">Link Selected Documents</button>
+                    <button onclick="@(Name).AddSelectedDocument()" type="button" class="btn btn-outline-primary">Link Selected Documents</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        var selectedDocumentId = 0;
 
-        function AddSelectedDocument() {
+        function @(Name)() {
 
-            var ids = DocumentSearchGrid.GetSelectedRows();
+            self = this;
 
-            var targetIdValue = "@targetIdValue";
+            self.Type = "";
+            self.TypeId = 0;
 
-            $.ajax({
-                "url": "AddExistingDocuments",
-                "data": $.param({ "@targetIdName": @targetIdValue, "documentIdList": ids }, true),
-                "success": function () {
-                    try {
-                        @(Name)_HandleDocumentsLinked();
-                    } catch (e) { }
-                }
-            })
+            self.AddSelectedDocument = function() {
+
+                if (self.Type === "" || self.Type === 0) {
+                    return;
+                } 
+
+                var ids = DocumentSearchGrid.GetSelectedRows();                
+
+                $.ajax({
+                    "url": "/Document/LinkDocuments",
+                    "data": $.param({ "type": self.Type, "typeId": self.TypeId, "documentIdList": ids }, true),
+                    "success": function () {
+                        try {
+                            @(Name)_HandleDocumentsLinked();
+                        } catch (e) { }
+                    }
+                })
+            }
         }
 
-        function DocumentSearchGrid_HandleRowSelected(rowData) {
-            selectedDocumentId = rowData.Id;
-        }
+        var @Name = new @(Name)();
 
         function DocumentSearchBoxButton_HandleClick(searchTerm) {
             DocumentSearchGrid.search(searchTerm);
         }
+
     </script>
 }
 
+// obsolete
 @helper AddAndLinkDocuments(System.Web.Mvc.WebViewPage page, string Name, string targetIdName, string targetIdValue)
 {
     <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

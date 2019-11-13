@@ -1,0 +1,75 @@
+﻿@model Application.ViewModels.ParentItemVM
+@using Application.Service
+@{
+    ViewBag.Title = Model.Code + " Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-horizontal" style="padding: 0px; margin-top: 10px">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#">DOCUMENTS applicable to @Model.Type @Model.Code  </a>
+
+        <form class="form-inline">
+
+            <button onclick="OpenLinkDocumentsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
+            <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
+            <button onclick="RemoveDocuments()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
+        </form>
+
+    </nav>
+    @CammGrid.SimpleAjaxGrid(this, new DocumentListVM(), "LinkedDocumentsGrid", "/" + Model.Type  + "/GetDocuments", Model.Id.ToString())
+</div>
+
+@CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
+
+<script>
+
+    var connectorid = @Model.Id;
+    var table = "";
+
+    function OpenLinkDocumentsPopUp() {
+        LinkDocumentsPopup.Type = "@Model.Type";
+        LinkDocumentsPopup.TypeId = "@Model.Id";
+        $('#LinkDocumentsPopup').modal('show');
+    }
+
+    function LinkDocumentsPopup_HandleDocumentsLinked() {
+        LinkedDocumentsGrid.refresh();
+    }
+
+    function RemoveDocuments() {
+
+        var rows = LinkedDocumentsGrid.GetSelectedRows();
+        if (rows.length === 0)
+            return;
+
+        var ids = [];
+        for (i = 0; i < rows.length; i++) {
+            ids.push(rows[i].Id);
+        }
+
+        $.ajax({
+            "url": "RemoveDocuments",
+            "data": $.param({ "type": "@Model.Type", "typeId": @Model.Id, "documentIdList": ids }, true),
+            "success": function (result) {
+                LinkedDocumentsGrid.refresh()
+            }
+        });
+    }
+
+    function HandleAddNewButtonClick() {
+
+        window.location.href = '@Url.Action("UploadDocuments", "Document")?linkToType=@Model.Type&linkToId=@Model.Id&linkToCD=@Model.Code';
+    }
+
+</script>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    .form-inline > * {
+        margin: 5px 3px;
+    }
+</style>
