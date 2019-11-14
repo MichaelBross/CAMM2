@@ -558,7 +558,6 @@
     <Content Include="User\Views\Index.cshtml" />
     <Content Include="Tool\Views\_ViewStart.cshtml" />
     <Content Include="User\Views\_ViewStart.cshtml" />
-    <Content Include="Connector\Views\ConnectorDocuments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

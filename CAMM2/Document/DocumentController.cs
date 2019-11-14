@@ -78,6 +78,14 @@ namespace Presentation
             return View(parentVM);
         }
 
+        [HttpPost]
+        public JsonResult GetDocumentsLinkedToItem(string type, int typeId)
+        {
+            var documents = _documentService.GetDocumentsLinkedToItem(type, typeId);            
+            return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult LinkDocuments(string type, int typeId, IEnumerable<int> documentIdList)
         {           
             foreach (int documentId in documentIdList)

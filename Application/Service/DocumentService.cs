@@ -233,6 +233,31 @@ namespace Application.Service
             }
         }
 
+        public List<Document> GetDocumentsLinkedToItem(string type, int typeId)
+        {
+            var item = new Item();
+
+            switch (type)
+            {
+                case "Assembly":
+                    item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Connector":
+                    item = _unitOfWork.Connectors.GetInculding("Documents", typeId);
+                    break;
+                case "Contact":
+                    item = _unitOfWork.Contacts.GetInculding("Documents", typeId);
+                    break;
+                case "Tool":
+                    item = _unitOfWork.Tools.GetInculding("Documents", typeId);
+                    break;
+                default:
+                    throw new Exception("Type " + type + " not found.");
+            }
+
+            return item.Documents.ToList();
+        }
+
         public string LinkToItem(string type, int typeId, int documentId)
         {
             var item = new Item();
