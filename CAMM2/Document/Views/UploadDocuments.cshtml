@@ -163,11 +163,8 @@
             }
 
             $.ajax({
-                url: "/" + linkToType + "/LinkDocuments",
-                data: JSON.stringify(UploadDocumentsVM),
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
+                url: "/Document/LinkDocuments",
+                data: $.param({ "type": linkToType, "typeId": linkToID, "documentIdList": documentIdList }, true),
                 success: function (updatedDocs) {
                     alert("Save successful.");
                 },

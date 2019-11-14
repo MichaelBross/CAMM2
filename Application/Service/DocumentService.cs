@@ -233,7 +233,7 @@ namespace Application.Service
             }
         }
 
-        public List<Document> GetDocumentsLinkedToItem(string type, int typeId)
+        public List<DocumentListVM> GetDocumentsLinkedToItem(string type, int typeId)
         {
             var item = new Item();
 
@@ -255,7 +255,10 @@ namespace Application.Service
                     throw new Exception("Type " + type + " not found.");
             }
 
-            return item.Documents.ToList();
+            var documentVMList = new List<DocumentListVM>();
+            Map.ListToList(item.Documents.ToList(), documentVMList);
+
+            return documentVMList;
         }
 
         public string LinkToItem(string type, int typeId, int documentId)

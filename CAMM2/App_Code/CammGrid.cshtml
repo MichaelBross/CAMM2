@@ -113,7 +113,7 @@
     </script>
 }
 
-@helper SimpleAjaxGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod, string Id)
+@helper SimpleAjaxGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name, string searchMethod)
 {
     var Html = page.Html;
 
@@ -122,21 +122,18 @@
     <script>
         var @Name = function() {
             vm = this;
+                       
+            vm.GetParameters = function () {
+                try {
+                    return @(Name)_GetParameters();
+                } catch (e) {
 
-            vm.searchstring = "@Id";
-
-            vm.search = function (searchTerm) {
-                vm.selectedRow = "";
-                vm.searchstring = searchTerm;
-                var table = $("#@(Name)").DataTable();
-                //vm.table.search(searchTerm).draw();
-                table.ajax.reload();
-            }
+                }
+            };
 
             vm.refresh = function () {
                 var table = $("#@(Name)").DataTable();
-                table.ajax.reload();
-                table.search(vm.searchstring).draw();
+                table.ajax.reload();                
             }
 
             vm.selectedRow = "";
@@ -153,11 +150,11 @@
                         "url": "@searchMethod",
                         "datatype": "json",
                         "type": "POST",
-                        "data": { "connectorId": vm.searchstring }
+                        "data": vm.GetParameters()
                     },
                     "columns":
                         @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
-                    "searching": "true",                                        
+                    "searching": "true",
                     "order": [0, "asc"],
                     "processing": "true",
                     "language": {

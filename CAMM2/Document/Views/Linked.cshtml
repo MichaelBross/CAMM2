@@ -17,7 +17,7 @@
         </form>
 
     </nav>
-    @CammGrid.SimpleAjaxGrid(this, new DocumentListVM(), "LinkedDocumentsGrid", "/" + Model.Type  + "/GetDocuments", Model.Id.ToString())
+    @CammGrid.SimpleAjaxGrid(this, new DocumentListVM(), "LinkedDocumentsGrid", "/Document/GetDocumentsLinkedToItem")
 </div>
 
 @CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
@@ -26,6 +26,10 @@
 
     var connectorid = @Model.Id;
     var table = "";
+
+    function LinkedDocumentsGrid_GetParameters() {
+        return {type: "@Model.Type", typeId: @Model.Id.ToString() }
+    }
 
     function OpenLinkDocumentsPopUp() {
         LinkDocumentsPopup.Type = "@Model.Type";

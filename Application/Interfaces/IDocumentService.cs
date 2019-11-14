@@ -14,6 +14,6 @@ namespace Application.Interfaces
         List<DocumentDetailVM> UpdateDocuments(List<DocumentVM> revisedDocuments);
         string LinkToItem(string type, int typeId, int documentId);
         string UnlinkDocument(string type, int typeId, int documentId);
-        List<Document> GetDocumentsLinkedToItem(string type, int typeId);
+        List<DocumentListVM> GetDocumentsLinkedToItem(string type, int typeId);
     }    
 }

@@ -14,12 +14,15 @@ namespace Presentation
 { 
     public class DocumentController : DocumentBaseController
     {              
-        private readonly IDocumentService _documentService;        
+        private readonly IDocumentService _documentService;
+        private readonly IConnectorService _connectorService;
 
-        public DocumentController(IDocumentService documentService) : base(documentService)
+        public DocumentController(IDocumentService documentService, IConnectorService connectorService) : base(documentService)
         { 
-            _documentService = documentService;            
+            _documentService = documentService;
+            _connectorService = connectorService;
         }
+
 
         public ActionResult UploadDocuments(string linkToType = "", int linkToId = 0, string linkToCD = "")
         {
@@ -79,9 +82,19 @@ namespace Presentation
         }
 
         [HttpPost]
+        public JsonResult GetDocuments(int connectorId)
+        {
+            var connector = _connectorService.GetConnectorAndDocuments(connectorId);
+            var documents = connector.Documents;
+            return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
         public JsonResult GetDocumentsLinkedToItem(string type, int typeId)
         {
-            var documents = _documentService.GetDocumentsLinkedToItem(type, typeId);            
+            var documents = _documentService.GetDocumentsLinkedToItem(type, typeId);
+
             return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
         }
 
