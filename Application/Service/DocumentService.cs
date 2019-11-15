@@ -154,7 +154,7 @@ namespace Application.Service
 
             foreach (var revisedVM in revisedDocuments)
             {
-                var retrieved = Get(revisedVM.Id);
+                var retrieved = _unitOfWork.Documents.Get(revisedVM.Id);
                 if (revisedVM.FileName != retrieved.FileName)
                 {
                     retrieved.Path = ChangeFileName(revisedVM.FileName, retrieved.Path);
@@ -166,8 +166,7 @@ namespace Application.Service
                 retrieved.Rev = revisedVM.Rev;
                 retrieved.Title = revisedVM.Title;
 
-                var updated = Update(retrieved);
-                updatedDocs.Add(updated);
+                _unitOfWork.Complete();
             }
 
             return updatedDocs;

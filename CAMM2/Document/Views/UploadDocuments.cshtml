@@ -15,11 +15,11 @@
     <div class="input-group" style="padding-top:5px">
         <div class="input-group" aria-label="First group">
             <button type="button" class="btn btn-outline-primary" style="margin-right:10px">Back</button>
-            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save</button>
+            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save Changes</button>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
-                <button onclick="UploadDocuments.SaveChangesAndLink()" class="btn btn-outline-primary" type="button">Save and Link to</button>
+                <button onclick="UploadDocuments.LinkDocumentsToTypeAndId()" class="btn btn-outline-primary" type="button">Link to</button>
             </div>
             <select class="form-control btn-outline-primary" id="linkToSelect">
                 @foreach (var item in Model.ItemSelectList)
@@ -99,9 +99,8 @@
             return n.name;
         };
 
-        vm.SaveChangesAndLink = function () {
-            var revisedDocuments = vm.GetDocuments();
-            vm.Save(revisedDocuments);
+        vm.LinkDocumentsToTypeAndId = function () {
+            var revisedDocuments = vm.GetDocuments();            
             vm.LinkDocuments(revisedDocuments);
         }
 
