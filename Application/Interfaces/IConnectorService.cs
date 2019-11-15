@@ -7,6 +7,5 @@ namespace Application.Interfaces
 {
     public interface IConnectorService : IConnectorServiceBase 
     {
-        ConnectorDetailVM GetConnectorAndDocuments(int connectorId);
     }
 }

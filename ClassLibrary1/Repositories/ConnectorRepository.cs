@@ -17,12 +17,7 @@ namespace Persistance
             :base(context)
         {
         }
-
-        public Connector GetWithDocuments(int connectorId)
-        {
-            return _entity.Include("Documents").Where(c => c.Id == connectorId).FirstOrDefault();
-        }
-
+               
         public Connector GetInculding(string itemsToInclude, int id)
         {
             return _entity.Include(itemsToInclude).Where(c => c.Id == id).FirstOrDefault();
