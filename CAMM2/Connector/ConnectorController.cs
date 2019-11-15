@@ -20,15 +20,7 @@ namespace Presentation
         { 
             _connectorService = connectorService;            
         }
-
-        [HttpPost]
-        public JsonResult GetDocuments(int connectorId)
-        {
-            var connector = _connectorService.GetConnectorAndDocuments(connectorId);
-            var documents = connector.Documents;
-            return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
-        }
-
+                
         public ActionResult GetAutoCompleteList(string term)
         {
             var searchParams = new SearchParameters();

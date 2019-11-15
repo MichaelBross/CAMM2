@@ -13,16 +13,21 @@ using Application.ViewModels;
 namespace Presentation
 { 
     public class DocumentController : DocumentBaseController
-    {              
+    {
+        #region Initialize
+
         private readonly IDocumentService _documentService;
         private readonly IConnectorService _connectorService;
 
         public DocumentController(IDocumentService documentService, IConnectorService connectorService) : base(documentService)
-        { 
+        {
             _documentService = documentService;
             _connectorService = connectorService;
         }
 
+        #endregion
+
+        #region UploadDocuments
 
         public ActionResult UploadDocuments(string linkToType = "", int linkToId = 0, string linkToCD = "")
         {
@@ -48,9 +53,9 @@ namespace Presentation
 
             var docList = _documentService.UploadFiles(Request);
 
-             return Json(docList);
+            return Json(docList);
         }
-                                    
+
         [HttpPost]
         public JsonResult IdentifyDuplicateNames(List<string> fileNames)
         {
@@ -69,6 +74,10 @@ namespace Presentation
             return Json(updatedDocs, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Documents Linked to Item
+
         public ActionResult Linked(string type, int id, string code)
         {
             var parentVM = new ParentItemVM
@@ -79,14 +88,6 @@ namespace Presentation
             };
 
             return View(parentVM);
-        }
-
-        [HttpPost]
-        public JsonResult GetDocuments(int connectorId)
-        {
-            var connector = _connectorService.GetConnectorAndDocuments(connectorId);
-            var documents = connector.Documents;
-            return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -100,7 +101,7 @@ namespace Presentation
 
 
         public ActionResult LinkDocuments(string type, int typeId, IEnumerable<int> documentIdList)
-        {           
+        {
             foreach (int documentId in documentIdList)
             {
                 _documentService.LinkToItem(type, typeId, documentId);
@@ -109,7 +110,7 @@ namespace Presentation
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RemoveDocuments(string type, int typeId, IEnumerable<int> documentIdList)
+        public ActionResult RemoveDocumentLinks(string type, int typeId, IEnumerable<int> documentIdList)
         {
             var result = "success";
             foreach (int documentId in documentIdList)
@@ -122,5 +123,7 @@ namespace Presentation
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
     }
 }

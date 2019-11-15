@@ -13,7 +13,7 @@
 
             <button onclick="OpenLinkDocumentsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
             <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add New</button>
-            <button onclick="RemoveDocuments()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
+            <button onclick="RemoveDocumentLinks()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove</button>
         </form>
 
     </nav>
@@ -41,7 +41,7 @@
         LinkedDocumentsGrid.refresh();
     }
 
-    function RemoveDocuments() {
+    function RemoveDocumentLinks() {
 
         var rows = LinkedDocumentsGrid.GetSelectedRows();
         if (rows.length === 0)
@@ -53,7 +53,7 @@
         }
 
         $.ajax({
-            "url": "RemoveDocuments",
+            "url": "RemoveDocumentLinks",
             "data": $.param({ "type": "@Model.Type", "typeId": @Model.Id, "documentIdList": ids }, true),
             "success": function (result) {
                 LinkedDocumentsGrid.refresh()
