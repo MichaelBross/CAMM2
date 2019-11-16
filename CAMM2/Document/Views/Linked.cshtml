@@ -7,8 +7,24 @@
 
 <div class="form-horizontal" style="padding: 0px; margin-top: 10px">
     <nav class="navbar navbar-light bg-light justify-content-between">
-        <a class="navbar-brand" href="#">DOCUMENTS applicable to @Model.Type @Model.Code  </a>
-
+        
+        <form class="form-inline">
+            <div class="input-group">
+                @*<button class="fg-button" href="#">DOCUMENTS applicable to</button>*@
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary">DOCUMENTS applicable to</button>
+                </div>
+                <select class="form-control btn-outline-primary" id="linkToSelect">
+                    @foreach (var item in Model.ItemSelectList)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search">
+                </div>
+            </div>
+        </form>
         <form class="form-inline">
 
             <button onclick="OpenLinkDocumentsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Existing</button>
@@ -17,28 +33,37 @@
         </form>
 
     </nav>
-    @CammGrid.SimpleAjaxGrid(this, new DocumentListVM(), "LinkedDocumentsGrid", "/Document/GetDocumentsLinkedToItem")
+    @CammGrid.GenericJavascriptSourcedGrid(this, new DocumentListVM(), "LinkedDocumentsGrid")
 </div>
 
 @CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
 
 <script>
-
-    var connectorid = @Model.Id;
+       
     var table = "";
 
-    function LinkedDocumentsGrid_GetParameters() {
-        return {type: "@Model.Type", typeId: @Model.Id.ToString() }
+    function GetLinkedDocuments() {
+
+        $.ajax({
+            url: "/Document/GetDocumentsLinkedToItem",
+            data: $.param({ "type": linkToType, "typeId": linkToID }, true),
+            success: function (response) {
+                LinkedDocumentsGrid.loadTable(response.data);
+            },
+            error: function (response) {
+                alert("Error getting linked documents.");
+            }
+        });
     }
 
     function OpenLinkDocumentsPopUp() {
-        LinkDocumentsPopup.Type = "@Model.Type";
-        LinkDocumentsPopup.TypeId = "@Model.Id";
+        LinkDocumentsPopup.Type = linkToType;
+        LinkDocumentsPopup.TypeId = linkToID;
         $('#LinkDocumentsPopup').modal('show');
     }
 
     function LinkDocumentsPopup_HandleDocumentsLinked() {
-        LinkedDocumentsGrid.refresh();
+        GetLinkedDocuments();
     }
 
     function RemoveDocumentLinks() {
@@ -54,17 +79,46 @@
 
         $.ajax({
             "url": "RemoveDocumentLinks",
-            "data": $.param({ "type": "@Model.Type", "typeId": @Model.Id, "documentIdList": ids }, true),
+            "data": $.param({ "type": linkToType, "typeId": linkToID, "documentIdList": ids }, true),
             "success": function (result) {
-                LinkedDocumentsGrid.refresh()
+                GetLinkedDocuments();
             }
         });
     }
 
     function HandleAddNewButtonClick() {
-
-        window.location.href = '@Url.Action("UploadDocuments", "Document")?linkToType=@Model.Type&linkToId=@Model.Id&linkToCD=@Model.Code';
+        var url = '@Url.Action("UploadDocuments", "Document")?linkToType=' + linkToType + '&linkToId='+ linkToID + '&linkToCD=' + linkToCD;
+        window.location.href = url;
     }
+
+    var linkToType = "@Model.Type";
+    var linkToID = @Model.Id;
+    var linkToCD = "@Model.Code";
+
+    $(document).ready(function () {
+
+        $('#myInput').autocomplete({
+            source: '/' + linkToType + '/GetAutoCompleteList',
+            select: function (event, ui) {
+                linkToID = ui.item.id;
+                linkToCD = ui.item.label;
+                GetLinkedDocuments();
+            }
+        });
+
+        $('#linkToSelect').change(function () {
+            linkToType = $(this).find("option:selected").attr('value');
+            $('#myInput').autocomplete({
+                source: '/' + linkToType + '/GetAutoCompleteList'
+            });
+        });
+
+        $('#linkToSelect').val(linkToType);
+
+        $('#myInput').val(linkToCD);
+
+        GetLinkedDocuments();
+    });
 
 </script>
 

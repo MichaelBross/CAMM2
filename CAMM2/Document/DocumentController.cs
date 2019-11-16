@@ -84,16 +84,17 @@ namespace Presentation
             {
                 Type = type,
                 Id = id,
-                Code = code
+                Code = code,
+                ItemSelectList = _documentService.LinkToSelectList()
             };
 
             return View(parentVM);
         }
-
-
-        [HttpPost]
+        
+        
         public JsonResult GetDocumentsLinkedToItem(string type, int typeId)
         {
+            
             var documents = _documentService.GetDocumentsLinkedToItem(type, typeId);
 
             return Json(new { data = documents, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);

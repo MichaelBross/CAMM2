@@ -126,12 +126,12 @@
             return revisedDocuments;
         }
 
-        vm.SaveChanges = function () {
+        vm.SaveChanges = function (showSuccessMessage = true) {
             var revisedDocuments = vm.GetDocuments();
-            vm.Save(revisedDocuments);
+            vm.Save(revisedDocuments, showSuccessMessage);
         }
 
-        vm.Save = function (revisedDocuments) {
+        vm.Save = function (revisedDocuments, showSuccessMessage) {
                        
             $.ajax({
                 url: "UpdateDocuments",
@@ -140,7 +140,8 @@
                 dataType: "json",
                 contentType: "application/json",
                 success: function (updatedDocs) {
-                    alert("Save successful.");
+                    if(showSuccessMessage)
+                        alert("Save successful.");
                 },
                 error: function (response) {
                     alert("Error saving edits.");
@@ -165,10 +166,10 @@
                 url: "/Document/LinkDocuments",
                 data: $.param({ "type": linkToType, "typeId": linkToID, "documentIdList": documentIdList }, true),
                 success: function (updatedDocs) {
-                    alert("Save successful.");
+                    alert("Successfully linked document(s).");
                 },
                 error: function (response) {
-                    alert("Error saving edits.");
+                    alert("Error linking documents.");
                 }
             });
         }
@@ -281,6 +282,7 @@
                 formData = new FormData();
                 UpdateDocumentList(documentList, response);
                 rowCount = AddRowsToGrid(rowCount, response);
+                UploadDocuments.SaveChanges(false);
             },
             error: function () {
                 formData = new FormData();
