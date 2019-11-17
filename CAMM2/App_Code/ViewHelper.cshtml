@@ -146,8 +146,8 @@ var childNames = new List<string>();
         <text>
 
     function @methodName {
-        
-        window.location.href = @Html.Raw("\"/" + childType + "/Linked?type=" + parentType + "&id=\" + Itemmodel.Item.Id() + \"&code=\" + Itemmodel.Item.Code()")
+        var url = @Html.Raw("\"/" + childType + "/Linked?type=" + parentType + "&id=\" + Itemmodel.Item.Id() + \"&code=\" + Itemmodel.Item.Code()")
+        window.location.href = url;
     }
 
         </text>
