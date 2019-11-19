@@ -238,8 +238,14 @@ namespace Application.Service
 
             switch (type)
             {
+                case "Item":
+                    item = _unitOfWork.Items.GetInculding("Documents", typeId);
+                    break;
                 case "Assembly":
                     item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Component":
+                    item = _unitOfWork.Components.GetInculding("Documents", typeId);
                     break;
                 case "Connector":
                     item = _unitOfWork.Connectors.GetInculding("Documents", typeId);
@@ -266,8 +272,14 @@ namespace Application.Service
 
             switch (type)
             {
+                case "Item":
+                    item = _unitOfWork.Items.GetInculding("Documents", typeId);
+                    break;
                 case "Assembly":
                     item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Component":
+                    item = _unitOfWork.Components.GetInculding("Documents", typeId);
                     break;
                 case "Connector":
                     item = _unitOfWork.Connectors.GetInculding("Documents", typeId);
@@ -304,8 +316,14 @@ namespace Application.Service
 
             switch (type)
             {
+                case "Item":
+                    item = _unitOfWork.Items.GetInculding("Documents", typeId);
+                    break;
                 case "Assembly":
                     item = _unitOfWork.Assemblys.GetInculding("Documents", typeId);
+                    break;
+                case "Component":
+                    item = _unitOfWork.Components.GetInculding("Documents", typeId);
                     break;
                 case "Connector":
                     item = _unitOfWork.Connectors.GetInculding("Documents", typeId);

@@ -7,61 +7,37 @@
     var detailVM = new DocumentDetailVM();
     var listVM = new DocumentListVM();
 }
-
-@*<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width:100%; padding-top: 15px">
-    <div class="input-group">
-        <h5 style="padding-top: 7px">UPLOAD DOCUMENTS</h5>
-    </div>
-    <div class="input-group" style="padding-top:5px">
-        <div class="input-group" aria-label="First group">
-            <button type="button" class="btn btn-outline-primary" style="margin-right:10px">Back</button>
-            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save Changes</button>
-        </div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <button onclick="UploadDocuments.LinkDocumentsToTypeAndId()" class="btn btn-outline-primary" type="button">Link to</button>
+   
+    <div class="form-horizontal" style="padding:0px; margin-top: 10px">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand">UPLOAD DOCUMENTS</a>
+                <form class="form-inline" style="margin-right:10px">
+                    <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save</button>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button onclick="UploadDocuments.LinkDocumentsToTypeAndId()" class="btn btn-outline-primary" type="button">Apply Documents to</button>
+                        </div>
+                        <select class="form-control btn-outline-primary" id="linkToSelect">
+                            @foreach (var item in Model.ItemSelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+                            <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search" style="min-width: 210px; max-width:840px" onkeypress="this.style.width = ((this.value.length + 1) * 11) + 'px';">
+                        </div>
+                        <div class="input-group-append">
+                            <button type="button" onclick="UploadDocuments.ShowLinkedDocuments()" class="btn btn-outline-primary my-2 my-sm-0">Show Applicable Documents</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <select class="form-control btn-outline-primary" id="linkToSelect">
-                @foreach (var item in Model.ItemSelectList)
-                {
-                    <option value="@item.Value">@item.Text</option>
-                }
-            </select>
-            <div class="input-group-append">
-                <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search">
-            </div>
-        </div>
+        </nav>
     </div>
-</div>*@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" >UPLOAD DOCUMENTS</a>
-        <form class="form-inline my-2 my-lg-0" style="margin-right:10px">
-            <button onclick="UploadDocuments.SaveChanges()" type="button" class="btn btn-outline-primary" style="margin-right:10px">Save Changes</button>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <button onclick="UploadDocuments.LinkDocumentsToTypeAndId()" class="btn btn-outline-primary" type="button">Link to</button>
-                </div>
-                <select class="form-control btn-outline-primary" id="linkToSelect">
-                    @foreach (var item in Model.ItemSelectList)
-                    {
-                        <option value="@item.Value">@item.Text</option>
-                    }
-                </select>
-                <div class="input-group-append">
-                    <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search">
-                </div>
-                <div class="input-group-append">
-                    <button type="button" onclick="UploadDocuments.ShowLinkedDocuments()" class="btn btn-outline-primary my-2 my-sm-0">Show Linked Documents</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</nav>
 
 <div style="padding-top:20px;">
     @CammInputs.DragDropZone(this, "Drawing", "DRAWING drop zone")
@@ -426,6 +402,7 @@
         $('#myInput').autocomplete({
             source: '/' + linkToType + '/GetAutoCompleteList',
             select: function (event, ui) {
+                this.style.width = ((this.value.length + 1) * 11) + 'px';
                 linkToID = ui.item.id;
                 linkToCD = ui.item.label;
             }
@@ -441,7 +418,9 @@
 
         $('#linkToSelect').val(linkToType);
 
-        $('#myInput').val(linkToCD);
+        var itemCodeAutocomplete = $('#myInput');
+        itemCodeAutocomplete.val(linkToCD);
+        itemCodeAutocomplete.css("width", ((linkToCD.length + 1) * 11) + 'px');
     });
 
 </script>

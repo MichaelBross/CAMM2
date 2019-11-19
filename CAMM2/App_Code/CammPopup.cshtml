@@ -11,7 +11,7 @@
 @helper LinkDocuments(System.Web.Mvc.WebViewPage page, string Name)
 {
     <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="@(Name)" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 1200px">
             <div class="modal-content">
                 <div class="modal-header" style="padding-bottom:0">
                     <div class="container">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button onclick="@(Name).AddSelectedDocument()" type="button" class="btn btn-outline-primary">Link Selected Documents</button>
+                    <button onclick="@(Name).AddSelectedDocument()" type="button" class="btn btn-outline-primary">Apply Selected Documents</button>
                 </div>
             </div>
         </div>

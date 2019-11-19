@@ -5,5 +5,6 @@ namespace Application.Interfaces
 {
     public interface IComponentRepository : IComponentRepositoryBase 
     {
+        Component GetInculding(string itemsToInclude, int id);
     }
 }
