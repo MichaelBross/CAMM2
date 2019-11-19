@@ -240,7 +240,6 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="BaseControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BaseControllersGenerator.txt</LastGenOutput>
     </Content>
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

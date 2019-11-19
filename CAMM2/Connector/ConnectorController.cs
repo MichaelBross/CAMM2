@@ -20,20 +20,5 @@ namespace Presentation
         { 
             _connectorService = connectorService;            
         }
-                
-        public ActionResult GetAutoCompleteList(string term)
-        {
-            var searchParams = new SearchParameters();
-            searchParams.SearchValue = term;
-            searchParams.SortColumnName = "Code";
-            searchParams.Length = 10;
-            var result = _connectorService.Search(searchParams).Select(i => new
-            {
-                label = i.Code,
-                id = i.Id
-            }).ToList();
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
     }
 }
