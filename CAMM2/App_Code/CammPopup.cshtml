@@ -73,7 +73,7 @@
 }
 
 // obsolete
-@helper AddAndLinkDocuments(System.Web.Mvc.WebViewPage page, string Name, string targetIdName, string targetIdValue)
+@helper Message(System.Web.Mvc.WebViewPage page, string Name, string Title = "", string Message = "")
 {
     <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -81,70 +81,39 @@
                 <div class="modal-header" style="padding-bottom:0">
                     <div class="container">
                         <div class="row" style="padding-top:15px">
-                            <h5 class="modal-title" id="exampleModalLongTitle">UPLOAD DOCUMENTS</h5>
+                            <h5 class="modal-title" id="@(Name)Title">@(Title)</h5>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        @CammInputs.DragDropZone(page, "Drawing", "Drop DRAWING files here")
-                    </div>
-                    <div style="padding-top: 20px">
-                        @CammGrid.JavascriptSourcedGrid(page, new DocumentListVM(), "DocumentGrid")
-                    </div>
+                    <p id="@(Name)Message">@Message</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button onclick="AddSelectedDocuments()" type="button" class="btn btn-outline-primary">Upload and Link Documents</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>                    
                 </div>
             </div>
         </div>
     </div> 
 
     <script>
+        
+        @(Name) = function() {
 
-        var droppedFiles = [];
-        var formData = new FormData();
+            var self = this;
 
-        function Drawing_HandleFileDrop(data) {
+            self.Show = function(title = "", message = ""){
 
-            if (data.length > 0) {
+                if(title !== "")
+                    $("#@(Name)Title").html(title);
 
-                for (i = 0; i < data.length; i++) {
+                if(message !== "")
+                    $("#@(Name)Message").html(message);
 
-                    var document = {
-                        FileData: data[i],
-                        Category: "Drawing",
-                        Number: data[i].name,
-                        Rev: "",
-                        Description: data[i].name
-                    }
-
-                    droppedFiles.push(document);
-
-                    formData.append(data[i].name, data[i]);
-                }                
-            }
+                $('#@(Name)').modal('show');
+            };
         }
 
-        function AddSelectedDocuments() {
-          
-            $.ajax({
-                "type": "POST",
-                "url": "UploadFiles",
-                "contentType": false,
-                "processData": false,
-                "data": formData,
-                "success": function (result) {
-                    alert(result);
-                    formData = new FormData();
-                    droppedFiles = [];
-                },
-                "error": function () {
-                    alert("There was an error uploading files!");
-                }
-            });
-        }
+        @Name = new @(Name)();
 
     </script>
 

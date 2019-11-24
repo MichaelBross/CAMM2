@@ -32,6 +32,7 @@
                 <button onclick="OpenLinkDocumentsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Apply Documents</button>
                 <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Upload Documents</button>
                 <button onclick="RemoveDocumentLinks()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove Selected Documents</button>
+                <button onclick="OpenFiles()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Open Selected Document</button>
             </form>
         </div>
 
@@ -40,6 +41,7 @@
 </div>
 
 @CammPopup.LinkDocuments(this, "LinkDocumentsPopup")
+@CammPopup.Message(this, "MessagePopUp")
 
 <script>
        
@@ -87,6 +89,21 @@
                 GetLinkedDocuments();
             }
         });
+    }
+
+    function OpenFiles() {
+
+        var rows = LinkedDocumentsGrid.GetSelectedRows();
+        if (rows.length === 0)
+            return;
+
+        if (rows.length > 1) {
+            MessagePopUp.Show("Alert", "Please select only one document to open.");
+            return;
+        }
+        var w = window.open('/Document/Download?documentID=' + rows[0].Id, "_blank");
+        var title = rows[0].Code;
+        setTimeout(function () { w.document.title = title; }, 1000);
     }
 
     function HandleAddNewButtonClick() {

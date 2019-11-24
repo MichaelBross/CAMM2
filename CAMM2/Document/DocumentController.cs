@@ -76,6 +76,52 @@ namespace Presentation
 
         #endregion
 
+        #region Download Documents
+
+        [HttpGet]
+        public FileResult Download(int documentID)
+        {
+            var doc = _documentService.Get(documentID);
+
+            string fileName = "";
+
+            if (doc.FileName != null)
+                fileName = doc.FileName;
+
+            string fullPath = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+
+            string fileType = "";
+            
+            if (fileName.Contains(".txt"))
+                fileType = "text/plain";
+
+            if (fileName.Contains(".pdf"))
+                fileType = "application/pdf";
+
+            if (fileName.Contains(".doc"))
+                fileType = "application/msword";
+
+            if (fileName.Contains(".docx"))
+                fileType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+            if (fileName.Contains(".xls"))
+                fileType = "application/vnd.ms-excel";
+
+            if (fileName.Contains(".xlsx"))
+                fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            if (fileName.Contains(".ppt"))
+                fileType = "application/vnd.ms-powerpoint";
+
+            if (fileName.Contains(".pptx"))
+                fileType = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+
+            byte[] FileBytes = System.IO.File.ReadAllBytes(fullPath);
+            var result = File(FileBytes, fileType);
+            return result;
+        }
+        #endregion
+
         #region Documents Linked to Item
 
         public ActionResult Linked(string type, int id, string code)
