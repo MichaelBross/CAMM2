@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Application;
 using Application.Interfaces;
 using Application.Service;
+using Application.ViewModels;
 
 namespace Presentation
 { 
@@ -17,6 +18,19 @@ namespace Presentation
         public ToolController(IToolService toolService) : base(toolService)
         { 
             _toolService = toolService;            
+        }
+
+        public ActionResult Linked(string type, int id, string code)
+        {
+            var parentVM = new ParentItemVM
+            {
+                Type = type,
+                Id = id,
+                Code = code,
+                ItemSelectList = _toolService.LinkToSelectList()
+            };
+
+            return View(parentVM);
         }
 
     }

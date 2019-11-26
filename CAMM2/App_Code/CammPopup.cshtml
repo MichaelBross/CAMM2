@@ -47,9 +47,9 @@
 
                 if (self.Type === "" || self.Type === 0) {
                     return;
-                } 
+                }
 
-                var ids = DocumentSearchGrid.GetSelectedRows();                
+                var ids = DocumentSearchGrid.GetSelectedRows();
 
                 $.ajax({
                     "url": "/Document/LinkDocuments",
@@ -72,7 +72,6 @@
     </script>
 }
 
-// obsolete
 @helper Message(System.Web.Mvc.WebViewPage page, string Name, string Title = "", string Message = "")
 {
     <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -89,14 +88,14 @@
                     <p id="@(Name)Message">@Message</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>                    
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <script>
-        
+
         @(Name) = function() {
 
             var self = this;
@@ -116,5 +115,68 @@
         @Name = new @(Name)();
 
     </script>
+}
 
-}   
+@helper LinkTools(System.Web.Mvc.WebViewPage page, string Name)
+{
+    <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="@(Name)" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="tool" style="max-width: 1200px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom:0">
+                    <div class="container">
+                        <div class="row">
+                            @CammInputs.ButtonInputCancelButton(page, "ToolSearchBoxButton", "Search Tools")
+                        </div>
+                        <div class="row" style="padding-top:15px">
+                            <h5 class="modal-title" id="exampleModalLongTitle">SELECT EXISTING DOCUMENT TO ADD</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    @CammGrid.SearchGrid(page, new ToolListVM(), "ToolSearchGrid", "/Tool/SearchServerSide")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                    <button onclick="@(Name).AddSelectedTool()" type="button" class="btn btn-outline-primary">Apply Selected Tools</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function @(Name)() {
+
+            self = this;
+
+            self.Type = "";
+            self.TypeId = 0;
+
+            self.AddSelectedTool = function() {
+
+                if (self.Type === "" || self.Type === 0) {
+                    return;
+                }
+
+                var ids = ToolSearchGrid.GetSelectedRows();
+
+                $.ajax({
+                    "url": "/Tool/LinkTools",
+                    "data": $.param({ "type": self.Type, "typeId": self.TypeId, "toolIdList": ids }, true),
+                    "success": function () {
+                        try {
+                            @(Name)_HandleToolsLinked();
+                        } catch (e) { }
+                    }
+                })
+            }
+        }
+
+        var @Name = new @(Name)();
+
+        function ToolSearchBoxButton_HandleClick(searchTerm) {
+            ToolSearchGrid.search(searchTerm);
+        }
+
+    </script>
+}

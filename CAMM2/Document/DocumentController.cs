@@ -122,7 +122,7 @@ namespace Presentation
         }
         #endregion
 
-        #region Documents Linked to Item
+        #region Linked
 
         public ActionResult Linked(string type, int id, string code)
         {
