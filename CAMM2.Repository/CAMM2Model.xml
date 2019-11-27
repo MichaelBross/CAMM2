@@ -116,10 +116,6 @@
       <name>Comments</name>
       <type>string</type>
     </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
-    </property>
   </class>
   <class>
     <name>Contact</name>
@@ -143,10 +139,6 @@
     <property>
       <name>Comments</name>
       <type>string</type>
-    </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;Tool&gt;</type>
     </property>
   </class>
   <class>
@@ -177,6 +169,10 @@
       <name>Documents</name>
       <type>IList&lt;Document&gt;</type>
     </property>
+    <property>
+      <name>Tools</name>
+      <type>IList&lt;Tool&gt;</type>
+    </property>
   </class>
   <class>
     <name>Tool</name>
@@ -202,12 +198,8 @@
       <type>string</type>
     </property>
     <property>
-      <name>Connectors</name>
-      <type>IList&lt;Connector&gt;</type>
-    </property>
-    <property>
-      <name>Contacts</name>
-      <type>IList&lt;Contact&gt;</type>
+      <name>Items</name>
+      <type>IList&lt;Item&gt;</type>
     </property>
   </class>
   <class>

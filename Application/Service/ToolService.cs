@@ -33,6 +33,37 @@ namespace Application.Service
             return list;
         }
 
+        public List<ToolListVM> GetToolsLinkedToItem(string type, int typeId)
+        {
+            var item = new Item();
+
+            switch (type)
+            {
+                case "Item":
+                    item = _unitOfWork.Items.GetInculding("Tools", typeId);
+                    break;
+                case "Assembly":
+                    item = _unitOfWork.Assemblys.GetInculding("Tools", typeId);
+                    break;
+                case "Component":
+                    item = _unitOfWork.Components.GetInculding("Tools", typeId);
+                    break;
+                case "Connector":
+                    item = _unitOfWork.Connectors.GetInculding("Tools", typeId);
+                    break;
+                case "Contact":
+                    item = _unitOfWork.Contacts.GetInculding("Tools", typeId);
+                    break;
+                default:
+                    throw new Exception("Type " + type + " not found.");
+            }
+
+            var toolVMList = new List<ToolListVM>();
+            Map.ListToList(item.Tools.ToList(), toolVMList);
+
+            return toolVMList;
+        }
+
         public string LinkToItem(string type, int typeId, int toolId)
         {
             var item = new Item();
@@ -58,9 +89,9 @@ namespace Application.Service
                     throw new Exception("Type " + type + " not found.");
             }
 
-            if (item.Documents == null)
+            if (item.Tools == null)
             {
-                item.Documents = new List<Document>();
+                item.Tools = new List<Tool>();
             }
             else
             {
@@ -69,7 +100,41 @@ namespace Application.Service
             }
 
             var tool = _unitOfWork.Tools.Get(toolId);
-            //item.Tools.Add(tool);
+            item.Tools.Add(tool);
+            _unitOfWork.Complete();
+            return "success";
+        }
+
+        public string UnlinkTool(string type, int typeId, int toolId)
+        {
+            var item = new Item();
+
+            switch (type)
+            {
+                case "Item":
+                    item = _unitOfWork.Items.GetInculding("Tools", typeId);
+                    break;
+                case "Assembly":
+                    item = _unitOfWork.Assemblys.GetInculding("Tools", typeId);
+                    break;
+                case "Component":
+                    item = _unitOfWork.Components.GetInculding("Tools", typeId);
+                    break;
+                case "Connector":
+                    item = _unitOfWork.Connectors.GetInculding("Tools", typeId);
+                    break;
+                case "Contact":
+                    item = _unitOfWork.Contacts.GetInculding("Tools", typeId);
+                    break;
+                case "Tool":
+                    item = _unitOfWork.Tools.GetInculding("Tools", typeId);
+                    break;
+                default:
+                    throw new Exception("Type " + type + " not found.");
+            }
+
+            var tool = _unitOfWork.Tools.Get(toolId);
+            item.Tools.Remove(tool);
             _unitOfWork.Complete();
             return "success";
         }

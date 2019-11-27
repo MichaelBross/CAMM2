@@ -30,7 +30,7 @@
             <form style="padding-left: 20px">
 
                 <button onclick="OpenLinkToolsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Apply Tools</button>
-                <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Upload Tools</button>
+                <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Tools</button>
                 <button onclick="RemoveToolLinks()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove Selected Tools</button>
             </form>
         </div>
@@ -91,7 +91,7 @@
     }
        
     function HandleAddNewButtonClick() {
-        var url = '@Url.Action("UploadTools", "Tool")?linkToType=' + linkToType + '&linkToId='+ linkToID + '&linkToCD=' + linkToCD;
+        var url = '@Url.Action("Index", "Tool")';
         window.location.href = url;
     }
 

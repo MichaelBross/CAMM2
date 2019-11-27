@@ -180,6 +180,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NinjectWebCommon1.cs</LastGenOutput>
     </Content>
+    <Content Include="BaseControllersGenerator1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaseControllersGenerator.tt</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />
@@ -245,6 +250,7 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="BaseControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BaseControllersGenerator1.txt</LastGenOutput>
     </Content>
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

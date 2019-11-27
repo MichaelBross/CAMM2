@@ -9,5 +9,7 @@ namespace Application.Interfaces
     {
         List<SelectListItem> LinkToSelectList();
         string LinkToItem(string type, int typeId, int toolId);
+        List<ToolListVM> GetToolsLinkedToItem(string type, int typeId);
+        string UnlinkTool(string type, int typeId, int toolId);
     }
 }

@@ -84,6 +84,14 @@
     <Compile Include="Migrations\201910191706020_AddFileNameAndPathToDocuments.Designer.cs">
       <DependentUpon>201910191706020_AddFileNameAndPathToDocuments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911270016225_DroppedConnectorAndContactTools.cs" />
+    <Compile Include="Migrations\201911270016225_DroppedConnectorAndContactTools.Designer.cs">
+      <DependentUpon>201911270016225_DroppedConnectorAndContactTools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911270028498_AssociatedToolAndItem.cs" />
+    <Compile Include="Migrations\201911270028498_AssociatedToolAndItem.Designer.cs">
+      <DependentUpon>201911270028498_AssociatedToolAndItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\AssemblyItemRepository.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\Generated Code\BaseRepositories.cs">
@@ -140,6 +148,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910191706020_AddFileNameAndPathToDocuments.resx">
       <DependentUpon>201910191706020_AddFileNameAndPathToDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911270016225_DroppedConnectorAndContactTools.resx">
+      <DependentUpon>201911270016225_DroppedConnectorAndContactTools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911270028498_AssociatedToolAndItem.resx">
+      <DependentUpon>201911270028498_AssociatedToolAndItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

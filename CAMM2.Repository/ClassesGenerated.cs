@@ -70,8 +70,6 @@ namespace Domain
 
 		public string Comments { get; set; }
 
-		public IList<Tool> Tools { get; set; }
-
 	}
 	public class Contact : Item
 	{	 
@@ -84,8 +82,6 @@ namespace Domain
 		public int WireGageMax { get; set; }
 
 		public string Comments { get; set; }
-
-		public IList<Tool> Tools { get; set; }
 
 	}
 	public class Item : Base
@@ -104,6 +100,8 @@ namespace Domain
 
 		public IList<Document> Documents { get; set; }
 
+		public IList<Tool> Tools { get; set; }
+
 	}
 	public class Tool : Item
 	{	 
@@ -117,9 +115,7 @@ namespace Domain
 
 		public string Comments { get; set; }
 
-		public IList<Connector> Connectors { get; set; }
-
-		public IList<Contact> Contacts { get; set; }
+		public IList<Item> Items { get; set; }
 
 	}
 	public class Assembly : Item

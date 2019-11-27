@@ -433,6 +433,17 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
 				retrieved.IsObsolete = revisedVM.IsObsolete;
 				retrieved.CreateDate = revisedVM.CreateDate;
 				retrieved.CreatedBy = revisedVM.CreatedBy;
@@ -495,17 +506,6 @@ namespace Application.Service
 
             Map.AtoB(connector, connectorVM);
 
-			var ToolList = new List<ToolListVM>();
-			if(connector.Tools != null)
-            {
-				foreach(Tool tool in connector.Tools)
-				{
-					var vm = new ToolListVM();
-					Map.AtoB(tool, vm);
-					ToolList.Add(vm);
-				}
-			}
-			connectorVM.Tools = ToolList;
 
             return connectorVM;
         }
@@ -593,13 +593,6 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
-				retrieved.IsObsolete = revisedVM.IsObsolete;
-				retrieved.CreateDate = revisedVM.CreateDate;
-				retrieved.CreatedBy = revisedVM.CreatedBy;
-				retrieved.UpdateDate = revisedVM.UpdateDate;
-				retrieved.UpdatedBy = revisedVM.UpdatedBy;
-				retrieved.Family = revisedVM.Family;
-				retrieved.Comments = revisedVM.Comments;
 				var Toollist = new List<Tool>();
 				if (revisedVM.Tools != null)
 				{                    
@@ -611,6 +604,13 @@ namespace Application.Service
 					}
 				}
 				retrieved.Tools = Toollist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
+				retrieved.Family = revisedVM.Family;
+				retrieved.Comments = revisedVM.Comments;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -667,17 +667,6 @@ namespace Application.Service
 
             Map.AtoB(contact, contactVM);
 
-			var ToolList = new List<ToolListVM>();
-			if(contact.Tools != null)
-            {
-				foreach(Tool tool in contact.Tools)
-				{
-					var vm = new ToolListVM();
-					Map.AtoB(tool, vm);
-					ToolList.Add(vm);
-				}
-			}
-			contactVM.Tools = ToolList;
 
             return contactVM;
         }
@@ -768,16 +757,6 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
-				retrieved.IsObsolete = revisedVM.IsObsolete;
-				retrieved.CreateDate = revisedVM.CreateDate;
-				retrieved.CreatedBy = revisedVM.CreatedBy;
-				retrieved.UpdateDate = revisedVM.UpdateDate;
-				retrieved.UpdatedBy = revisedVM.UpdatedBy;
-				retrieved.Size = revisedVM.Size;
-				retrieved.Family = revisedVM.Family;
-				retrieved.WireGageMin = revisedVM.WireGageMin;
-				retrieved.WireGageMax = revisedVM.WireGageMax;
-				retrieved.Comments = revisedVM.Comments;
 				var Toollist = new List<Tool>();
 				if (revisedVM.Tools != null)
 				{                    
@@ -789,6 +768,16 @@ namespace Application.Service
 					}
 				}
 				retrieved.Tools = Toollist;
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
+				retrieved.Size = revisedVM.Size;
+				retrieved.Family = revisedVM.Family;
+				retrieved.WireGageMin = revisedVM.WireGageMin;
+				retrieved.WireGageMax = revisedVM.WireGageMax;
+				retrieved.Comments = revisedVM.Comments;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -856,6 +845,17 @@ namespace Application.Service
 				}
 			}
 			itemVM.Documents = DocumentList;
+			var ToolList = new List<ToolListVM>();
+			if(item.Tools != null)
+            {
+				foreach(Tool tool in item.Tools)
+				{
+					var vm = new ToolListVM();
+					Map.AtoB(tool, vm);
+					ToolList.Add(vm);
+				}
+			}
+			itemVM.Tools = ToolList;
 
             return itemVM;
         }
@@ -946,6 +946,17 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -1002,28 +1013,17 @@ namespace Application.Service
 
             Map.AtoB(tool, toolVM);
 
-			var ConnectorList = new List<ConnectorListVM>();
-			if(tool.Connectors != null)
+			var ItemList = new List<ItemListVM>();
+			if(tool.Items != null)
             {
-				foreach(Connector connector in tool.Connectors)
+				foreach(Item item in tool.Items)
 				{
-					var vm = new ConnectorListVM();
-					Map.AtoB(connector, vm);
-					ConnectorList.Add(vm);
+					var vm = new ItemListVM();
+					Map.AtoB(item, vm);
+					ItemList.Add(vm);
 				}
 			}
-			toolVM.Connectors = ConnectorList;
-			var ContactList = new List<ContactListVM>();
-			if(tool.Contacts != null)
-            {
-				foreach(Contact contact in tool.Contacts)
-				{
-					var vm = new ContactListVM();
-					Map.AtoB(contact, vm);
-					ContactList.Add(vm);
-				}
-			}
-			toolVM.Contacts = ContactList;
+			toolVM.Items = ItemList;
 
             return toolVM;
         }
@@ -1114,6 +1114,17 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
 				retrieved.IsObsolete = revisedVM.IsObsolete;
 				retrieved.CreateDate = revisedVM.CreateDate;
 				retrieved.CreatedBy = revisedVM.CreatedBy;
@@ -1124,28 +1135,17 @@ namespace Application.Service
 				retrieved.MilitarySpecification = revisedVM.MilitarySpecification;
 				retrieved.SerialNumber = revisedVM.SerialNumber;
 				retrieved.Comments = revisedVM.Comments;
-				var Connectorlist = new List<Connector>();
-				if (revisedVM.Connectors != null)
+				var Itemlist = new List<Item>();
+				if (revisedVM.Items != null)
 				{                    
-					foreach(ConnectorListVM vm in revisedVM.Connectors)
+					foreach(ItemListVM vm in revisedVM.Items)
 					{
-						var connector = new Connector();
-						Map.AtoB(vm, connector);
-						Connectorlist.Add(connector);
+						var item = new Item();
+						Map.AtoB(vm, item);
+						Itemlist.Add(item);
 					}
 				}
-				retrieved.Connectors = Connectorlist;
-				var Contactlist = new List<Contact>();
-				if (revisedVM.Contacts != null)
-				{                    
-					foreach(ContactListVM vm in revisedVM.Contacts)
-					{
-						var contact = new Contact();
-						Map.AtoB(vm, contact);
-						Contactlist.Add(contact);
-					}
-				}
-				retrieved.Contacts = Contactlist;
+				retrieved.Items = Itemlist;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();
@@ -1299,6 +1299,17 @@ namespace Application.Service
 					}
 				}
 				retrieved.Documents = Documentlist;
+				var Toollist = new List<Tool>();
+				if (revisedVM.Tools != null)
+				{                    
+					foreach(ToolListVM vm in revisedVM.Tools)
+					{
+						var tool = new Tool();
+						Map.AtoB(vm, tool);
+						Toollist.Add(tool);
+					}
+				}
+				retrieved.Tools = Toollist;
 				retrieved.IsObsolete = revisedVM.IsObsolete;
 				retrieved.CreateDate = revisedVM.CreateDate;
 				retrieved.CreatedBy = revisedVM.CreatedBy;

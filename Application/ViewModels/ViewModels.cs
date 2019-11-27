@@ -73,6 +73,9 @@ namespace Application.Service
 		[Display(Name = "Documents", Order = -50)]
 		public IList<DocumentListVM> Documents { get; set; }
 
+		[Display(Name = "Tools", Order = -59)]
+		public IList<ToolListVM> Tools { get; set; }
+
 	}
 
     public class ItemListVM : BaseListVM
@@ -97,6 +100,8 @@ namespace Application.Service
 		[HiddenInput(DisplayValue = false)]
 		[Display(Name = "Documents", Order = -40)]
 		public IList<DocumentListVM> Documents { get; set; }
+
+		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -220,9 +225,6 @@ namespace Application.Service
 		[Display(Name = "Comments", Order = -68)]
 		public string Comments { get; set; }
 
-		[Display(Name = "Tools", Order = -59)]
-		public IList<ToolListVM> Tools { get; set; }
-
 	}
 
     public class ConnectorListVM : ItemListVM
@@ -230,8 +232,6 @@ namespace Application.Service
 		public string Family { get; set; }
 
 		public string Comments { get; set; }
-
-		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -247,8 +247,6 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<ToolListVM> Tools { get; set; }
-
 	}
 
     public class ContactListVM : ItemListVM
@@ -262,8 +260,6 @@ namespace Application.Service
 		public int WireGageMax { get; set; }
 
 		public string Comments { get; set; }
-
-		public IList<ToolListVM> Tools { get; set; }
 
 	}
 
@@ -279,9 +275,8 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<ConnectorListVM> Connectors { get; set; }
-
-		public IList<ContactListVM> Contacts { get; set; }
+		[Display(Name = "Items", Order = -59)]
+		public IList<ItemListVM> Items { get; set; }
 
 	}
 
@@ -297,9 +292,7 @@ namespace Application.Service
 
 		public string Comments { get; set; }
 
-		public IList<ConnectorListVM> Connectors { get; set; }
-
-		public IList<ContactListVM> Contacts { get; set; }
+		public IList<Item> Items { get; set; }
 
 	}
 

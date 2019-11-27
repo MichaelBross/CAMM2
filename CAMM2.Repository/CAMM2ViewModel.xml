@@ -88,6 +88,11 @@
       <type>IList&lt;DocumentListVM&gt;</type>
       <annotations>[Display(Name = "Documents", Order = -50)]</annotations>
     </property>
+    <property>
+      <name>Tools</name>
+      <type>IList&lt;ToolListVM&gt;</type>
+      <annotations>[Display(Name = "Tools", Order = -59)]</annotations>
+    </property>
   </class>
   <class>
     <name>ItemListVM</name>
@@ -121,6 +126,10 @@
       <name>Documents</name>
       <type>IList&lt;DocumentListVM&gt;</type>
       <annotations>[HiddenInput(DisplayValue = false)]~[Display(Name = "Documents", Order = -40)]</annotations>
+    </property>
+    <property>
+      <name>Tools</name>
+      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -315,11 +324,6 @@
       <type>string</type>
       <annotations>[Display(Name = "Comments", Order = -68)]</annotations>
     </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;ToolListVM&gt;</type>
-      <annotations>[Display(Name = "Tools", Order = -59)]</annotations>
-    </property>
   </class>
   <class>
     <name>ConnectorListVM</name>
@@ -331,10 +335,6 @@
     <property>
       <name>Comments</name>
       <type>string</type>
-    </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
   <class>
@@ -360,10 +360,6 @@
       <name>Comments</name>
       <type>string</type>
     </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;ToolListVM&gt;</type>
-    </property>
   </class>
   <class>
     <name>ContactListVM</name>
@@ -387,10 +383,6 @@
     <property>
       <name>Comments</name>
       <type>string</type>
-    </property>
-    <property>
-      <name>Tools</name>
-      <type>IList&lt;ToolListVM&gt;</type>
     </property>
   </class>
 
@@ -418,12 +410,9 @@
       <type>string</type>
     </property>
     <property>
-      <name>Connectors</name>
-      <type>IList&lt;ConnectorListVM&gt;</type>
-    </property>
-    <property>
-      <name>Contacts</name>
-      <type>IList&lt;ContactListVM&gt;</type>
+      <name>Items</name>
+      <type>IList&lt;ItemListVM&gt;</type>
+      <annotations>[Display(Name = "Items", Order = -59)]</annotations>
     </property>
   </class>  
   <class>
@@ -450,12 +439,8 @@
       <type>string</type>
     </property>
     <property>
-      <name>Connectors</name>
-      <type>IList&lt;ConnectorListVM&gt;</type>
-    </property>
-    <property>
-      <name>Contacts</name>
-      <type>IList&lt;ContactListVM&gt;</type>
+      <name>Items</name>
+      <type>IList&lt;Item&gt;</type>
     </property>
   </class>
   <class>

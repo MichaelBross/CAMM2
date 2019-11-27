@@ -33,5 +33,36 @@ namespace Presentation
             return View(parentVM);
         }
 
+        public JsonResult GetToolsLinkedToItem(string type, int typeId)
+        {
+
+            var tools = _toolService.GetToolsLinkedToItem(type, typeId);
+
+            return Json(new { data = tools, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LinkTools(string type, int typeId, IEnumerable<int> toolIdList)
+        {
+            foreach (int toolId in toolIdList)
+            {
+                _toolService.LinkToItem(type, typeId, toolId);
+            }
+
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RemoveToolLinks(string type, int typeId, IEnumerable<int> toolIdList)
+        {
+            var result = "success";
+            foreach (int toolId in toolIdList)
+            {
+                if (_toolService.UnlinkTool(type, typeId, toolId) != "success")
+                {
+                    result = "Failed";
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

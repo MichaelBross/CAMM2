@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <table id="searchResultsTable" class="table table-striped table-bordered" style="width:100%"></table>
+                <table id="searchResultsTable" class="table table-striped table-bordered" typeof="display" style="width:100%"></table>
             </div>
         </div>
     </div>
@@ -87,20 +87,34 @@
                 vm.table = $('#searchResultsTable').DataTable({
                     "ajax": {
                         "url": "SearchServerSide",
-                        "type": "POST"
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "drawCallback": function (settings) {
+                        var api = this.api();
+                        if (vm.selectedRow === "") {
+                            var newdata = api.rows({ page: 'current' }).data();
+                            if (vm.mode() === 'Get') {
+                                vm.loadDetails(newdata[0]);
+                            }
+                            api.rows(0).select();
+                        }
+                        else {
+                            vm.selectedRow.select();
+                        }
                     },
                     "columns": 
                         @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),                    
                     "serverSide": true,
 					"info": true,
-					"lengthMenu": [10, 20, 50, 75, 100, "All"],					
+					"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],					
                     "order": [0, "asc"],
                     "processing": true,
-                    "paging": true,
                     "language": {
                         "processing": "processing, please wait"
                     },
-                    "select": "single"
+                    "select": "single",
+                    "dom": '<"top"i>rt<"bottom"lp><"clear">'
                 });
 
                 @*Load selected row into details *@

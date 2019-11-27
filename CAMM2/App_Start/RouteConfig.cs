@@ -13,6 +13,8 @@ namespace CAMM2
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(null, "{controller}/{action}");
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
