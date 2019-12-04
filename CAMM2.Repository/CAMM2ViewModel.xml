@@ -449,6 +449,7 @@
     <property>
       <name>Rev</name>
       <type>string</type>
+      <annotations>[Display(Name = "Rev", Order = -85)]</annotations>
     </property>
     <property>
       <name>AssemblyItems</name>
@@ -461,6 +462,7 @@
     <property>
       <name>Rev</name>
       <type>string</type>
+      <annotations>[Display(Name = "Rev", Order = -75)]</annotations>
     </property>
     <property>
       <name>AssemblyItems</name>
@@ -485,6 +487,7 @@
     <property>
       <name>Qty</name>
       <type>Decimal</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
     </property>
   </class>
   <class>
@@ -505,6 +508,38 @@
     <property>
       <name>Qty</name>
       <type>Decimal</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
+    </property>
+  </class>
+  <class>
+    <name>BOMListVM</name>
+    <inherits>BaseListVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>AssemblyId</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>ItemId</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Qty</name>
+      <type>Decimal</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+      <annotations>[Display(Name = "Item Number", Order = -80)]</annotations>
+    </property>
+    <property>
+      <name>Description</name>
+      <type>string</type>
+      <annotations>[Display(Name = "Description", Order = -70)]</annotations>
     </property>
   </class>
 </models>

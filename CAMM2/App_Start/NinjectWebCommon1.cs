@@ -15,8 +15,7 @@ namespace App_Start
     using Ninject.Web.Common;
 
     using Persistance;
-    using Persistance.Repository;
-    using Application.Items.Queries.GetItemList;
+    using Persistance.Repository;    
     using Application.Interfaces;
     using Application.Service;
     

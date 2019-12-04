@@ -298,6 +298,7 @@ namespace Application.Service
 
     public class AssemblyDetailVM : ItemDetailVM
     {
+		[Display(Name = "Rev", Order = -85)]
 		public string Rev { get; set; }
 
 		public IList<AssemblyItemListVM> AssemblyItems { get; set; }
@@ -306,6 +307,7 @@ namespace Application.Service
 
     public class AssemblyListVM : ItemListVM
     {
+		[Display(Name = "Rev", Order = -75)]
 		public string Rev { get; set; }
 
 		public IList<AssemblyItemListVM> AssemblyItems { get; set; }
@@ -320,6 +322,8 @@ namespace Application.Service
 
 		public Item Item { get; set; }
 
+		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+		[Display(Name = "Qty Required", Order = -60)]
 		public Decimal Qty { get; set; }
 
 	}
@@ -332,7 +336,29 @@ namespace Application.Service
 
 		public Item Item { get; set; }
 
+		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+		[Display(Name = "Qty Required", Order = -60)]
 		public Decimal Qty { get; set; }
+
+	}
+
+    public class BOMListVM : BaseListVM
+    {
+		public int Id { get; set; }
+
+		public int AssemblyId { get; set; }
+
+		public int ItemId { get; set; }
+
+		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
+		[Display(Name = "Qty Required", Order = -60)]
+		public Decimal Qty { get; set; }
+
+		[Display(Name = "Item Number", Order = -80)]
+		public string Code { get; set; }
+
+		[Display(Name = "Description", Order = -70)]
+		public string Description { get; set; }
 
 	}
 

@@ -1,6 +1,5 @@
 ﻿@using System.Web.Mvc;
 @using System.Web.Mvc.Html;
-@using Application.Items;
 @using System.ComponentModel;
 @using System.ComponentModel.DataAnnotations;
 @using System.Reflection;
@@ -176,6 +175,66 @@
 
         function ToolSearchBoxButton_HandleClick(searchTerm) {
             ToolSearchGrid.search(searchTerm);
+        }
+
+    </script>
+}
+
+@helper LinkItems(System.Web.Mvc.WebViewPage page, string Name)
+{
+    <div class="modal fade" id="@(Name)" tabindex="-1" role="dialog" aria-labelledby="@(Name)" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="item" style="max-width: 1200px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom:0">
+                    <div class="container">
+                        <div class="row">
+                            @CammInputs.ButtonInputCancelButton(page, "ItemSearchBoxButton", "Search Items")
+                        </div>
+                        <div class="row" style="padding-top:15px">
+                            <h5 class="modal-title" id="exampleModalLongTitle">SELECT EXISTING DOCUMENT TO ADD</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    @CammGrid.SearchGrid(page, new ItemListVM(), "ItemSearchGrid", "/Item/SearchServerSide")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                    <button onclick="@(Name).AddSelectedItem()" type="button" class="btn btn-outline-primary">Apply Selected Items</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function @(Name)() {
+
+            self = this;
+
+            self.Type = "";
+            self.TypeId = 0;
+
+            self.AddSelectedItem = function() {
+                               
+                var ids = ItemSearchGrid.GetSelectedRows();
+
+                $.ajax({
+                    "url": "/Item/LinkItems",
+                    "data": $.param({ "assemblyId": self.TypeId, "itemIdList": ids }, true),
+                    "success": function () {
+                        try {
+                            @(Name)_HandleItemsLinked();
+                        } catch (e) { }
+                    }
+                })
+            }
+        }
+
+        var @Name = new @(Name)();
+
+        function ItemSearchBoxButton_HandleClick(searchTerm) {
+            ItemSearchGrid.search(searchTerm);
         }
 
     </script>
