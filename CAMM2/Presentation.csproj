@@ -417,6 +417,7 @@
     <Content Include="Document\Views\UploadDocuments.cshtml" />
     <Content Include="Document\Views\Linked.cshtml" />
     <Content Include="Item\Views\AssemblyItems.cshtml" />
+    <Content Include="AssemblyItem\Views\AssemblyItems.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

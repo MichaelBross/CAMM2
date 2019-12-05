@@ -125,6 +125,7 @@
     <Compile Include="Service\ToolService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\AssemblyItemVM.cs" />
     <Compile Include="ViewModels\DocumentVM.cs" />
     <Compile Include="ViewModels\NameVM.cs" />
     <Compile Include="ViewModels\ParentItemVM.cs" />

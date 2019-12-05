@@ -76,7 +76,7 @@
             };
 
             vm.formatDate = function (d) {
-                if (d === null) {
+                if (d === null || d === undefined) {
                     return "";
                 }
                 var dateInt = parseInt(d.substring(6, 19));

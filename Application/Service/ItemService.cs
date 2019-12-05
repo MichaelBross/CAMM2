@@ -38,50 +38,5 @@ namespace Application.Service
 
             return result;
         }
-
-        public List<BOMListVM> GetAssemblyItems(int assemblyId)
-        {
-            var assembly = _unitOfWork.Assemblys.GetInculding("AssemblyItems", assemblyId);            
-
-            var list = new List<BOMListVM>();
-
-            foreach(var ai in assembly.AssemblyItems)
-            {
-                var item = _unitOfWork.Items.Get(ai.Id);
-
-                var lineItem = new BOMListVM
-                {
-                    Id = ai.Id,
-                    Qty = ai.Qty,
-                    AssemblyId = ai.Assembly.Id,
-                    ItemId = item.Id,
-                    Code = item.Code,
-                    Description = item.Description
-                };
-
-                list.Add(lineItem);
-            }
-
-            return list;
-        }
-
-        public List<SelectListItem> LinkToSelectList()
-        {
-            var list = new List<SelectListItem>();
-
-            list.Add(new SelectListItem { Text = "Assembly", Value = "Assembly" });
-
-            return list;
-        }
-
-        public string LinkToAssembly(int assemblyId, int itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UnlinkItem(int assemblyId, int itemId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -14,8 +14,21 @@ namespace Persistance
     public class AssemblyItemRepository : AssemblyItemRepositoryBase, IAssemblyItemRepository
     {
         public AssemblyItemRepository(Camm2Context context)
-            :base(context)
+            : base(context)
         {
         }
-	}
+
+        public AssemblyItem GetInculding(string itemsToInclude, int id)
+        {
+            return _entity.Include(itemsToInclude).Where(c => c.Id == id).FirstOrDefault();
+        }
+
+        public List<AssemblyItem> GetAssemblyItemsWithItems(int assemblyId)
+        {
+            return Camm2Context.AssemblyItems
+                .Where(a => a.Assembly.Id == assemblyId)
+                .Include(a => a.Item)
+                .ToList();
+        }
+    }
 }
