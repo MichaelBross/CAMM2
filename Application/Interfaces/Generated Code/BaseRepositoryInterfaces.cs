@@ -55,6 +55,8 @@ namespace Application.Interfaces
 
     public partial interface IAssemblyItemRepositoryBase : IRepository<AssemblyItem> 
     {
+        IEnumerable<AssemblyItem> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
     }
 
 }

@@ -220,7 +220,7 @@
                 var ids = ItemSearchGrid.GetSelectedRows();
 
                 $.ajax({
-                    "url": "/Item/LinkItems",
+                    "url": "LinkItems",
                     "data": $.param({ "assemblyId": self.TypeId, "itemIdList": ids }, true),
                     "success": function () {
                         try {

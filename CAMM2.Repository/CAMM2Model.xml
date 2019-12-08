@@ -222,6 +222,10 @@
       <type>int</type>
     </property>
     <property>
+      <name>LineNumber</name>
+      <type>int</type>
+    </property>
+    <property>
       <name>Assembly</name>
       <type>Assembly</type>
     </property>
@@ -232,6 +236,10 @@
     <property>
       <name>Qty</name>
       <type>Decimal</type>
+    </property>
+    <property>
+      <name>Reference</name>
+      <type>string</type>
     </property>
   </class>
 </models>

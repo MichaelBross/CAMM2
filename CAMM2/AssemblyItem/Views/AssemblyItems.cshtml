@@ -36,7 +36,7 @@
         </div>
 
     </nav>
-    @CammGrid.GenericJavascriptSourcedGrid(this, new BOMListVM(), "LinkedItemsGrid")
+    @CammGrid.GenericJavascriptSourcedGrid(this, new AssemblyItemVM(), "LinkedItemsGrid")
 </div>
 
 @CammPopup.LinkItems(this, "LinkItemsPopUp")
@@ -78,12 +78,12 @@
 
         var ids = [];
         for (i = 0; i < rows.length; i++) {
-            ids.push(rows[i].Id);
+            ids.push(rows[i].AssemblyItemId);
         }
 
         $.ajax({
             "url": "RemoveItemLinks",
-            "data": $.param({ "type": linkToType, "typeId": linkToID, "itemIdList": ids }, true),
+            "data": $.param({"assemblyItemIdList": ids }, true),
             "success": function (result) {
                 GetLinkedItems();
             }

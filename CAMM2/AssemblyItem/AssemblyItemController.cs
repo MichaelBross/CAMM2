@@ -61,10 +61,13 @@ namespace Presentation
 
         public ActionResult RemoveItemLinks(IEnumerable<int> assemblyItemIdList)
         {
+            if (assemblyItemIdList == null)
+                throw new Exception("No items selected.");
+
             var result = "success";
-            foreach (int itemId in assemblyItemIdList)
+            foreach (int assemblyItemId in assemblyItemIdList)
             {
-                if (_assemblyitemService.UnlinkItem(itemId) != "success")
+                if (_assemblyitemService.UnlinkItem(assemblyItemId) != "success")
                 {
                     result = "Failed";
                 }

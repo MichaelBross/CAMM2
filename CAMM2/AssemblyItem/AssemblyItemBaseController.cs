@@ -25,6 +25,23 @@ namespace Presentation
             return View();
         }
 
+        [HttpPost]
+        public JsonResult SearchServerSide()
+        {
+            // Get Server Side Parameters from Request
+            var searchParams = MapDataTableRequestToSearchParams(Request);
+
+            // Total record count
+            int totalrows = _assemblyitemService.GetAll().Count();
+            
+            // Search
+            var searchResults = _assemblyitemService.Search(searchParams);
+                       
+            // Filtered record count
+            int totalrowsafterfiltering = _assemblyitemService.SearchResultsCount(searchParams);
+
+            return Json(new { data = searchResults, draw = Request.Form["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+        }
 
         // POST: AssemblyItem/Add
         [HttpPost]

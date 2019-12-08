@@ -318,6 +318,8 @@ namespace Application.Service
     {
 		public int Id { get; set; }
 
+		public int LineNumber { get; set; }
+
 		public Assembly Assembly { get; set; }
 
 		public Item Item { get; set; }
@@ -325,6 +327,8 @@ namespace Application.Service
 		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
 		[Display(Name = "Qty Required", Order = -60)]
 		public Decimal Qty { get; set; }
+
+		public string Reference { get; set; }
 
 	}
 
@@ -332,6 +336,8 @@ namespace Application.Service
     {
 		public int Id { get; set; }
 
+		public int LineNumber { get; set; }
+
 		public Assembly Assembly { get; set; }
 
 		public Item Item { get; set; }
@@ -339,6 +345,8 @@ namespace Application.Service
 		[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]
 		[Display(Name = "Qty Required", Order = -60)]
 		public Decimal Qty { get; set; }
+
+		public string Reference { get; set; }
 
 	}
 

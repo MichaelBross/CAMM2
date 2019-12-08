@@ -1420,6 +1420,32 @@ namespace Application.Service
             }
         }
 
+        public IEnumerable<AssemblyItemListVM> Search(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.AssemblyItems.Search(searchParams)
+                .Select(i => new AssemblyItemListVM()
+                {
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
+					Id = i.Id,
+					LineNumber = i.LineNumber,
+					Assembly = i.Assembly,
+					Item = i.Item,
+					Qty = i.Qty,
+					Reference = i.Reference,
+                }).ToList();
+
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.AssemblyItems.SearchResultsCount(searchParams);
+            return result;
+        }
 
         public AssemblyItemDetailVM Update(AssemblyItemDetailVM revisedVM)
         {
@@ -1433,9 +1459,11 @@ namespace Application.Service
 				retrieved.UpdateDate = revisedVM.UpdateDate;
 				retrieved.UpdatedBy = revisedVM.UpdatedBy;
 				retrieved.Id = revisedVM.Id;
+				retrieved.LineNumber = revisedVM.LineNumber;
 				retrieved.Assembly = revisedVM.Assembly;
 				retrieved.Item = revisedVM.Item;
 				retrieved.Qty = revisedVM.Qty;
+				retrieved.Reference = revisedVM.Reference;
                 var now = DateTime.Now;
                 retrieved.UpdateDate = now;
                 _unitOfWork.Complete();

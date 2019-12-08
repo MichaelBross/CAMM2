@@ -10,6 +10,6 @@ namespace Application.Interfaces
         List<SelectListItem> LinkToSelectList();
         AssemblyItemVM LinkToAssembly(AssemblyItemVM assemblyItemDetailVM);
         List<AssemblyItemVM> GetAssemblyItems(int assemblyId);
-        string UnlinkItem(int assemblyItemIdList);
+        string UnlinkItem(int assemblyItemId);
     }
 }

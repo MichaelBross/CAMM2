@@ -129,11 +129,15 @@ namespace Domain
 	{	 
 		public int Id { get; set; }
 
+		public int LineNumber { get; set; }
+
 		public Assembly Assembly { get; set; }
 
 		public Item Item { get; set; }
 
 		public Decimal Qty { get; set; }
+
+		public string Reference { get; set; }
 
 	}
 }

@@ -28,11 +28,14 @@ namespace Application.Service
             {
                 var aivm = new AssemblyItemVM
                 {
+                    AssemblyItemId = ai.Id,
+                    LineNumber = ai.LineNumber,
                     AssemblyId = assemblyId,
                     ItemId = ai.Item.Id,
+                    Qty = ai.Qty,
                     Code = ai.Item.Code,
                     Description = ai.Item.Description,
-                    Qty = ai.Qty
+                    Reference = ai.Reference
                 };
                 assemblyItemVMList.Add(aivm);
             }
@@ -44,11 +47,14 @@ namespace Application.Service
         {
             var assembly = _unitOfWork.Assemblys.Get(assemblyItemVM.AssemblyId);
             var item = _unitOfWork.Items.Get(assemblyItemVM.ItemId);
+            var now = DateTime.Now;
             var assemblyItem = new AssemblyItem
             {
                 Assembly = assembly,
                 Item = item,
-                Qty = assemblyItemVM.Qty
+                Qty = assemblyItemVM.Qty,
+                CreateDate = now,
+                UpdateDate =now
             };
 
             _unitOfWork.AssemblyItems.Add(assemblyItem);
@@ -68,12 +74,12 @@ namespace Application.Service
             return list;
         }
 
-        public string UnlinkItem(int assemblyId)
+        public string UnlinkItem(int assemblyItemId)
         {
             try
             {
-                var assemblyItem = _unitOfWork.AssemblyItems.Get(assemblyId);
-                assemblyItem.IsObsolete = true;
+                var assemblyItem = _unitOfWork.AssemblyItems.Get(assemblyItemId);
+                _unitOfWork.AssemblyItems.Remove(assemblyItem);
                 _unitOfWork.Complete();
                 return "success";
             }

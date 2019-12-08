@@ -476,25 +476,8 @@
       <name>Id</name>
       <type>int</type>
     </property>
-    <property>
-      <name>Assembly</name>
-      <type>Assembly</type>
-    </property>
-    <property>
-      <name>Item</name>
-      <type>Item</type>
-    </property>
-    <property>
-      <name>Qty</name>
-      <type>Decimal</type>
-      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
-    </property>
-  </class>
-  <class>
-    <name>AssemblyItemListVM</name>
-    <inherits>BaseListVM</inherits>
-    <property>
-      <name>Id</name>
+        <property>
+      <name>LineNumber</name>
       <type>int</type>
     </property>
     <property>
@@ -509,6 +492,39 @@
       <name>Qty</name>
       <type>Decimal</type>
       <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
+    </property>
+    <property>
+      <name>Reference</name>
+      <type>string</type>
+    </property>
+  </class>
+  <class>
+    <name>AssemblyItemListVM</name>
+    <inherits>BaseListVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+        <property>
+      <name>LineNumber</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Assembly</name>
+      <type>Assembly</type>
+    </property>
+    <property>
+      <name>Item</name>
+      <type>Item</type>
+    </property>
+    <property>
+      <name>Qty</name>
+      <type>Decimal</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty Required", Order = -60)]</annotations>
+    </property>
+    <property>
+      <name>Reference</name>
+      <type>string</type>
     </property>
   </class>
   <class>

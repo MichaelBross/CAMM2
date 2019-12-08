@@ -97,6 +97,8 @@ namespace Application.Service
     }
     public interface IAssemblyItemServiceBase
     {
+        IEnumerable<AssemblyItemListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
 		AssemblyItemDetailVM Get(int id);
         IEnumerable<AssemblyItemListVM> GetAll();
         int GetTotalCount();

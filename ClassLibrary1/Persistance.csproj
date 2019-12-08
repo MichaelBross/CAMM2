@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201911270028498_AssociatedToolAndItem.Designer.cs">
       <DependentUpon>201911270028498_AssociatedToolAndItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912071523249_AddAssemblyItemPropertiesLineNumberAndReference.cs" />
+    <Compile Include="Migrations\201912071523249_AddAssemblyItemPropertiesLineNumberAndReference.Designer.cs">
+      <DependentUpon>201912071523249_AddAssemblyItemPropertiesLineNumberAndReference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\AssemblyItemRepository.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\Generated Code\BaseRepositories.cs">
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911270028498_AssociatedToolAndItem.resx">
       <DependentUpon>201911270028498_AssociatedToolAndItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912071523249_AddAssemblyItemPropertiesLineNumberAndReference.resx">
+      <DependentUpon>201912071523249_AddAssemblyItemPropertiesLineNumberAndReference.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
