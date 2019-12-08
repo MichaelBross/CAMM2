@@ -110,35 +110,10 @@
         }
 
         vm.ShowLinkedDocuments = function () {
+
             var url = '@Url.Action("Linked", "Document")?type=' + linkToType + '&id='+ linkToID + '&code=' + linkToCD;
-            //url_redirect(url);
             window.location.href = url;
-            //return false;
-            //setTimeout(function(){document.location.href = url},500);
-            //$(location).attr('href', url);
         }
-
-        function url_redirect(url) {
-            var X = setTimeout(function () {
-                window.location.replace(url);
-                return true;
-            }, 300);
-
-            if (window.location = url) {
-                clearTimeout(X);
-                return true;
-            } else {
-                if (window.location.href = url) {
-                    clearTimeout(X);
-                    return true;
-                } else {
-                    clearTimeout(X);
-                    window.location.replace(url);
-                    return true;
-                }
-            }
-            return false;
-        };
 
         vm.GetDocuments = function () {
 
@@ -164,7 +139,8 @@
 
         vm.SaveChanges = function (showSuccessMessage = true) {
             var revisedDocuments = vm.GetDocuments();
-            vm.Save(revisedDocuments, showSuccessMessage);
+            if(revisedDocuments.length > 0)
+                vm.Save(revisedDocuments, showSuccessMessage);
         }
 
         vm.Save = function (revisedDocuments, showSuccessMessage) {
@@ -374,7 +350,7 @@
                 '</tr>');
 
             $("#row" + rowIndex + " .Id").val(newDocuments[i].Id);
-            $("#row" + rowIndex + " .Number").val(newDocuments[i].Code);
+            $("#row" + rowIndex + " .Number").val(newDocuments[i].Code); 
             $("#row" + rowIndex + " .Rev").val(newDocuments[i].Rev);
             $("#row" + rowIndex + " .FileName").val(newDocuments[i].FileName);
             $("#row" + rowIndex + " .Category").val(newDocuments[i].DocType);
