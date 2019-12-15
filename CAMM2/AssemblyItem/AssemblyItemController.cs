@@ -26,11 +26,12 @@ namespace Presentation
 
         public ActionResult AssemblyItems(int id)
         {
+            var code = _assemblyService.Get(id).Code;
             var parentVM = new ParentItemVM
             {
                 Type = "Assembly",
                 Id = id,
-                Code = "Assembly Number",
+                Code = code,
                 ItemSelectList = _assemblyitemService.LinkToSelectList()
             };
 
@@ -45,7 +46,9 @@ namespace Presentation
         }
 
         public ActionResult LinkItems(int assemblyId, IEnumerable<int> itemIdList)
-        {            
+        {
+            var result = "success";
+
             foreach (int itemId in itemIdList)
             {
                 var assemblyItem = new AssemblyItemVM
@@ -53,7 +56,19 @@ namespace Presentation
                     AssemblyId = assemblyId,
                     ItemId = itemId
                 };
-                _assemblyitemService.LinkToAssembly(assemblyItem);
+                var message = _assemblyitemService.LinkToAssembly(assemblyItem);
+                if(message != "success")
+                {
+                    if(result == "success")
+                    {
+                        result = message;
+                    }
+                    else
+                    {
+                        result += message + "\r\n";
+                    }
+                }
+
             }
 
             return Json("success", JsonRequestBehavior.AllowGet);
@@ -62,7 +77,7 @@ namespace Presentation
         public ActionResult RemoveItemLinks(IEnumerable<int> assemblyItemIdList)
         {
             if (assemblyItemIdList == null)
-                throw new Exception("No items selected.");
+                throw new ArgumentNullException("assemblyItemIdList");
 
             var result = "success";
             foreach (int assemblyItemId in assemblyItemIdList)
@@ -76,5 +91,18 @@ namespace Presentation
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UpdateList(List<AssemblyItemVM> assemblyItemList)
+        {
+            if (assemblyItemList == null)
+                throw new Exception("Nothing to save.");
+
+            var result = "success";
+            foreach(AssemblyItemVM ai in assemblyItemList)
+            {
+                _assemblyitemService.Update(ai);
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

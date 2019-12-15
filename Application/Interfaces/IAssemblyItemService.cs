@@ -8,8 +8,9 @@ namespace Application.Interfaces
     public interface IAssemblyItemService : IAssemblyItemServiceBase 
     {
         List<SelectListItem> LinkToSelectList();
-        AssemblyItemVM LinkToAssembly(AssemblyItemVM assemblyItemDetailVM);
+        string LinkToAssembly(AssemblyItemVM assemblyItemVM);
         List<AssemblyItemVM> GetAssemblyItems(int assemblyId);
         string UnlinkItem(int assemblyItemId);
+        AssemblyItemVM Update(AssemblyItemVM assemblyItemVM);
     }
 }

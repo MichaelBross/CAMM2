@@ -43,16 +43,31 @@ namespace Application.Service
             return assemblyItemVMList;
         }
 
-        public AssemblyItemVM LinkToAssembly(AssemblyItemVM assemblyItemVM)
-        {
-            var assembly = _unitOfWork.Assemblys.Get(assemblyItemVM.AssemblyId);
+        public string LinkToAssembly(AssemblyItemVM assemblyItemVM)
+        {            
             var item = _unitOfWork.Items.Get(assemblyItemVM.ItemId);
+            var message = "Failed to add item " + item.Code;
+
+            if (_unitOfWork.AssemblyItems.IsDuplicate(assemblyItemVM.AssemblyId, assemblyItemVM.ItemId))
+            {
+                message = "Item " + item.Code + " would have been a duplicate but was not added to the list.";
+                return message;
+            }
+                
+            var assembly = _unitOfWork.Assemblys.Get(assemblyItemVM.AssemblyId);
+            
             var now = DateTime.Now;
+            
+            if (assemblyItemVM.LineNumber == 0)
+                assemblyItemVM.LineNumber = _unitOfWork.AssemblyItems.GetNextLineNumber(assemblyItemVM.AssemblyId);
+
             var assemblyItem = new AssemblyItem
             {
+                LineNumber = assemblyItemVM.LineNumber,
                 Assembly = assembly,
                 Item = item,
                 Qty = assemblyItemVM.Qty,
+                Reference = assemblyItemVM.Reference,
                 CreateDate = now,
                 UpdateDate =now
             };
@@ -62,7 +77,8 @@ namespace Application.Service
 
             assemblyItemVM.AssemblyItemId = assemblyItem.Id;
 
-            return assemblyItemVM;
+            message = "success";
+            return message;
         }
 
         public List<SelectListItem> LinkToSelectList()
@@ -88,5 +104,72 @@ namespace Application.Service
                 return "failed";
             };
         }
+
+        public AssemblyItemVM Update(AssemblyItemVM assemblyItemVM)
+        {
+            var retrieved = _unitOfWork.AssemblyItems.GetAssemblyItemWithAssemblyAndItem(assemblyItemVM.AssemblyItemId);
+                       
+            var changes = "";
+
+            if (retrieved.Assembly.Id != assemblyItemVM.AssemblyId)
+            {
+                changes += "AssemblyId ";
+                retrieved.Assembly = _unitOfWork.Assemblys.Get(assemblyItemVM.AssemblyId);
+            }
+
+            if (retrieved.Item.Id != assemblyItemVM.ItemId)
+            {
+                changes += "ItemId ";
+                retrieved.Item = _unitOfWork.Items.Get(assemblyItemVM.ItemId);                
+            }                
+
+            if (retrieved.LineNumber != assemblyItemVM.LineNumber)
+            {
+                changes += "LineNumber ";
+                retrieved.LineNumber = assemblyItemVM.LineNumber;
+            }                
+
+            if (retrieved.Qty != assemblyItemVM.Qty)
+            {
+                changes += "Qty ";
+                retrieved.Qty = assemblyItemVM.Qty;
+            }   
+
+            if (retrieved.Reference != assemblyItemVM.Reference)
+            {
+                changes += "Reference ";
+                retrieved.Reference = assemblyItemVM.Reference;
+            }   
+
+            if (changes == "")
+                return assemblyItemVM;
+
+            var now = DateTime.Now;
+            retrieved.UpdateDate = now;
+            
+            _unitOfWork.Complete();
+            
+            return assemblyItemVM;
+        }
+
+        //private bool PropertyValuesAreEqual<T, TU>(this T A, TU B)
+        //{
+        //    var sourceProps = typeof(T).GetProperties().Where(x => x.CanRead).ToList();
+        //    var destProps = typeof(TU).GetProperties().Where(x => x.CanRead).ToList();
+
+        //    foreach (var sourceProp in sourceProps)
+        //    {
+        //        if (destProps.Any(x => x.Name == sourceProp.Name))
+        //        {
+        //            var destProp = destProps.First(x => x.Name == sourceProp.Name);
+        //            if (destProp.GetValue(destProp).ToString() != sourceProp.GetValue(sourceProp).ToString()) 
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //    }
+
+        //    return true;
+        //}
     }
 }

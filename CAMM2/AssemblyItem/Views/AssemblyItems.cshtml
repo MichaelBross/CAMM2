@@ -11,7 +11,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand">ITEMS applicable to</a>
+            <a class="navbar-brand">PARTS LIST for</a>
             <form class="form-inline">
 
                 <div class="input-group">
@@ -23,7 +23,7 @@
                             }
                         </select>
                     </div>
-                    <input class="form-control btn-outline-primary" type="text" id="myInput" placeholder="Search" style="min-width: 210px; max-width:840px" onkeypress="this.style.width = ((this.value.length + 1) * 11) + 'px';">
+                    <input class="form-control btn-outline-primary" type="text" id="searchInput" placeholder="Search" style="min-width: 210px; max-width:840px" onkeypress="this.style.width = ((this.value.length + 1) * 11) + 'px';">
                 </div>
 
             </form>
@@ -32,11 +32,12 @@
                 <button onclick="OpenLinkItemsPopUp()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Apply Items</button>
                 <button onclick="HandleAddNewButtonClick()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Add Items</button>
                 <button onclick="RemoveItemLinks()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Remove Selected Items</button>
+                <button onclick="Save()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Save</button>
             </form>
         </div>
 
-    </nav>
-    @CammGrid.GenericJavascriptSourcedGrid(this, new AssemblyItemVM(), "LinkedItemsGrid")
+    </nav>    
+    @CammGrid.GenericEditableGrid(this, new AssemblyItemVM(), "LinkedItemsGrid")
 </div>
 
 @CammPopup.LinkItems(this, "LinkItemsPopUp")
@@ -101,7 +102,7 @@
 
     $(document).ready(function () {
 
-        $('#myInput').autocomplete({
+        $('#searchInput').autocomplete({
             source: '/' + linkToType + '/GetAutoCompleteList',
             select: function (event, ui) {
                 this.style.width = ((this.value.length + 1) * 11) + 'px';
@@ -113,20 +114,34 @@
 
         $('#linkToSelect').change(function () {
             linkToType = $(this).find("option:selected").attr('value');
-            $('#myInput').autocomplete({
+            $('#searchInput').autocomplete({
                 source: '/' + linkToType + '/GetAutoCompleteList'
             });
-            $('#myInput').val("");
+            $('#searchInput').val("");
         });
 
         $('#linkToSelect').val(linkToType);
 
-        var itemCodeAutocomplete = $('#myInput');
+        var itemCodeAutocomplete = $('#searchInput');
         itemCodeAutocomplete.val(linkToCD);
         itemCodeAutocomplete.css("width", ((linkToCD.length + 1) * 11) + 'px');
 
         GetLinkedItems();
     });
+
+    function Save() {
+                
+        $.ajax({
+            "type": "POST",
+            "url": "UpdateList",
+            "data": ko.toJSON(LinkedItemsGrid.ItemList),
+            "contentType": "application/json; charset=utf-8",
+            "success": function (result) {
+                MessagePopUp.Show("Save", "Successful");
+                GetLinkedItems();
+            }
+        });
+    }
 
 </script>
 

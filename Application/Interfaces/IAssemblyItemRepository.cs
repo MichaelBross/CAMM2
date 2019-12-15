@@ -7,5 +7,8 @@ namespace Application.Interfaces
     {
         AssemblyItem GetInculding(string itemsToInclude, int id);
         List<AssemblyItem> GetAssemblyItemsWithItems(int assemblyId);
+        AssemblyItem GetAssemblyItemWithAssemblyAndItem(int id);
+        int GetNextLineNumber(int assemblyId);
+        bool IsDuplicate(int assemblyId, int itemId);
     }
 }

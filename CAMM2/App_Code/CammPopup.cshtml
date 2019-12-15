@@ -206,6 +206,8 @@
         </div>
     </div>
 
+    @CammPopup.Message(page, Name + "Message")
+
     <script>
 
         function @(Name)() {
@@ -226,7 +228,8 @@
                         try {
                             @(Name)_HandleItemsLinked();
                         } catch (e) { }
-                    }
+                    },
+                    "error" : @(Name)Message("Link Item", "Linking action failed.")
                 })
             }
         }

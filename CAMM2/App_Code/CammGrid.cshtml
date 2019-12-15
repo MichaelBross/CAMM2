@@ -186,3 +186,116 @@
 
     </script>
 }
+
+@helper GenericEditableGrid(System.Web.Mvc.WebViewPage page, object listVM, string Name)
+{
+    var Html = page.Html;
+
+    <table id="@(Name)" class="table table-borderless" typeof="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Line #</th><th>Qty Required</th><th>Item Number</th><th>Description</th><th>Reference</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: ItemList">
+            <tr>
+                <td><input style="max-width:100%" data-bind="value: LineNumber" class="form-control" /></td>
+                <td><input style="max-width:100%" data-bind="value: Qty" class="form-control" /></td>
+                <td><input style="max-width:100%" data-bind="value: Code" class="form-control" /></td>
+                <td><input style="max-width:100%" data-bind="value: Description" class="form-control" /></td>
+                <td><input style="max-width:100%" data-bind="value: Reference" class="form-control" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        function AssemblyItemVM(assemblyItemId, assemblyId, itemId, lineNumber, qty, code, description, reference) {
+            var self = this;
+            self.AssemblyItemId = ko.observable(assemblyItemId);
+            self.AssemblyId = ko.observable(assemblyId);
+            self.ItemId = ko.observable(itemId);
+            self.LineNumber = ko.observable(lineNumber);
+            self.Qty = ko.observable(qty);
+            self.Code = ko.observable(code);
+            self.Description = ko.observable(description);
+            self.Reference = ko.observable(reference);
+        }
+
+        function @(Name)() {
+
+            vm = this;
+
+            vm.data = [];
+
+            vm.ItemList = ko.observableArray([]);
+
+            vm.AddLineItem = function(){
+
+                @(Name).ItemList.push(new AssemblyItemVM());
+            }
+
+            @*@Html.Raw(JavaScriptBuilder.SelectListsArray(listVM));
+
+            vm.getEnumItemName = function (myEnum, id) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = "";
+                for (var i = 0; i < enumList.length; i++) {
+                    if (enumList[i].id === id) {
+                        n = enumList[i];
+                    }
+                }
+                return n.name;
+            };
+
+            vm.getEnumItemId = function (myEnum, name) {
+                var enumListName = myEnum + "List";
+                var enumList = vm[enumListName];
+                var n = "";
+                for (var i = 0; i < enumList.length; i++) {
+                    if (enumList[i].name === name) {
+                        n = enumList[i];
+                    }
+                }
+                return n.id;
+            };*@
+
+            @*vm.table = $('#@(Name)').DataTable({
+                data: vm.data,
+                columns: @Html.Raw(JavaScriptBuilder.TableColumns(listVM)),
+                paging: false,
+                ordering: false,
+                info: false,
+                searching: false,
+                select: { style: 'multi' }
+            });*@
+
+            vm.loadTable = function (newData) {
+
+                @(Name).ItemList([]);
+
+                for (var i = 0; i < newData.length; i++) {
+                    @(Name).ItemList.push(newData[i]);
+                }
+            }
+
+            @*vm.GetSelectedRows = function () {
+
+                var table = $("#@(Name)").DataTable();
+                var rows = table.rows('.selected').data();
+                return rows;
+            }*@
+        }
+
+        @Name = new @(Name)();
+
+        $(document).ready(function () {
+            @*@(Name).table;*@
+
+        });
+
+        ko.applyBindings(@(Name));
+
+    </script>
+}
