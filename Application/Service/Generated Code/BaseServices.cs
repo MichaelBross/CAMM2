@@ -1477,4 +1477,141 @@ namespace Application.Service
         }
     }
 
+   public class WorkOrderServiceBase : IWorkOrderServiceBase
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public WorkOrderServiceBase(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public WorkOrderDetailVM Add(WorkOrderDetailVM workorderVM)
+        {
+            try
+            {
+                var newWorkOrder = new WorkOrder();
+
+                Map.AtoB(workorderVM, newWorkOrder);
+
+                var now = DateTime.Now;
+                newWorkOrder.CreateDate = now;
+                newWorkOrder.UpdateDate = now;
+
+                _unitOfWork.WorkOrders.Add(newWorkOrder);
+                _unitOfWork.Complete();
+
+                Map.AtoB(newWorkOrder, workorderVM);
+
+                return workorderVM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+
+                throw new Exception(message);
+            }
+        }
+
+		public WorkOrderDetailVM Get(int id)
+        {
+            var workorder = _unitOfWork.WorkOrders.Get(id);
+            var workorderVM = new WorkOrderDetailVM();
+
+            Map.AtoB(workorder, workorderVM);
+
+
+            return workorderVM;
+        }
+
+        public IEnumerable<WorkOrderListVM> GetAll()
+        {
+            var workorders = _unitOfWork.WorkOrders.GetAll().ToList();
+            var workorderVMs = new List<WorkOrderListVM>();
+
+            Map.ListToList(workorders, workorderVMs);
+
+            return workorderVMs;
+        }
+
+        public int GetTotalCount()
+        {
+            var count = _unitOfWork.WorkOrders.GetAll().Count();
+            return count;
+        }
+
+        public void Remove(WorkOrderDetailVM workorderVM)
+        {
+            try
+            {
+                var toBeRemoved = _unitOfWork.WorkOrders.Get(workorderVM.Id);
+                if (toBeRemoved == null)
+                    throw new Exception("WorkOrder not found.");
+                _unitOfWork.WorkOrders.Remove(toBeRemoved);
+                _unitOfWork.Complete();
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
+        }
+
+        public IEnumerable<WorkOrderListVM> Search(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.WorkOrders.Search(searchParams)
+                .Select(i => new WorkOrderListVM()
+                {
+					IsObsolete = i.IsObsolete,
+					CreateDate = i.CreateDate,
+					CreatedBy = i.CreatedBy,
+					UpdateDate = i.UpdateDate,
+					UpdatedBy = i.UpdatedBy,
+					Id = i.Id,
+					Code = i.Code,
+					QtyToBuild = i.QtyToBuild,
+					Assembly = i.Assembly,
+					DueDate = i.DueDate,
+					CustomerPO = i.CustomerPO,
+                }).ToList();
+
+            return result;
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var result = _unitOfWork.WorkOrders.SearchResultsCount(searchParams);
+            return result;
+        }
+
+        public WorkOrderDetailVM Update(WorkOrderDetailVM revisedVM)
+        {
+            try
+            {
+                var retrieved = _unitOfWork.WorkOrders.Get(revisedVM.Id);
+
+				retrieved.IsObsolete = revisedVM.IsObsolete;
+				retrieved.CreateDate = revisedVM.CreateDate;
+				retrieved.CreatedBy = revisedVM.CreatedBy;
+				retrieved.UpdateDate = revisedVM.UpdateDate;
+				retrieved.UpdatedBy = revisedVM.UpdatedBy;
+				retrieved.Id = revisedVM.Id;
+				retrieved.Code = revisedVM.Code;
+				retrieved.QtyToBuild = revisedVM.QtyToBuild;
+				retrieved.Assembly = revisedVM.Assembly;
+				retrieved.DueDate = revisedVM.DueDate;
+				retrieved.CustomerPO = revisedVM.CustomerPO;
+                var now = DateTime.Now;
+                retrieved.UpdateDate = now;
+                _unitOfWork.Complete();
+                return revisedVM;
+            }
+            catch (Exception ex)
+            {
+                var message = Utility.GetRootCauseOfException(ex);
+                throw new Exception(message);
+            }
+        }
+    }
+
 }

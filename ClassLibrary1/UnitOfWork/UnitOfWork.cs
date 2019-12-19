@@ -25,6 +25,7 @@ namespace Persistance
             Tools = new ToolRepository(_context);            
             Assemblys = new AssemblyRepository(_context);            
             AssemblyItems = new AssemblyItemRepository(_context);            
+            WorkOrders = new WorkOrderRepository(_context);            
         }
 
         public IUserRepository Users { get; private set; }        
@@ -36,6 +37,7 @@ namespace Persistance
         public IToolRepository Tools { get; private set; }        
         public IAssemblyRepository Assemblys { get; private set; }        
         public IAssemblyItemRepository AssemblyItems { get; private set; }        
+        public IWorkOrderRepository WorkOrders { get; private set; }        
         public int Complete()
         {
             return _context.SaveChanges();

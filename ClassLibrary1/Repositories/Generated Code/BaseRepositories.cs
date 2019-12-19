@@ -537,4 +537,60 @@ namespace Persistance
         }
     }
 
+    public class WorkOrderRepositoryBase : Repository<WorkOrder>, IWorkOrderRepositoryBase
+    {
+        public WorkOrderRepositoryBase(Camm2Context context)
+            :base(context)
+        {
+        }
+               
+        public IEnumerable<WorkOrder> Search(SearchParameters searchParams)
+        {
+            var query = Camm2Context.WorkOrders.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Code.Contains(term)
+					|| q.CustomerPO.Contains(term)
+					);					
+                }
+            }
+
+            query = query.OrderBy(searchParams.SortColumnName + " " + searchParams.SortDirection);
+            query = query.Skip(searchParams.Start).Take(searchParams.Length);
+
+            return query.ToList();
+        }
+
+		public int SearchResultsCount(SearchParameters searchParams)
+        {
+            var query = Camm2Context.WorkOrders.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchParams.SearchValue))
+            {
+                string[] terms = searchParams.SearchValue.Split(' ');
+
+                foreach (string term in terms)
+                {
+                    query = query.Where(q =>
+					   q.Code.Contains(term)
+					|| q.CustomerPO.Contains(term)
+					);					
+                }
+            }
+
+            return query.Count();
+        }
+
+        public Camm2Context Camm2Context
+        {
+            get { return Context as Camm2Context; }
+        }
+    }
+
 }

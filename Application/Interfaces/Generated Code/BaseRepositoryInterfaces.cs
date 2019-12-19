@@ -59,4 +59,10 @@ namespace Application.Interfaces
 		int SearchResultsCount(SearchParameters searchParams);
     }
 
+    public partial interface IWorkOrderRepositoryBase : IRepository<WorkOrder> 
+    {
+        IEnumerable<WorkOrder> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
+    }
+
 }

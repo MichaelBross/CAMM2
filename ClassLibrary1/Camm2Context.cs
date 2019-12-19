@@ -21,5 +21,6 @@ namespace Persistance
         public DbSet<Connector> Connectors { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<WorkOrder> WorkOrders { get; set; }
     }
 }

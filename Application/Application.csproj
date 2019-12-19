@@ -100,6 +100,8 @@
     <Compile Include="Interfaces\IToolService.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Interfaces\IWorkOrderRepository.cs" />
+    <Compile Include="Interfaces\IWorkOrderService.cs" />
     <Compile Include="JsonAntiForgeryValidator.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="SearchParameters.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Service\ItemService.cs" />
     <Compile Include="Service\ToolService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\WorkOrderService.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\AssemblyItemVM.cs" />
     <Compile Include="ViewModels\DocumentVM.cs" />

@@ -100,6 +100,9 @@ namespace App_Start
             kernel.Bind<IAssemblyItemRepository>().To<AssemblyItemRepository>();
             kernel.Bind<IAssemblyItemService>().To<AssemblyItemService>();
 
+            kernel.Bind<IWorkOrderRepository>().To<WorkOrderRepository>();
+            kernel.Bind<IWorkOrderService>().To<WorkOrderService>();
+
         }        
     }
 }

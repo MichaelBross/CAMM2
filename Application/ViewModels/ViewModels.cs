@@ -370,4 +370,37 @@ namespace Application.Service
 
 	}
 
+    public class WorkOrderDetailVM : BaseDetailVM
+    {
+		public int Id { get; set; }
+
+		[Display(Name = "WorkOrder Number", Order = -80)]
+		public string Code { get; set; }
+
+		public int QtyToBuild { get; set; }
+
+		public Assembly Assembly { get; set; }
+
+		public DateTime DueDate { get; set; }
+
+		public string CustomerPO { get; set; }
+
+	}
+
+    public class WorkOrderListVM : BaseListVM
+    {
+		public int Id { get; set; }
+
+		public string Code { get; set; }
+
+		public int QtyToBuild { get; set; }
+
+		public Assembly Assembly { get; set; }
+
+		public DateTime DueDate { get; set; }
+
+		public string CustomerPO { get; set; }
+
+	}
+
 }

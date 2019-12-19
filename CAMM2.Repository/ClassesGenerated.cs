@@ -140,5 +140,20 @@ namespace Domain
 		public string Reference { get; set; }
 
 	}
+	public class WorkOrder : Base
+	{	 
+		public int Id { get; set; }
+
+		public string Code { get; set; }
+
+		public int QtyToBuild { get; set; }
+
+		public Assembly Assembly { get; set; }
+
+		public DateTime DueDate { get; set; }
+
+		public string CustomerPO { get; set; }
+
+	}
 }
 

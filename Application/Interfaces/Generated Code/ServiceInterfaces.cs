@@ -106,4 +106,15 @@ namespace Application.Service
         AssemblyItemDetailVM Update(AssemblyItemDetailVM assemblyitemVM);
         void Remove(AssemblyItemDetailVM assemblyitemVM);
     }
+    public interface IWorkOrderServiceBase
+    {
+        IEnumerable<WorkOrderListVM> Search(SearchParameters searchParams);
+		int SearchResultsCount(SearchParameters searchParams);
+		WorkOrderDetailVM Get(int id);
+        IEnumerable<WorkOrderListVM> GetAll();
+        int GetTotalCount();
+        WorkOrderDetailVM Add(WorkOrderDetailVM workorderVM);
+        WorkOrderDetailVM Update(WorkOrderDetailVM workorderVM);
+        void Remove(WorkOrderDetailVM workorderVM);
+    }
 }

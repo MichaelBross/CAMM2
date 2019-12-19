@@ -558,5 +558,63 @@
       <annotations>[Display(Name = "Description", Order = -70)]</annotations>
     </property>
   </class>
+  <class>
+    <name>WorkOrderDetailVM</name>
+    <inherits>BaseDetailVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+      <annotations>[Display(Name = "WorkOrder Number", Order = -80)]</annotations>
+    </property>
+    <property>
+      <name>QtyToBuild</name>
+      <type>int</type>
+      <annotations>[Range(0, 2147483646, ErrorMessage = "Value must be between 0 and 2147483646.")]~[Display(Name = "Qty To Build", Order = -60)]</annotations>
+    </property>
+    <property>
+      <name>Assembly</name>
+      <type>Assembly</type>
+    </property>
+    <property>
+      <name>DueDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>CustomerPO</name>
+      <type>string</type>
+    </property>
+  </class>
+  <class>
+    <name>WorkOrderListVM</name>
+    <inherits>BaseListVM</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>QtyToBuild</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Assembly</name>
+      <type>Assembly</type>
+    </property>
+    <property>
+      <name>DueDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>CustomerPO</name>
+      <type>string</type>
+    </property>
+  </class>
 </models>
 

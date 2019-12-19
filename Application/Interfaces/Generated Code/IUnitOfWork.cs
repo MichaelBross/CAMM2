@@ -27,6 +27,8 @@ namespace Application.Interfaces
         
         IAssemblyItemRepository AssemblyItems { get; } 
         
+        IWorkOrderRepository WorkOrders { get; } 
+        
         int Complete();
     }
 }

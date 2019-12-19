@@ -242,5 +242,33 @@
       <type>string</type>
     </property>
   </class>
+  <class>
+    <name>WorkOrder</name>
+    <inherits>Base</inherits>
+    <property>
+      <name>Id</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Code</name>
+      <type>string</type>
+    </property>
+    <property>
+      <name>QtyToBuild</name>
+      <type>int</type>
+    </property>
+    <property>
+      <name>Assembly</name>
+      <type>Assembly</type>
+    </property>
+    <property>
+      <name>DueDate</name>
+      <type>DateTime</type>
+    </property>
+    <property>
+      <name>CustomerPO</name>
+      <type>string</type>
+    </property>
+  </class>
 </models>
 
